@@ -181,6 +181,7 @@ public class OidcBaseTest extends AbstractBaseHttpTest {
                 webClient.addCookie(getCookieString(cookie), requestUri.toURL(), null);
             }
         }
+
         HtmlPage keycloakLoginPage = webClient.getPage(location);
         HtmlForm loginForm = keycloakLoginPage.getForms().get(0);
         loginForm.getInputByName(KEYCLOAK_USERNAME).setValueAttribute(username);

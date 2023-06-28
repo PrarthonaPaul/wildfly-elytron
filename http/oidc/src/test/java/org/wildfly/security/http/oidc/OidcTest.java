@@ -22,18 +22,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 import static org.wildfly.security.http.oidc.Oidc.OIDC_NAME;
+import static org.wildfly.security.http.oidc.Oidc.OIDC_SCOPE;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import com.gargoylesoftware.htmlunit.WebClient;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.wildfly.security.http.HttpAuthenticationException;
 import org.wildfly.security.http.HttpServerAuthenticationMechanism;
 
 import com.gargoylesoftware.htmlunit.TextPage;
@@ -42,6 +47,7 @@ import com.gargoylesoftware.htmlunit.html.HtmlPage;
 import io.restassured.RestAssured;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.QueueDispatcher;
+import org.wildfly.security.http.HttpServerCookie;
 
 /**
  * Tests for the OpenID Connect authentication mechanism.
@@ -161,6 +167,32 @@ public class OidcTest extends OidcBaseTest {
         performAuthentication(getOidcConfigurationInputStreamWithTokenSignatureAlgorithm(), KeycloakConfiguration.ALICE, KeycloakConfiguration.ALICE_PASSWORD,
                 true, HttpStatus.SC_MOVED_TEMPORARILY, getClientUrl(), CLIENT_PAGE_TEXT);
     }
+    @Test
+    public void testInvalidScope() throws Exception {
+        checkInvalidScopeError(getoidcConfigurationInputStreamWithScope(CLIENT_SECRET, "INVALID_SCOPE"), KeycloakConfiguration.ALICE, KeycloakConfiguration.ALICE_PASSWORD,
+                true, HttpStatus.SC_MOVED_TEMPORARILY, getClientUrl(), "error=invalid_scope", OIDC_SCOPE + "+INVALID_SCOPE");
+    }
+
+    @Test
+    public void testEmptyScope() throws Exception {
+        performAuthentication(getoidcConfigurationInputStreamWithScope(CLIENT_SECRET, ""), KeycloakConfiguration.ALICE, KeycloakConfiguration.ALICE_PASSWORD,
+                true, HttpStatus.SC_MOVED_TEMPORARILY, getClientUrl(), CLIENT_PAGE_TEXT);
+        checkScopeValuesInHTTPServerResponse(OIDC_SCOPE);
+    }
+
+    @Test
+    public void testSingleScopeValue() throws Exception {
+        performAuthentication(getoidcConfigurationInputStreamWithScope(CLIENT_SECRET, "profile"), KeycloakConfiguration.ALICE, KeycloakConfiguration.ALICE_PASSWORD,
+                true, HttpStatus.SC_MOVED_TEMPORARILY, getClientUrl(), CLIENT_PAGE_TEXT);
+        checkScopeValuesInHTTPServerResponse(OIDC_SCOPE + "+profile");
+    }
+
+    @Test
+    public void testMultipleScopeValue() throws Exception {
+        performAuthentication(getoidcConfigurationInputStreamWithScope(CLIENT_SECRET, "profile email phone"), KeycloakConfiguration.ALICE, KeycloakConfiguration.ALICE_PASSWORD,
+                true, HttpStatus.SC_MOVED_TEMPORARILY, getClientUrl(), CLIENT_PAGE_TEXT);
+        checkScopeValuesInHTTPServerResponse(OIDC_SCOPE + "+profile+email+phone");
+    }
 
     private void performAuthentication(InputStream oidcConfig, String username, String password, boolean loginToKeycloak,
                                        int expectedDispatcherStatusCode, String expectedLocation, String clientPageText) throws Exception {
@@ -197,6 +229,52 @@ public class OidcTest extends OidcBaseTest {
 
     private InputStream getOidcConfigurationInputStream(String clientSecret) {
         return getOidcConfigurationInputStream(clientSecret, KEYCLOAK_CONTAINER.getAuthServerUrl());
+    }
+
+    private void checkScopeValuesInHTTPServerResponse(String expectedScope) throws HttpAuthenticationException, URISyntaxException {
+        Map<String, Object> props = new HashMap<>();
+        HttpServerAuthenticationMechanism mechanism = oidcFactory.createAuthenticationMechanism(OIDC_NAME, props, getCallbackHandler());
+        URI requestUri = new URI(getClientUrl());
+        TestingHttpServerRequest request = new TestingHttpServerRequest(null, requestUri);
+        mechanism.evaluateRequest(request);
+        TestingHttpServerResponse response = request.getResponse();
+        assert(response.getFirstResponseHeaderValue("Location").contains("scope=" + expectedScope));
+    }
+
+    private void checkInvalidScopeError(InputStream oidcConfig, String username, String password, boolean loginToKeycloak,
+                                        int expectedDispatcherStatusCode, String expectedLocation, String clientPageText, String expectedScope) throws Exception {
+        try {
+            Map<String, Object> props = new HashMap<>();
+            OidcClientConfiguration oidcClientConfiguration = OidcClientConfigurationBuilder.build(oidcConfig);
+            assertEquals(OidcClientConfiguration.RelativeUrlsUsed.NEVER, oidcClientConfiguration.getRelativeUrls());
+
+            OidcClientContext oidcClientContext = new OidcClientContext(oidcClientConfiguration);
+            oidcFactory = new OidcMechanismFactory(oidcClientContext);
+            HttpServerAuthenticationMechanism mechanism = oidcFactory.createAuthenticationMechanism(OIDC_NAME, props, getCallbackHandler());
+
+            URI requestUri = new URI(getClientUrl());
+            TestingHttpServerRequest request = new TestingHttpServerRequest(null, requestUri);
+            mechanism.evaluateRequest(request);
+            TestingHttpServerResponse response = request.getResponse();
+            assert(response.getFirstResponseHeaderValue("Location").contains("scope=" + expectedScope));
+            assertEquals(loginToKeycloak ? HttpStatus.SC_MOVED_TEMPORARILY : HttpStatus.SC_FORBIDDEN, response.getStatusCode());
+            assertEquals(Status.NO_AUTH, request.getResult());
+
+            if (loginToKeycloak) {
+                client.setDispatcher(createAppResponse(mechanism, expectedDispatcherStatusCode, expectedLocation, clientPageText));
+                WebClient webClient = getWebClient();
+                List<HttpServerCookie> cookies = response.getCookies();
+                if (cookies != null) {
+                    for (HttpServerCookie cookie : cookies) {
+                        webClient.addCookie(getCookieString(cookie), requestUri.toURL(), null);
+                    }
+                }
+                TextPage keycloakLoginPage = webClient.getPage(response.getLocation());
+                assertTrue(keycloakLoginPage.getWebResponse().getWebRequest().toString().contains("error_description=Invalid+scopes"));
+            }
+        } finally {
+            client.setDispatcher(new QueueDispatcher());
+        }
     }
 
     private InputStream getOidcConfigurationInputStream(String clientSecret, String authServerUrl) {
@@ -286,6 +364,21 @@ public class OidcTest extends OidcBaseTest {
                 "    \"ssl-required\" : \"EXTERNAL\",\n" +
                 "    \"credentials\" : {\n" +
                 "        \"secret\" : \"" + CLIENT_SECRET + "\"\n" +
+                "    }\n" +
+                "}";
+        return new ByteArrayInputStream(oidcConfig.getBytes(StandardCharsets.UTF_8));
+    }
+
+    private InputStream getoidcConfigurationInputStreamWithScope(String clientSecret, String scopeValue){
+        String oidcConfig = "{\n" +
+                "    \"realm\" : \"" + TEST_REALM + "\",\n" +
+                "    \"resource\" : \"" + CLIENT_ID + "\",\n" +
+                "    \"public-client\" : \"false\",\n" +
+                "    \"provider-url\" : \"" + KEYCLOAK_CONTAINER.getAuthServerUrl() + "/realms/" + TEST_REALM + "/" + "\",\n" +
+                "    \"scope\" : \"" + scopeValue + "\",\n" +
+                "    \"ssl-required\" : \"EXTERNAL\",\n" +
+                "    \"credentials\" : {\n" +
+                "        \"secret\" : \"" + clientSecret + "\"\n" +
                 "    }\n" +
                 "}";
         return new ByteArrayInputStream(oidcConfig.getBytes(StandardCharsets.UTF_8));

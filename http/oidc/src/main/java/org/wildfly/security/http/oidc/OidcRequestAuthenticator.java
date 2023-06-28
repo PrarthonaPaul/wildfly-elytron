@@ -169,7 +169,7 @@ public class OidcRequestAuthenticator {
             for (String paramName : forwardableQueryParams) {
                 String paramValue = getQueryParamValue(facade, paramName);
                 if (SCOPE.equals(paramName)) {
-                    paramValue = addOidcScopeIfNeeded(paramValue);
+                    paramValue = addOidcScopeIfNeeded(deployment.getScope());
                 }
                 if (paramValue != null && !paramValue.isEmpty()) {
                     forwardedQueryParams.add(new BasicNameValuePair(paramName, paramValue));
@@ -180,6 +180,7 @@ public class OidcRequestAuthenticator {
             if (deployment.getAuthUrl() == null) {
                 return null;
             }
+
             URIBuilder redirectUriBuilder = new URIBuilder(deployment.getAuthUrl())
                     .addParameter(RESPONSE_TYPE, CODE)
                     .addParameter(CLIENT_ID, deployment.getResourceName())
