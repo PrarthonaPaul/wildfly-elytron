@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Tue, 08 Aug 2023 16:36:07 +0000</lastBuildDate>
+        <lastBuildDate>Tue, 08 Aug 2023 16:38:44 +0000</lastBuildDate>
         
         <item>
             <title>Deploying an OpenID Secured WildFly Application on OpenShift</title>
@@ -32,6 +32,20 @@
             <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/securing-management-console-oidc/
+            </guid>
+        </item>
+        
+        <item>
+            <title>Using Certificate Based Authentication with Mutual TLS without Roles</title>
+            <link>
+                https://wildfly-security.github.io/wildfly-elytron/blog/Client-cert-auth-without-roles/
+            </link>
+            <description>
+                Mutual TLS with client certificates is essential for secure and encrypted communication between clients and servers in various applications and systems. It involves a handshake process during which both the client and the server must present their certificate to each other in order to establish a secure connection. This ensures...
+            </description>
+            <pubDate>Mon, 26 Jun 2023 00:00:00 +0000</pubDate>
+            <guid>
+                https://wildfly-security.github.io/wildfly-elytron/blog/Client-cert-auth-without-roles/
             </guid>
         </item>
         
@@ -130,20 +144,6 @@
             <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity/
-            </guid>
-        </item>
-        
-        <item>
-            <title>Grace Hopper Celebration Recap</title>
-            <link>
-                https://wildfly-security.github.io/wildfly-elytron/blog/ghc22-recap/
-            </link>
-            <description>
-                Last month, I had the opportunity to attend and speak at the 2022 Grace Hopper Celebration. This was my very first time attending this conference in person after attending virtually last year. This was the largest conference I have ever been to and it definitely had a lasting impact on...
-            </description>
-            <pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate>
-            <guid>
-                https://wildfly-security.github.io/wildfly-elytron/blog/ghc22-recap/
             </guid>
         </item>
         
