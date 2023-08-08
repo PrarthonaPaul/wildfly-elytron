@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Tue, 08 Aug 2023 16:38:44 +0000</lastBuildDate>
+        <lastBuildDate>Tue, 08 Aug 2023 16:39:48 +0000</lastBuildDate>
         
         <item>
             <title>Deploying an OpenID Secured WildFly Application on OpenShift</title>
