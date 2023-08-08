@@ -5,7 +5,21 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Tue, 25 Jul 2023 13:37:15 +0000</lastBuildDate>
+        <lastBuildDate>Tue, 08 Aug 2023 16:24:09 +0000</lastBuildDate>
+        
+        <item>
+            <title>Deploying an OpenID Secured WildFly Application on OpenShift</title>
+            <link>
+                https://wildfly-security.github.io/wildfly-elytron/blog/deploying-OIDC-webapp-on-openshift/
+            </link>
+            <description>
+                The latest release of WildFly includes the ability to add additional scope values when securing applications using OpenID Connect.This blog post demonstrates how to secure a WildFly application using OpenID Connect and deploy it on the cloud using Red Hat OpenShift. OpenID Connect Setting up your environment Logging into OpenShift...
+            </description>
+            <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
+            <guid>
+                https://wildfly-security.github.io/wildfly-elytron/blog/deploying-OIDC-webapp-on-openshift/
+            </guid>
+        </item>
         
         <item>
             <title>Securing the WildFly Management Console with OpenID Connect</title>
@@ -18,20 +32,6 @@
             <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/securing-management-console-oidc/
-            </guid>
-        </item>
-        
-        <item>
-            <title>Using Certificate Based Authentication with Mutual TLS without Roles</title>
-            <link>
-                https://wildfly-security.github.io/wildfly-elytron/blog/Client-cert-auth-without-roles/
-            </link>
-            <description>
-                Mutual TLS with client certificates is essential for secure and encrypted communication between clients and servers in various applications and systems. It involves a handshake process during which both the client and the server must present their certificate to each other in order to establish a secure connection. This ensures...
-            </description>
-            <pubDate>Mon, 26 Jun 2023 00:00:00 +0000</pubDate>
-            <guid>
-                https://wildfly-security.github.io/wildfly-elytron/blog/Client-cert-auth-without-roles/
             </guid>
         </item>
         
