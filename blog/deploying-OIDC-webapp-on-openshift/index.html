@@ -217,8 +217,8 @@
 <li><a href="#building-container-image-for-wildfly">Building Container Image for WildFly</a></li>
 <li><a href="#building-and-deploying-the-app">Building and deploying the App</a>
 <ul class="sectlevel2">
+<li><a href="#configuring-image-pull-secret">Configuring Image Pull Secret</a></li>
 <li><a href="#creating-a-helm-release">Creating a Helm Release</a></li>
-<li><a href="#resolving-image-pull-error">Resolving Image Pull Error</a></li>
 </ul>
 </li>
 <li><a href="#accessing-the-app">Accessing the App</a></li>
@@ -347,10 +347,10 @@ mvn clean install -Dversion.org.wildfly.core=&lt;insert_SNAPSHOT_VERSION_OF_WILD
 <p>In order to deploy our application on OpenShift, we need to first create a container image of the application using Docker or Podman. In this post we are using Docker, but you can also use Podman using the <code>podman</code> keyword, or using an alias.</p>
 </div>
 <div class="paragraph">
-<p>Navigate to the <code>WildFly</code> project and create a <code>Dockerfile</code> inside the root directory of the project. We will be creating an image of the current version of WildFly using the <code>wildfly-runtime-jdk</code> image on quay. Quay is a repository for building and storing container images of your projects.</p>
+<p>Navigate to the <code>WildFly</code> project and create a <code>Dockerfile</code> inside the root directory of the project. We will be creating an image of the current version of WildFly using the <code>wildfly-runtime-jdk</code> image on Quay. Quay is a repository for building and storing container images of your projects.</p>
 </div>
 <div class="paragraph">
-<p>Head over to <a href="https://quay.io/repository/">quay.io</a> and create a repositories called <code>wildfly</code>. For more information on how to create one, visit the <a href="https://docs.quay.io/guides/create-repo.html#:~:text=via%20the%20UI-,To%20create%20a%20repository%20in%20the%20Quay.io%20UI%2C%20click,the%20&#8217;Create%20Repository'%20button">quay documentation</a>.</p>
+<p>Head over to <a href="https://quay.io/repository/">Quay.io</a> and create a repositories called <code>wildfly</code>. For more information on how to create one, visit the <a href="https://docs.quay.io/guides/create-repo.html#:~:text=via%20the%20UI-,To%20create%20a%20repository%20in%20the%20Quay.io%20UI%2C%20click,the%20&#8217;Create%20Repository'%20button">Quay documentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>Now we can create the container image for our WildFly project. Enter the following commands inside your Dockerfile:</p>
@@ -409,6 +409,18 @@ docker push quay.io/&lt;your-quay-username&gt;/wildfly:latest</code></pre>
 </div>
 </div>
 <div class="sect2">
+<h3 id="configuring-image-pull-secret"><a class="anchor" href="#configuring-image-pull-secret"></a>Configuring Image Pull Secret</h3>
+<div class="paragraph">
+<p>In order to pull the image from Quay, you will need to configure a pull secret and connect it to your helm release. If you have already configured a pull secret for Quay, then you can skip this step.</p>
+</div>
+<div class="paragraph">
+<p>Navigate to your Quay console, click on <code>Account Settings</code>, <code>Generate Encrypted Password</code> and log in. Under the <code>Kubernetes Secret</code> tab you will be able to download the yaml file for your Kubernetes secret. Upload it to your OpenShift Secrets by going to the <code>Secret</code> tab on Developer Sandbox, clicking on <code>Create</code>, <code>From Yaml</code> and replacing it with the contents of your Kubernetes Secret.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively you can link your pull secret so OpenShift can automatically use your pull secret to obtain the image when needed. You can learn more about handling secrets on OpenShift on <a href="https://docs.openshift.com/container-platform/4.10/openshift_images/managing_images/using-image-pull-secrets.html">their documentation</a>.</p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="creating-a-helm-release"><a class="anchor" href="#creating-a-helm-release"></a>Creating a Helm Release</h3>
 <div class="paragraph">
 <p>Lastly, we will be creating a helm release of our local WildFly image and deploying our application on it using a helm chart. Navigate to <code>charts</code> directory and open the <code>helm.yaml</code> file. The contents of the file will be as follows:</p>
@@ -436,7 +448,7 @@ deploy:
 <p>Using the image tag, we are specifying that we want the pod to use the image of our application that we just built. Notice that we did not specify the tag. This is because when the helm chart uploads, the <code>latest</code> tag is appended to it by default, which is why we tagged our application image as that. If you want to use a different tag, then you can edit this by clicking on the pod, click on <code>Edit Deployment</code> and changing it under <code>Image Name</code>.</p>
 </div>
 <div class="paragraph">
-<p>We have also added some environment variables. Notice the <code>OIDC_PROVIDER_URL</code>. The value of this will be the url for your RH-SSO pod. So, copy that link and paste it as the <code>value</code>. The <code>OIDC_PROVIDER_URL</code> variable is being used by the <code>oidc.json</code> file inside the <code>WEB-INF</code> directory when specifying the <code>provider-url</code>.</p>
+<p>We have also added some environment variables. Notice the <code>OIDC_PROVIDER_URL</code>. The value of this will be the url for your RH-SSO pod, which can be found by clicking on the <code>Open URL</code> button on the pod. So, copy that link and paste it as the <code>value</code>. The <code>OIDC_PROVIDER_URL</code> variable is being used by the <code>oidc.json</code> file inside the <code>WEB-INF</code> directory when specifying the <code>provider-url</code>.</p>
 </div>
 <div class="paragraph">
 <p>Change the image name on the <code>charts/helm.yaml</code> file to <code>quay.io/&lt;your-quay-username&gt;/wildfly</code> and use the following commands to create a cloud instance for your webapp using the wildfly helm chart:</p>
@@ -448,16 +460,10 @@ helm install simple-webapp-oidc -f charts/helm.yaml wildfly/wildfly</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Click on the <code>simple-webapp-oidc</code> pod and under the <code>resources</code> tag, you should see the status of your deployment.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="resolving-image-pull-error"><a class="anchor" href="#resolving-image-pull-error"></a>Resolving Image Pull Error</h3>
-<div class="paragraph">
-<p>If you see a image pull error, then navigate to your quay console, click on <code>Account Settings</code>, <code>Generate Encrypted Password</code> and log in. Under the <code>Kubernetes Secret</code> tab you will be able to download the yaml file for your Kubernetes secret. Upload it to your OpenShift Secrets by going to the <code>Secret</code> tab on Developer Sandbox, clicking on <code>Create</code>, <code>From Yaml</code> and replacing it with the contents of your Kubernetes Secret. Now you should be able to see your pod run and look at the logs my clicking on <code>View logs</code>.</p>
+<p>Click on the three dots beside the pod&#8217;s name and click on <code>Edit Deployment</code>. Under <code>Show advanced image options</code>, set the <code>Pull Secret</code> to be the one you configured in the last section and click <code>Save</code>.</p>
 </div>
 <div class="paragraph">
-<p>Alternatively you can link your pull secret so OpenShift can automatically use your pull secret to obtain the image when needed. You can learn more about handling secrets on OpenShift on <a href="https://docs.openshift.com/container-platform/4.10/openshift_images/managing_images/using-image-pull-secrets.html">their documentation</a>.</p>
+<p>Your application is now deploying. Click on the <code>simple-webapp-oidc</code> pod and under the <code>resources</code> tab, you should see the status of your deployment.</p>
 </div>
 </div>
 </div>
