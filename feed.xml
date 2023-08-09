@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Tue, 08 Aug 2023 16:39:48 +0000</lastBuildDate>
+        <lastBuildDate>Wed, 09 Aug 2023 14:46:47 +0000</lastBuildDate>
         
         <item>
             <title>Deploying an OpenID Secured WildFly Application on OpenShift</title>
@@ -13,7 +13,7 @@
                 https://wildfly-security.github.io/wildfly-elytron/blog/deploying-OIDC-webapp-on-openshift/
             </link>
             <description>
-                The latest release of WildFly includes the ability to add additional scope values when securing applications using OpenID Connect.This blog post demonstrates how to secure a WildFly application using OpenID Connect and deploy it on the cloud using Red Hat OpenShift. OpenID Connect Setting up your environment Logging into OpenShift...
+                A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using a pre-release version of the feature. We will...
             </description>
             <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
             <guid>
