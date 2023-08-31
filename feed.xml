@@ -5,7 +5,21 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Thu, 31 Aug 2023 18:58:53 +0000</lastBuildDate>
+        <lastBuildDate>Thu, 31 Aug 2023 19:04:36 +0000</lastBuildDate>
+        
+        <item>
+            <title>Deploying an OpenID Secured WildFly Application on OpenShift</title>
+            <link>
+                https://wildfly-security.github.io/wildfly-elytron/blog/deploying-OIDC-webapp-on-openshift/
+            </link>
+            <description>
+                A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using a pre-release version of the feature. We will...
+            </description>
+            <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
+            <guid>
+                https://wildfly-security.github.io/wildfly-elytron/blog/deploying-OIDC-webapp-on-openshift/
+            </guid>
+        </item>
         
         <item>
             <title>Securing the WildFly Management Console with OpenID Connect</title>
@@ -130,20 +144,6 @@
             <pubDate>Thu, 10 Nov 2022 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity/
-            </guid>
-        </item>
-        
-        <item>
-            <title>Grace Hopper Celebration Recap</title>
-            <link>
-                https://wildfly-security.github.io/wildfly-elytron/blog/ghc22-recap/
-            </link>
-            <description>
-                Last month, I had the opportunity to attend and speak at the 2022 Grace Hopper Celebration. This was my very first time attending this conference in person after attending virtually last year. This was the largest conference I have ever been to and it definitely had a lasting impact on...
-            </description>
-            <pubDate>Mon, 31 Oct 2022 00:00:00 +0000</pubDate>
-            <guid>
-                https://wildfly-security.github.io/wildfly-elytron/blog/ghc22-recap/
             </guid>
         </item>
         
