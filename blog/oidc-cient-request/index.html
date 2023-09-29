@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Elytron: Sending Authentication Requests OpenID Connect Using Request Parameters</title>
+    <script src="/wildfly-elytron/assets/javascript/highlight.pack.js" type="text/javascript"></script>
+
+    <link rel="shortcut icon" type="image/png" href="/wildfly-elytron/favicon.ico">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <!-- We override the colours from this theme manually -->
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="/wildfly-elytron/assets/css/styles.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+    <script src="/wildfly-elytron/assets/javascript/hl.js" type="text/javascript"></script>
+    <link rel="alternate" type="application/rss+xml"  href="/wildfly-elytron/feed.xml" title="WildFly Elytron">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135301155-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135301155-1');
+    </script>
+    <!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Sending Authentication Requests OpenID Connect Using Request Parameters | WildFly Elytron</title>
+<meta name="generator" content="Jekyll v4.3.2" />
+<meta property="og:title" content="Sending Authentication Requests OpenID Connect Using Request Parameters" />
+<meta name="author" content="Prarthona Paul" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A future release of WildFly includes the ability to configure these request parameters to send the request as a JWT using either a request or a request_uri. The feature also includes the ability to sign and/or encrypt the JWT for added security." />
+<meta property="og:description" content="A future release of WildFly includes the ability to configure these request parameters to send the request as a JWT using either a request or a request_uri. The feature also includes the ability to sign and/or encrypt the JWT for added security." />
+<link rel="canonical" href="https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/" />
+<meta property="og:url" content="https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/" />
+<meta property="og:site_name" content="WildFly Elytron" />
+<meta property="og:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2023-09-29T00:00:00+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="twitter:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
+<meta property="twitter:title" content="Sending Authentication Requests OpenID Connect Using Request Parameters" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2023-09-29T00:00:00+00:00","datePublished":"2023-09-29T00:00:00+00:00","description":"A future release of WildFly includes the ability to configure these request parameters to send the request as a JWT using either a request or a request_uri. The feature also includes the ability to sign and/or encrypt the JWT for added security.","headline":"Sending Authentication Requests OpenID Connect Using Request Parameters","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/"}</script>
+<!-- End Jekyll SEO tag -->
+
+</head>
+<body>
+
+
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll">
+        <div class="mdl-layout__header-row ">
+            <!-- Title -->
+            <span class="mdl-layout-title"><h3>Wild<strong>Fly</strong>  Elytron</h3></span>
+            <!-- Add spacer, to align navigation to the right -->
+            <div class="mdl-layout-spacer"></div>
+            <nav class="mdl-navigation mdl-layout--large-screen-only">
+                
+                    
+                    
+                    
+                         <a class="mdl-navigation__link Hacktoberfest-menuitem" href="/wildfly-elytron/hacktoberfest/">Hacktoberfest</a>
+                    
+                
+                    
+                    
+                    
+                         <a class="mdl-navigation__link Home-menuitem" href="/wildfly-elytron/">Home</a>
+                    
+                
+                    
+                    
+                    
+                         <a class="mdl-navigation__link Guides-menuitem" href="/wildfly-elytron/guides/">Guides</a>
+                    
+                
+                    
+                    
+                    
+                         <a class="mdl-navigation__link Docs-menuitem" href="/wildfly-elytron/docs/">Docs</a>
+                    
+                
+                    
+                    
+                    
+                         <a class="mdl-navigation__link Community-menuitem" href="/wildfly-elytron/community/">Community</a>
+                    
+                
+                    
+                    
+                    
+                         <a class="mdl-navigation__link mdl-navigation__link--current Blog-menuitem" href="/wildfly-elytron/blog/">Blog</a>
+                    
+                
+                    
+                    
+                    
+                         <a class="mdl-navigation__link GitHub-menuitem" href="https://github.com/wildfly-security/wildfly-elytron">GitHub</a>
+                    
+                
+            </nav>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        <div class="side-drawer-logo-container"><h3>Wild<strong>Fly</strong>  Elytron</h3></div>
+        <nav class="mdl-navigation">
+            
+            
+            
+            
+                <a class="mdl-navigation__link highlight-sidebar Hacktoberfest-menuitem" href="/wildfly-elytron/hacktoberfest/">Hacktoberfest</a>
+            
+            
+            
+            
+            
+                <a class="mdl-navigation__link Home-menuitem" href="/wildfly-elytron/">Home</a>
+            
+            
+            
+            
+            
+                <a class="mdl-navigation__link Guides-menuitem" href="/wildfly-elytron/guides/">Guides</a>
+            
+            
+            
+            
+            
+                <a class="mdl-navigation__link Docs-menuitem" href="/wildfly-elytron/docs/">Docs</a>
+            
+            
+            
+            
+            
+                <a class="mdl-navigation__link Community-menuitem" href="/wildfly-elytron/community/">Community</a>
+            
+            
+            
+            
+            
+                <a class="mdl-navigation__link mdl-navigation__link--current Blog-menuitem" href="/wildfly-elytron/blog/">Blog</a>
+            
+            
+            
+            
+            
+                <a class="mdl-navigation__link GitHub-menuitem" href="https://github.com/wildfly-security/wildfly-elytron">GitHub</a>
+            
+            
+            <!-- mdl-navigation__link--current -->
+        </nav>
+    </div>
+    <main class="mdl-layout__content">
+        <div class="page-content">
+            
+            <div class="content">
+                <div class="post-page grid-wrapper">
+  <div class="grid__item width-12-12 width-12-12-m doc-content">
+    <h1>Sending Authentication Requests OpenID Connect Using Request Parameters</h1>
+    <div class="grid-wrapper">
+      <div class="grid__item width-8-12 width-12-12-m byline-wrapper">
+        
+        
+          <img class="headshot" src="https://www.gravatar.com/avatar/6ed81e314d6074bbf734abe812f33b05">
+        
+        <p class="byline">
+          By <a href="https://github.com/PrarthonaPaul">Prarthona Paul</a> | September 29, 2023
+          <br>
+          
+            
+              <a style="font-size: 0.9em;" href="/wildfly-elytron/blog/tag/oidc"> #oidc</a>
+            
+              <a style="font-size: 0.9em;" href="/wildfly-elytron/blog/tag/keycloak"> #keycloak</a>
+            
+              <a style="font-size: 0.9em;" href="/wildfly-elytron/blog/tag/jwt"> #jwt</a>
+            
+              <a style="font-size: 0.9em;" href="/wildfly-elytron/blog/tag/encryption"> #encryption</a>
+            
+              <a style="font-size: 0.9em;" href="/wildfly-elytron/blog/tag/authentication"> #authentication</a>
+            
+          
+        </p>
+      </div>
+      
+      <div class="grid__item width-4-12 width-12-12-m"><div class="share-page">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/&title=Sending Authentication Requests OpenID Connect Using Request Parameters" rel="nofollow" target="_blank" title="Share on LinkedIn">
+    <i class="fab fa-linkedin"></i>
+  </a>
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Sending Authentication Requests OpenID Connect Using Request Parameters&url=https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/&via=WildFlyAS&related=WildFlyAS" rel="nofollow" target="_blank" title="Share on Twitter">
+    <i class="fab fa-twitter-square"></i>
+  </a>
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/" rel="nofollow" target="_blank" title="Share on Facebook">
+    <i class="fab fa-facebook-square"></i>
+  </a>
+  <a class="share-reddit" href="http://www.reddit.com/submit?url=https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+    <i class="fab fa-reddit-square"></i>
+  </a>
+  <a class="share-email" href="mailto:?subject=Sending Authentication Requests OpenID Connect Using Request Parameters&amp;body=Sending Authentication Requests OpenID Connect Using Request Parameters https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/" title="Share via Email" >
+    <i class="fas fa-envelope-square"></i>
+  </a>
+</div>
+</div>
+      <div class="grid__item width-12-12">
+          <div class="paragraph">
+<p>A future release of WildFly includes the ability to configure these request parameters to send the request as a JWT using either a <code>request</code> or a <code>request_uri</code>. The feature also includes the ability to sign and/or encrypt the JWT for added security.</p>
+</div>
+<div class="sect1">
+<h2 id="openid-connect"><a class="anchor" href="#openid-connect"></a>OpenID Connect</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://openid.net/developers/how-connect-works/">OpenID Connect</a> is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. The OAuth 2.0 request syntax sends the Request Object in the request by adding them directly to the URL. However, OpenID Connect allows the Request Object to be sent as a JWT using the <a href="https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests">request parameter</a>, which can be signed and optionally encrypted. This adds an added layer of protection, as the parameters are no longer human readable.</p>
+</div>
+<div class="paragraph">
+<p>Note: This example demonstrates how to configure scope values in two different ways:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Deployment Configuration</p>
+</li>
+<li>
+<p>Subsystem Configuration</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setting-up-the-keypairs"><a class="anchor" href="#setting-up-the-keypairs"></a>Setting up the KeyPairs</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In order for us to sign the JWT&#8217;s, we will need to use key pairs corresponding to the algorithms specified. These are tokens communicated between the client and the server and are used to sign and encrypt JWT&#8217;s.</p>
+</div>
+<div class="sect2">
+<h3 id="about-key-pairs"><a class="anchor" href="#about-key-pairs"></a>About Key Pairs</h3>
+<div class="paragraph">
+<p>Typically key pairs have 3 components:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Private Key: This is used to sign the JWT. In this case, we will create the key pair have access to the private key. Private keys are also used to decrypt JWT&#8217;s. Keycloak also communicates part of some keyPairs to us and they will be using the private keys of those keyPairs to decrypt the JWT&#8217;s we send.</p>
+</li>
+<li>
+<p>Public Key: This is used to encrypt the JWT. We use the public key that Keycloak shares with us to encrypt our JWT&#8217;s. Public keys can be extracted from the certificate.</p>
+</li>
+<li>
+<p>Certificate: This is used to verify the signatures. This is communicated to the Keycloak sever. Certificate contains the public key.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Some keys are symmetric, meaning they only have 1 secret key that is used by both the client and the server. An example of a symmetric algorithm is HS256, where the same key is used to sign a JWT and verify the signature.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="generating-key-pairs"><a class="anchor" href="#generating-key-pairs"></a>Generating Key Pairs</h3>
+<div class="paragraph">
+<p>We can use the <code>keytool</code> tool in the cli to generate our keys. We can genetate keystore files of type <code>JKS</code> and <code>PKCS12</code> for our application. The general format for doing this is as follows:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">keytool -genkeypair -alias &lt;keystore_alias&gt; -keyalg &lt;algorithm&gt; -keysize &lt;key_size&gt; -validity &lt;validity_in_days&gt;
+-keystore &lt;keystore_name&gt; -dname "&lt;distinguished_name&gt;" -keypass &lt;private_key_password&gt; -storepass &lt;keystore_password&gt;</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="generating-jks-keystore"><a class="anchor" href="#generating-jks-keystore"></a>Generating JKS Keystore</h4>
+<div class="paragraph">
+<p>Let us first create a JKS file with 2 different keys. Let&#8217;s first generate an RSA keyPair:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">keytool -genkey -alias rsaKey -keyalg RSA -validity 365 -keystore server.keystore -storetype JKS -storepass password -keypass password</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will see some prompts, for which you can press <code>enter</code> to leave them blank. For more information visit [here](<a href="https://access.redhat.com/documentation/en-us/red_hat_jboss_data_virtualization/6.2/html/security_guide/create_a_privatepublic_key_pair_with_keytool" class="bare">https://access.redhat.com/documentation/en-us/red_hat_jboss_data_virtualization/6.2/html/security_guide/create_a_privatepublic_key_pair_with_keytool</a>).</p>
+</div>
+<div class="paragraph">
+<p>To generate an elliptical curve key, enter the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">keytool -genkey -alias rsaKey -keyalg RSA -validity 365 -keystore server.keystore -storetype JKS -storepass password -keypass password</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="generating-pkcs12-keystore"><a class="anchor" href="#generating-pkcs12-keystore"></a>Generating PKCS12 Keystore</h4>
+<div class="paragraph">
+<p>For RSA, please use the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">keytool -genkeypair -alias rsaKey -keyalg RSA -keysize 2048 -validity 365 -keystore Keycloak.keystore.pkcs12 -dname "CN=client" -keypass password -storepass password</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And for Elliptical Curve keys, use the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">keytool -genkeypair -alias ecKey -keyalg EC -groupname secp256r1 -validity 365 -keystore Keycloak.keystore.pkcs12 -dname "CN=client" -keypass password -storepass password</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that in this case, we have specified the key size for the RSA keys, and the groupname for Elliptical Curve keys. For the RSA keys, the same keysize can be used for RSA algorithms with different SHA values (i.e. RSA256, RSA512). However, this is not the case for Elliptical Curve keys. For ES256 algorithms, you need to use <code>-groupname secp256r1</code> and for ES384, use <code>-groupname secp384r1</code> and so on.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="setting-up-keycloak-openid-provider"><a class="anchor" href="#setting-up-keycloak-openid-provider"></a>Setting up Keycloak OpenID Provider</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>It’s easy to set up Keycloak using Docker. Follow the steps in Keycloak’s [ getting started guide ](<a href="https://www.Keycloak.org/getting-started/getting-started-docker" class="bare">https://www.Keycloak.org/getting-started/getting-started-docker</a>) to start Keycloak, create a realm called <code>myrealm</code>, and a client called <code>myclient</code>. When registering the client, toggle the <code>Client authentication</code> option to be on.</p>
+</div>
+<div class="paragraph">
+<p>After registering our client, <code>myclient</code>, we also need to configure <code>valid redirect URIs</code>. Simply click on <code>Clients</code> and then on <code>myclient</code>. In the <code>Valid Redirect URIs</code> field, enter <a href="http://localhost:8090/simple-webapp-oidc/*" class="bare">http://localhost:8090/simple-webapp-oidc/*</a>. Once you hit <code>Save</code>, you should see a new tab called <code>Keys</code> appear.</p>
+</div>
+<div class="paragraph">
+<p>Navigate to that tab and click on <code>Import</code>. Under <code>Archive format</code>, choose <code>PKCS12</code> from the dropdown. Under <code>Key alias</code>, enter the alias of the RSA key you just created, under <code>Store password</code>, enter the password of the keystore you created and click on the <code>Browse</code> button to import the keystore file. Note that when we created the keystore, we specified a key password and a keystore password. Here, we are only using the keystore password. While we set them both to be the same, they do not have to be.</p>
+</div>
+<div class="paragraph">
+<p>Finally, create a user called <code>alice</code> whose <code>First name</code> is Alice and <code>Last name</code> is Smith.</p>
+</div>
+<div class="paragraph">
+<p>Next, navigate to the <code>Credentials</code> tab and create a password for Alice. Toggle the <code>Temporary</code> switch off so you are not prompted to update the password after the first login.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="server-configuration"><a class="anchor" href="#server-configuration"></a>Server Configuration</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>First clone the <code>elytron-example</code> repo locally and navigate to this project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">    git clone https://github.com/wildfly-security-incubator/elytron-examples
+    cd elytron-examples/elytron-oidc-request</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In order to secure an application using OpenID Connect, we need to either add configuration in the <code>elytron-oidc-client</code> subsystem or add configuration to the application itself. This example will show you the steps for both.</p>
+</div>
+<div class="sect2">
+<h3 id="deployment-configuration"><a class="anchor" href="#deployment-configuration"></a>Deployment Configuration</h3>
+<div class="paragraph">
+<p>The configuration required to secure an application with OpenID Connect can be specified in the deployment. We will first be sending a plaintext request, which will be unsigned, signified by the "none" algorithm.</p>
+</div>
+<div class="paragraph">
+<p>The first step is to set up the deployment configuration using the <code>oidc.json</code> file in the <code>WEB-INF</code> directory of this project. The following will be the contents of the <code>oidc.json</code> file once we have specified the scope values:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">{
+    "client-id" : "myclient",
+    "provider-url" : "${env.OIDC_PROVIDER_URL:http://localhost:8080}/realms/myrealm",
+    "public-client" : "false",
+    "authentication-request-format" : "request",
+    "request-object-signing-algorithm" : "none",
+    "principal-attribute" : "preferred_username",
+    "ssl-required" : "EXTERNAL"
+    "credentials" : {
+    	"secret" : "&lt;INSERT CLIENT SECRET&gt;"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that we have specified the <code>authentication-request-format</code> to be <code>request</code>, meaning, we are sending it by value. We have specified the signing algorithm to be <code>none</code>. Alternatively, we could not have specified it too, since the default value is already <code>none</code>. Since we are not signing the JWT, we don&#8217;t need to configure the keystore.</p>
+</div>
+<div class="paragraph">
+<p>Next, navigate to the OIDC application&#8217;s <code>web.xml</code> file and look for the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">&lt;login-config&gt;
+    &lt;auth-method&gt;OIDC&lt;/auth-method&gt;
+&lt;/login-config&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you would like to configure the <code>elytron-oidc-client</code> subsystem instead, then follow the steps outlines in the next section.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If you have both the subsystem and the deployment configured, then the <code>elytron-oidc-client</code> subsystem configuration will override the deployment configuration.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="subsystem-configuration"><a class="anchor" href="#subsystem-configuration"></a>Subsystem Configuration</h3>
+<div class="paragraph">
+<p>To configure the server using the <code>elytron-oidc-client</code> subsystem, we will be making use of the <code>WILDFLY_HOME</code> project.</p>
+</div>
+<div class="paragraph">
+<p>First start the server. We will be using a port offset of 10 since our Keycloak instance is already exposed on port 8080.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">    $ WILDFLY_HOME/bin/standalone.sh -Djboss.socket.binding.port-offset=10</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Review the <code>configure-elytron.cli</code> file in the <code>elytron-oidc-request</code> project. This will add the <code>secure-deployment</code> resource and the appropriate attributes under it.</p>
+</div>
+<div class="paragraph">
+<p>Open a new terminal, navigate to the <code>WILDFLY_HOME</code> directory and enter the following command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">    /subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war:add(client-id=myclient, provider-url=http://localhost:8080/realms/myrealm, authentication-request-format=request, request-object-signing-algorithm=none, public-client=false)
+
+    /subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war/credential=mySecret:add(secret=Vyt0aVnuwD2jZbJvLUMCgWuTbEj6JgJc)
+
+    reload</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We are specifying the port here because of the port offset we used earlier. You should see the following result when you run the script:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-$xslt hljs" data-lang="$xslt">    {"outcome" =&gt; "success"}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="deploying-and-accessing-the-application"><a class="anchor" href="#deploying-and-accessing-the-application"></a>Deploying and Accessing the Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Now we are ready to deploy the web app using WildFly. From the <code>elytron-oidc-client-scope</code> directory run the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">mvn wildfly:deploy -Dwildfly.port=10000</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, let’s try accessing our application using <a href="http://localhost:8090/simple-webapp-oidc/" class="bare">http://localhost:8090/simple-webapp-oidc/</a>.</p>
+</div>
+<div class="paragraph">
+<p>Click on "Access Secured Servlet".</p>
+</div>
+<div class="paragraph">
+<p>Now, you’ll be redirected to Keycloak&#8217;s login page. If you click on the url on the search bar, you will see the request value specified in the URL along with <code>client-id</code>, <code>response_type</code>, <code>redirect_uri</code> and the openid scope. These parameters are required to be included in the auth request according to the OAuth2 specifications.</p>
+</div>
+<div class="paragraph">
+<p>Log in with <code>Alice</code> and the password that you set when configuring Keycloak.</p>
+</div>
+<div class="paragraph">
+<p>Next, you’ll be redirected back to our application and you should see the "Secured Servlet" page. That means that we were able to successfully log in to our application using the Keycloak OpenID provider!</p>
+</div>
+<div class="sect2">
+<h3 id="sending-the-jwt-by-reference"><a class="anchor" href="#sending-the-jwt-by-reference"></a>Sending the JWT by Reference</h3>
+<div class="paragraph">
+<p>Now try changing the value for <code>authentication-request-format</code> to <code>request_uri</code> and keep everything else the same. You can do this either in the deployment configuration by editing the <code>oidc.json</code> file or in the subsystem configuration by typing in the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">/subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war:write-attribute(name=authentication-request-format, value=request_uri)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Save the oidc.json file and deploy it again. If you are using the subsystem configuration, please type in <code>reload</code> to apply the changes and access <a href="http://localhost:8090/simple-webapp-oidc/" class="bare">http://localhost:8090/simple-webapp-oidc/</a>. You will now see the request_uri appear in the url. The <code>request_uri</code> parameter is used to send the JWT by reference. The Elytron client sends a PAR request to the Pushed Authorization Request Endpoint (<a href="http://localhost:8080/realms/myrealm/protocol/openid-connect/ext/par/request" class="bare">http://localhost:8080/realms/myrealm/protocol/openid-connect/ext/par/request</a>), which creates the request_uri given the JWT Request Object. Once the reference has been made it is only valid for a certain amount of time specified in the structure returned by the PAR request. After which the request_uri needs to be regenerated. To learn more about the specifications of the Request Object, read the <a href="https://openid.net/specs/openid-connect-core-1_0.html#RequestUriParameter">OpenID documentation</a> on passing a Request Object by reference.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sending-a-signed-and-encrypted-request"><a class="anchor" href="#sending-a-signed-and-encrypted-request"></a>Sending a Signed and Encrypted Request</h3>
+<div class="sect3">
+<h4 id="deployment-configuration-2"><a class="anchor" href="#deployment-configuration-2"></a>Deployment configuration</h4>
+<div class="paragraph">
+<p>Lastly, lets try to send a signed and encrypted request. For this, please update the <code>oidc.json</code> file to have the following contents:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">{
+    "client-id" : "myclient",
+    "provider-url" : "${env.OIDC_PROVIDER_URL:http://localhost:8080}/realms/myrealm",
+    "public-client" : "false",
+    "authentication-request-format" : "request_uri",
+    "request-object-signing-algorithm" : "RS512",
+    "client-keystore-file" : "/path/to/server.keystore",
+    "client-keystore-password" : "password",
+    "client-key-password" : "password",
+    "client-key-alias" : "rsakey",
+    "client-keystore-type" : "JKS",
+    "ssl-required" : "EXTERNAL",
+    "credentials" : {
+    	"secret" : "&lt;INSERT CLIENT SECRET&gt;"
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You will need to edit the secret field to add the client secret for your client. On the Keycloak console, navigate to <code>myclient</code>, and under the <code>Credentials</code> tab, go to <code>Client secret</code> and copt that to your clipboard and place it here as the value for "secret". Save the file and deploy it again.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="subsystem-configuration-2"><a class="anchor" href="#subsystem-configuration-2"></a>Subsystem Configuration</h4>
+<div class="paragraph">
+<p>To use subsystem configuration, you can run the following commands to configure the server as well:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">    #Change the signing algorithm
+    /subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war:write-attribute(name=request-object-signing-algorithm, value=RS256)
+
+    #add an encryption and content encryption algorithm
+    /subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war:write-attribute(name=request-object-encryption-algorithm, value=RSA-OAEP)
+    /subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war:write-attribute(name=request-object-content-encryption-algorithm, value=A256GCM)
+
+    #configure the keystore. Change the path to the actual path before running these commands
+    /subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war:write-attribute(name=client-keystore-file, value="path/to/jwt.keystore")
+    /subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war:write-attribute(name=client-key-password, value=password)
+    /subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war:write-attribute(name=client-keystore-password, value=password)
+    /subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war:write-attribute(name=client-key-alias, value=rsaKey)
+    /subsystem=elytron-oidc-client/secure-deployment=simple-webapp-oidc.war:write-attribute(name=client-keystore-type, value=JKS)
+    reload</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This time, we are using the keyPairs we created earlier to sign the JWT. The JWT will be signed first and then encrypted using the public key that Keycloak shared with us. To see what this key looks like, you can either go to <a href="http://localhost:8080/realms/myrealm/protocol/openid-connect/certs" class="bare">http://localhost:8080/realms/myrealm/protocol/openid-connect/certs</a> or you can go to the Keycloak console and under the <code>Realm settings</code> tab, click on the <code>keys</code> tab. You will see that there console includes 2 other keys in additional to the ones on the link. These are the symmetric keys provided by Keycloak which are used by both the client and the server to sign/verify and encrypt/decrypt.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="note-about-keystores"><a class="anchor" href="#note-about-keystores"></a>Note about Keystores</h3>
+<div class="paragraph">
+<p>You can follow the same instructions to configure your server to use a PKCS12 type keystore. For Keycloak, the signing algorithms available are "PS384", "ES384", "RS384", "HS256", "HS512", "ES256", "RS256", "HS384", "ES512","PS256", "PS512", "RS512" and "none". If you use algorithms that start with "RS" and "PS" to sign the JWT, you will need to use an RSA key pair. For "ES" type keys, use Elliptical curve keys and as mentioned above, adjust the group name for the PKCS12 keystore keys to match the SHA value of the algorithms. "none" does not require a keystore and lastly, "HS" keys require a symmetric key, where the same secret hash is used by the client and the server to sign and verify respectively.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="restoring-the-server"><a class="anchor" href="#restoring-the-server"></a>Restoring the server</h3>
+<div class="paragraph">
+<p>Once you are ready to restore your server back to what it was, please enter the following on your terminal:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">    /subsystem=elytron-oidc-client/secure-deployment=oidc.war:remove</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="conclusion"><a class="anchor" href="#conclusion"></a>Conclusion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This example has demonstrated how to secure a web application deployed to WildFly by sending the request parameters as a JWT. For more details on the <code>elytron-oidc-client</code> subsystem, please check out the <a href="https://docs.wildfly.org/29/Admin_Guide.html#Elytron_OIDC_Client">documentation</a> and for more details on OpenID Connect, checkout the <a href="https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests">OpenID documentation</a> and the documentation of your OpenID provider. To learn more about the <code>keytool</code> commands, visit their <a href="https://docs.oracle.com/javase/8/docs/technotes/tools/unix/keytool.html">documentation</a>.</p>
+</div>
+</div>
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+            </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>

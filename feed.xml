@@ -5,7 +5,21 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Thu, 28 Sep 2023 14:03:56 +0000</lastBuildDate>
+        <lastBuildDate>Fri, 29 Sep 2023 21:02:50 +0000</lastBuildDate>
+        
+        <item>
+            <title>Sending Authentication Requests OpenID Connect Using Request Parameters</title>
+            <link>
+                https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/
+            </link>
+            <description>
+                A future release of WildFly includes the ability to configure these request parameters to send the request as a JWT using either a request or a request_uri. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect OpenID Connect is an identity layer...
+            </description>
+            <pubDate>Fri, 29 Sep 2023 00:00:00 +0000</pubDate>
+            <guid>
+                https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/
+            </guid>
+        </item>
         
         <item>
             <title>Vlog: Join us at Open Source Day on September 22, 2023 and Make Meaningful Contributions</title>
@@ -130,20 +144,6 @@
             <pubDate>Tue, 25 Apr 2023 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/using-custom-principals-with-elytron/
-            </guid>
-        </item>
-        
-        <item>
-            <title>AMA Recap</title>
-            <link>
-                https://wildfly-security.github.io/wildfly-elytron/blog/ask-me-anything-recap/
-            </link>
-            <description>
-                The WildFly Elytron team had our very first Ask Me Anything (AMA) session on chat this week. Thanks very much to those who joined! This blog post gives a recap of the session in case you missed it. Q: How can I contribute to Elytron as a person who has...
-            </description>
-            <pubDate>Thu, 22 Dec 2022 00:00:00 +0000</pubDate>
-            <guid>
-                https://wildfly-security.github.io/wildfly-elytron/blog/ask-me-anything-recap/
             </guid>
         </item>
         
