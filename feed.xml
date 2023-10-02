@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Fri, 29 Sep 2023 21:02:50 +0000</lastBuildDate>
+        <lastBuildDate>Mon, 02 Oct 2023 13:05:02 +0000</lastBuildDate>
         
         <item>
             <title>Sending Authentication Requests OpenID Connect Using Request Parameters</title>
