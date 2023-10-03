@@ -5,15 +5,15 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Mon, 02 Oct 2023 13:05:02 +0000</lastBuildDate>
+        <lastBuildDate>Tue, 03 Oct 2023 19:37:24 +0000</lastBuildDate>
         
         <item>
-            <title>Sending Authentication Requests OpenID Connect Using Request Parameters</title>
+            <title>Sending OpenID Connect Authentication Requests Using Request Parameters</title>
             <link>
                 https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/
             </link>
             <description>
-                A future release of WildFly includes the ability to configure these request parameters to send the request as a JWT using either a request or a request_uri. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect OpenID Connect is an identity layer...
+                A future release of WildFly includes the ability to configure request parameters to send authentication requests as JWTs using either request a request_uri. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect OpenID Connect is an identity layer on top of the...
             </description>
             <pubDate>Fri, 29 Sep 2023 00:00:00 +0000</pubDate>
             <guid>
