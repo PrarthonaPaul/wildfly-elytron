@@ -208,21 +208,28 @@
 <div id="toctitle" class="title"></div>
 <ul class="sectlevel1">
 <li><a href="#openid-connect">OpenID Connect</a></li>
-<li><a href="#setting-up-your-environment">Setting up your environment</a>
+<li><a href="#prerequisite">Prerequisite</a></li>
+<li><a href="#example-application">Example Application</a></li>
+<li><a href="#log-into-the-openshift-cluster">Log into the OpenShift Cluster</a></li>
+<li><a href="#start-red-hat-single-sign-on">Start Red Hat Single Sign On</a></li>
+<li><a href="#configure-rh-sso">Configure RH-SSO</a></li>
+<li><a href="#prepare-container-images-for-openshift">Prepare Container Images for OpenShift</a>
 <ul class="sectlevel2">
-<li><a href="#logging-into-openshift-cli">Logging into OpenShift CLI</a></li>
+<li><a href="#build-wildfly-using-feature-branches">Build WildFly Using Feature Branches</a></li>
+<li><a href="#build-and-upload-container-images-to-quay">Build and Upload Container Images to Quay</a></li>
 </ul>
 </li>
-<li><a href="#setting-up-red-hat-single-sign-on">Setting up Red Hat Single Sign On</a></li>
-<li><a href="#building-container-image-for-wildfly">Building Container Image for WildFly</a></li>
-<li><a href="#building-and-deploying-the-app">Building and deploying the App</a>
+<li><a href="#deploy-the-example-application-to-wildfly-on-openshift">Deploy the Example Application to WildFly on OpenShift</a>
 <ul class="sectlevel2">
-<li><a href="#configuring-image-pull-secret">Configuring Image Pull Secret</a></li>
-<li><a href="#creating-a-helm-release">Creating a Helm Release</a></li>
+<li><a href="#configure-image-pull-secret">Configure Image Pull Secret</a></li>
 </ul>
 </li>
-<li><a href="#accessing-the-app">Accessing the App</a></li>
-<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#add-helm-configuration">Add Helm Configuration</a></li>
+<li><a href="#get-the-application-url">Get the Application URL</a></li>
+<li><a href="#finish-configuring-rh-sso">Finish Configuring RH-SSO</a></li>
+<li><a href="#access-the-application">Access the Application</a></li>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#resources">Resources</a></li>
 </ul>
 </div>
 <div class="sect1">
@@ -234,19 +241,10 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="setting-up-your-environment"><a class="anchor" href="#setting-up-your-environment"></a>Setting up your environment</h2>
+<h2 id="prerequisite"><a class="anchor" href="#prerequisite"></a>Prerequisite</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>For this walkthrough, we will be making use of the <a href="https://github.com/PrarthonaPaul/elytron-examples/tree/elytron-oidc-client-scope/elytron-oidc-client-scope">elytron-oidc-client-scope</a> project which makes use of the ability to configure additional scope values for OpenID Connect. First, clone the <code>elytron-example</code> repo locally and navigate to the <code>elytron-oidc-client-scope</code> project:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">git clone https://github.com/wildfly-security-incubator/elytron-examples
-cd elytron-examples/elytron-oidc-client-scope</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We can deploy this application using Red Hat OpenShift <a href="https://developers.redhat.com/developer-sandbox">Developer Sandbox</a>. There are other <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/try-it">options</a> available for running OpenShift. Please refer to this <a href="https://docs.wildfly.org/29/Getting_Started_on_OpenShift.html">getting started guide</a> to learn more about WildFly on OpenShift. We will be making use of the following tools for this walkthrough:</p>
+<p>We will be deploying this application using Red Hat OpenShift <a href="https://developers.redhat.com/developer-sandbox">Developer Sandbox</a>. There are other <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/try-it">options</a> available for running OpenShift. Please refer to this <a href="https://docs.wildfly.org/29/Getting_Started_on_OpenShift.html">getting started guide</a> to learn more about WildFly on OpenShift. We will be making use of the following tools for this walkthrough:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -267,25 +265,59 @@ cd elytron-examples/elytron-oidc-client-scope</code></pre>
 </li>
 </ul>
 </div>
-<div class="sect2">
-<h3 id="logging-into-openshift-cli"><a class="anchor" href="#logging-into-openshift-cli"></a>Logging into OpenShift CLI</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="example-application"><a class="anchor" href="#example-application"></a>Example Application</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>If you are not logged into OpenShift on your cli, navigate to Developer Sandbox, click on your username at the top right corner, copy your login command and paste it on your terminal.</p>
+<p>For this walkthrough, we will be making use of the <a href="https://github.com/PrarthonaPaul/elytron-examples/tree/elytron-oidc-client-scope/elytron-oidc-client-scope">elytron-oidc-client-scope</a> project which makes use of the ability to configure additional scope values for OpenID Connect. First, clone the <code>elytron-example</code> repo locally and navigate to the <code>elytron-oidc-client-scope</code> project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">git clone https://github.com/wildfly-security-incubator/elytron-examples
+cd elytron-examples/elytron-oidc-client-scope</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="log-into-the-openshift-cluster"><a class="anchor" href="#log-into-the-openshift-cluster"></a>Log into the OpenShift Cluster</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Before we can deploy our application, we need to log into an OpenShift cluster. You can log in via the <a href="https://docs.openshift.com/container-platform/4.13/cli_reference/openshift_cli/getting-started-cli.html">OpenShift CLI</a>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">oc login -u YOUR_USERNAME</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternatively, navigate to Developer Sandbox, click on your username at the top right corner, copy your login command and paste it on your terminal. It would look something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">oc login --token=myToken --server=myServerUrl</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Once you have your environment set up with the required tools, we can move on to the next step to build and deploy our application on OpenShift.</p>
 </div>
 </div>
 </div>
-</div>
 <div class="sect1">
-<h2 id="setting-up-red-hat-single-sign-on"><a class="anchor" href="#setting-up-red-hat-single-sign-on"></a>Setting up Red Hat Single Sign On</h2>
+<h2 id="start-red-hat-single-sign-on"><a class="anchor" href="#start-red-hat-single-sign-on"></a>Start Red Hat Single Sign On</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Developer Sandbox gives us access to the enterprise version of Red Hat&#8217;s OpenID provider, Red Hat Single Sign On (RH-SSO). On the topology view of OpenShift, click on the <code>Add to Project</code> button at the top left and add the version of RH-SSO that is compatible with the version of OpehShift you are running and wait for it to finish deploying. Please refer to the <a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html/red_hat_single_sign-on_for_openshift/introduction">RH-SSO for OpenShift Documentation</a> to learn more about it.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="configure-rh-sso"><a class="anchor" href="#configure-rh-sso"></a>Configure RH-SSO</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Next, click on the <code>Open URL</code> button on the pod to be redirected to the RH-SSO landing page and click on <code>Administration Console</code>. You will be able to sign in using the admin username and password that is specified in the yaml configuration of the RH-SSO pod.</p>
+<p>Click on the <code>Open URL</code> button on the pod to be redirected to the RH-SSO landing page and click on <code>Administration Console</code>. You will be able to sign in using the admin username and password that is specified in the yaml configuration of the RH-SSO pod.</p>
 </div>
 <div class="paragraph">
 <p>From here, create a realm called <code>myrealm</code>, and a client called <code>myclient</code>.</p>
@@ -305,11 +337,13 @@ cd elytron-examples/elytron-oidc-client-scope</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="building-container-image-for-wildfly"><a class="anchor" href="#building-container-image-for-wildfly"></a>Building Container Image for WildFly</h2>
+<h2 id="prepare-container-images-for-openshift"><a class="anchor" href="#prepare-container-images-for-openshift"></a>Prepare Container Images for OpenShift</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Normally to use WildFly features that have been released, we just need to add the WildFly Helm release using the chart that is already available on OpenShift. However, since we are making use of a feature that is not released yet, we will need to build our own image of WildFly from the source code and deploy our application on that.</p>
 </div>
+<div class="sect2">
+<h3 id="build-wildfly-using-feature-branches"><a class="anchor" href="#build-wildfly-using-feature-branches"></a>Build WildFly Using Feature Branches</h3>
 <div class="paragraph">
 <p>First we need to clone the <code>WildFly</code> and the <code>WildFly-Elytron</code> projects with the branches that contain the OIDC scope feature:</p>
 </div>
@@ -329,6 +363,9 @@ git checkout WFLY-16532</code></pre>
 </div>
 </div>
 <div class="paragraph">
+<p>You will also need to clone the WildFly-core project, but since this feature does not affect this project, you can use the default branch for WildFly-core.</p>
+</div>
+<div class="paragraph">
 <p>Notice that we are not using <code>WildFly/WildFly</code> repo. Instead, we are using a forked version of the project. Next, we need to build these projects to use the local version of the code. To do this, we will specify the SNAPSHOT versions of <code>Elytron</code> and <code>WildFly-core</code>:</p>
 </div>
 <div class="listingblock">
@@ -343,6 +380,9 @@ cd ../wildfly
 mvn clean install -Dversion.org.wildfly.core=&lt;insert_SNAPSHOT_VERSION_OF_WILDFLY-CORE&gt;</code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="build-and-upload-container-images-to-quay"><a class="anchor" href="#build-and-upload-container-images-to-quay"></a>Build and Upload Container Images to Quay</h3>
 <div class="paragraph">
 <p>In order to deploy our application on OpenShift, we need to first create a container image of the application using Docker or Podman. In this post we are using Docker, but you can also use Podman using the <code>podman</code> keyword, or using an alias.</p>
 </div>
@@ -376,8 +416,9 @@ docker push quay.io/&lt;your-quay-username&gt;/wildfly:wildfly-app</code></pre>
 </div>
 </div>
 </div>
+</div>
 <div class="sect1">
-<h2 id="building-and-deploying-the-app"><a class="anchor" href="#building-and-deploying-the-app"></a>Building and deploying the App</h2>
+<h2 id="deploy-the-example-application-to-wildfly-on-openshift"><a class="anchor" href="#deploy-the-example-application-to-wildfly-on-openshift"></a>Deploy the Example Application to WildFly on OpenShift</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Now that we have our WildFly container image, we can use it to deploy our application on it. Navigate to the <code>elytron-examples/elytron-oidc-client-scope</code> directory and create a deployment file for your application using this command:</p>
@@ -409,7 +450,7 @@ docker push quay.io/&lt;your-quay-username&gt;/wildfly:latest</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configuring-image-pull-secret"><a class="anchor" href="#configuring-image-pull-secret"></a>Configuring Image Pull Secret</h3>
+<h3 id="configure-image-pull-secret"><a class="anchor" href="#configure-image-pull-secret"></a>Configure Image Pull Secret</h3>
 <div class="paragraph">
 <p>In order to pull the image from Quay, you will need to configure a pull secret and connect it to your helm release. If you have already configured a pull secret for Quay, then you can skip this step.</p>
 </div>
@@ -420,8 +461,11 @@ docker push quay.io/&lt;your-quay-username&gt;/wildfly:latest</code></pre>
 <p>Alternatively you can link your pull secret so OpenShift can automatically use your pull secret to obtain the image when needed. You can learn more about handling secrets on OpenShift on <a href="https://docs.openshift.com/container-platform/4.10/openshift_images/managing_images/using-image-pull-secrets.html">their documentation</a>.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="creating-a-helm-release"><a class="anchor" href="#creating-a-helm-release"></a>Creating a Helm Release</h3>
+</div>
+</div>
+<div class="sect1">
+<h2 id="add-helm-configuration"><a class="anchor" href="#add-helm-configuration"></a>Add Helm Configuration</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Lastly, we will be creating a helm release of our local WildFly image and deploying our application on it using a helm chart. Navigate to <code>charts</code> directory and open the <code>helm.yaml</code> file. The contents of the file will be as follows:</p>
 </div>
@@ -460,20 +504,63 @@ helm install simple-webapp-oidc -f charts/helm.yaml wildfly/wildfly</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Click on the three dots beside the pod&#8217;s name and click on <code>Edit Deployment</code>. Under <code>Show advanced image options</code>, set the <code>Pull Secret</code> to be the one you configured in the last section and click <code>Save</code>.</p>
+<p>On the OpenShift Console, click on the three dots beside the pod&#8217;s name and click on <code>Edit Deployment</code>. Under <code>Show advanced image options</code>, set the <code>Pull Secret</code> to be the one you configured in the last section and click <code>Save</code>.</p>
 </div>
 <div class="paragraph">
 <p>Your application is now deploying. Click on the <code>simple-webapp-oidc</code> pod and under the <code>resources</code> tab, you should see the status of your deployment.</p>
+</div>
+<div class="paragraph">
+<p>Alternatively, you can use the cli to do so as well using the following command to see the status of your build:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">oc get build -w</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And the following command to see the deployment of the application:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">oc get deployment simple-webapp-oidc -w</code></pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="accessing-the-app"><a class="anchor" href="#accessing-the-app"></a>Accessing the App</h2>
+<h2 id="get-the-application-url"><a class="anchor" href="#get-the-application-url"></a>Get the Application URL</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Just like RH-SSO, you can find the url for your webapp by clicking on <code>Open URL</code> which will redirect you to the WildFly landing page. Copy this link and go back to the admin console for RH-SSO and add <code>&lt;Simple-webapp-oidc-url&gt;/simple-webapp-oidc/*</code> to the <code>Valid Redirect URIs</code> field. Notice that the link starts with <code>https</code>. We will be changing it to <code>http</code> since we have not performed any ssl configuration.</p>
+<p>Just like RH-SSO, you can find the url for your webapp by clicking on <code>Open URL</code> which will redirect you to the WildFly landing page. You can also use the OC client to do this using the follwing commands:</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">SIMPLE_WEBAPP_OIDC_URL=http://$(oc get route oidc-app --template='{{ .spec.host }}') &amp;&amp;
+echo "" &amp;&amp;
+echo "Application URL: $SIMPLE_WEBAPP_OIDC_URL/simple-webapp-oidc"  &amp;&amp;
+echo "Valid redirect URI: $SIMPLE_WEBAPP_OIDC_URL/simple-webapp-oidc/secured/*" &amp;&amp;
+echo ""</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We will be making use of these two URL&#8217;s for our RH-SSO configuration after a few steps.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="finish-configuring-rh-sso"><a class="anchor" href="#finish-configuring-rh-sso"></a>Finish Configuring RH-SSO</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>From your <code>myclient</code> client in the RH-SSO Administration Console, in the client settings, set <code>Valid Redirect URI</code> to the <code>Valid redirect URI</code> that was output in the previous section and then click Save.</p>
+</div>
+<div class="paragraph">
+<p>If you found the url using the web console, copy the link and go back to the admin console for RH-SSO and add &lt;Simple-webapp-oidc-url&gt;/simple-webapp-oidc/* to the <code>Valid Redirect URIs</code> field. Notice that the link starts with https. We will be changing it to http since we have not performed any ssl configuration.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="access-the-application"><a class="anchor" href="#access-the-application"></a>Access the Application</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Now, let’s try accessing our application using &lt;Simple-webapp-oidc-url&gt;/simple-webapp-oidc.</p>
 </div>
@@ -504,7 +591,7 @@ Using the "microprofile-jwt" scope, we got the user's groups: [default-roles-myr
 </div>
 </div>
 <div class="paragraph">
-<p>Note that the value for Current Principal may be different, since that is the client secret.</p>
+<p>Note that the value for Current Principal may be different and may be replaced with the client secret.</p>
 </div>
 <div class="paragraph">
 <p>Notice that there are no claims obtained using the <code>offline_access</code> scope. To learn more about what this scope value does, please refer to the <a href="https://openid.net/specs/openid-connect-core-1_0.html#OfflineAccess"> OpenID Documentation</a>.</p>
@@ -512,10 +599,47 @@ Using the "microprofile-jwt" scope, we got the user's groups: [default-roles-myr
 </div>
 </div>
 <div class="sect1">
-<h2 id="conclusion"><a class="anchor" href="#conclusion"></a>Conclusion</h2>
+<h2 id="summary"><a class="anchor" href="#summary"></a>Summary</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This post demonstrated how to deploy an OIDC secured WildFly application on OpenShift using Developer Sandbox. We also looked into how to configure additional scope values to request specific claim values. For more details on the elytron-oidc-client subsystem, please check out the <a href="https://docs.wildfly.org/29/Admin_Guide.html#Elytron_OIDC_Client">documentation</a>. Details on the <code>scope</code> attribute will be available once the feature is released. For more details on WildFly on OpenShift, you can check out <a href="https://cloud.redhat.com/blog/getting-started-with-wildfly">this guide</a>.</p>
+<p>This post demonstrated how to deploy an OIDC secured WildFly application on OpenShift using Developer Sandbox. We also looked into how to configure additional scope values to request specific claim values. For more details on WildFly on OpenShift, you can check out <a href="https://cloud.redhat.com/blog/getting-started-with-wildfly">this guide</a>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resources"><a class="anchor" href="#resources"></a>Resources</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://docs.wildfly.org/29/Admin_Guide.html#Elytron_OIDC_Client">Elytron-oidc-client documentation</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Details on the <code>scope</code> attribute will be available once the feature is released.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><a href="https://docs.wildfly.org/29/Getting_Started_on_OpenShift.html">Getting started with WildFly on OpenShift</a></p>
+</li>
+<li>
+<p><a href="https://docs.openshift.com/container-platform/4.13/cli_reference/openshift_cli/getting-started-cli.html">Openshift CLI</a></p>
+</li>
+<li>
+<p><a href="https://docs.wildfly.org/29/Getting_Started_on_OpenShift.html#helm-charts">WildFly Helm Chart</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html/red_hat_single_sign-on_for_openshift/index">RH-SSO on OpenShift</a></p>
+</li>
+<li>
+<p><a href="https://openid.net/specs/openid-connect-core-1_0.html">OpenID Concepts</a></p>
+</li>
+<li>
+<p><a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.4/html/getting_started_guide/securing-sample-app_">Using OpenID Connect to secure applications and services</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
