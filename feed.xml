@@ -5,21 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Fri, 20 Oct 2023 18:17:54 +0000</lastBuildDate>
-        
-        <item>
-            <title>Sending OpenID Connect Authentication Requests Using Request Parameters</title>
-            <link>
-                https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/
-            </link>
-            <description>
-                A future release of WildFly includes the ability to configure request parameters to send authentication requests as JWTs using either request a request_uri. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect OpenID Connect is an identity layer on top of the...
-            </description>
-            <pubDate>Fri, 29 Sep 2023 00:00:00 +0000</pubDate>
-            <guid>
-                https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/
-            </guid>
-        </item>
+        <lastBuildDate>Fri, 20 Oct 2023 18:20:28 +0000</lastBuildDate>
         
         <item>
             <title>Vlog: Join us at Open Source Day on September 22, 2023 and Make Meaningful Contributions</title>
@@ -144,6 +130,20 @@
             <pubDate>Mon, 15 May 2023 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/specify-http-digest-algorithms/
+            </guid>
+        </item>
+        
+        <item>
+            <title>Using Custom Principals with Elytron</title>
+            <link>
+                https://wildfly-security.github.io/wildfly-elytron/blog/using-custom-principals-with-elytron/
+            </link>
+            <description>
+                Sometimes, you need to access additional information about an authenticated user. As an example, you may want to know when they logged in, or what information they have on file. Traditionally, this type of information needed to be stored using security realm attributes associated with an identity. Now in WildFly...
+            </description>
+            <pubDate>Tue, 25 Apr 2023 00:00:00 +0000</pubDate>
+            <guid>
+                https://wildfly-security.github.io/wildfly-elytron/blog/using-custom-principals-with-elytron/
             </guid>
         </item>
         
