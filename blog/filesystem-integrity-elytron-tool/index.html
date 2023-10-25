@@ -301,7 +301,7 @@ cd elytron-examples/integrity-filesystem-realm</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Here the <code>input-location</code> option refers to the path to the existing filesystem, the <code>output-location</code> refers to the new filesystem realm to be created. The <code>keystore</code> option specifies the location for the keystore file, <code>password</code> refers to the password for the keystore and <code>key-pair</code> refers to the alias of the key that uniquely identified the key pair we are looking for inside the keystore. The <code>summary</code> option is added so that when the new filesystem is created, we can see the details of what is being done. The keystore can be created in one of two ways:</p>
+<p>Here the <code>input-location</code> option refers to the path to the existing filesystem, the <code>output-location</code> refers to the new filesystem realm to be created. The <code>keystore</code> option specifies the location for the keystore file, <code>password</code> refers to the password for the keystore and <code>key-pair</code> refers to the alias of the key that uniquely identifies the key pair we are looking for inside the keystore. The <code>summary</code> option is added so that when the new filesystem is created, we can see the details of what is being done. The keystore can be created in one of two ways:</p>
 </div>
 <div class="sect2">
 <h3 id="generating-keystore-using-keytool"><a class="anchor" href="#generating-keystore-using-keytool"></a>Generating Keystore Using Keytool</h3>
@@ -467,7 +467,7 @@ realm-name:realm-two</code></pre>
 <h2 id="summary"><a class="anchor" href="#summary"></a>Summary</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This blog post has shown how to add integrity checking to an existing filesystem realm using an asymmetrical key pair and the WildFly Elytron tool. We also looked at how we can convert multiple filesystem realms using the <code>bulk-convert</code> option. Please note that in addition to elytron-tool.sh, the WildFly package also comes with <code>elytron-tool.bat</code> and <code>elytron-tool.ps1</code> scripts. For more information on the different options available for the elytron-tool, you can use the <code>--help</code> option. To learn more about the filesystem-security-realm, please refer to the <a href="https://docs.wildfly.org/30/WildFly_Elytron_Security.html#filesystem-security-realm">WildFly documentation</a>.</p>
+<p>This blog post has shown how to add integrity checking to an existing filesystem realm using an asymmetrical key pair and the WildFly Elytron tool. We also looked at how we can convert multiple filesystem realms using the <code>bulk-convert</code> option. Please note that in addition to elytron-tool.sh, WildFly also ships with <code>elytron-tool.bat</code> and <code>elytron-tool.ps1</code> scripts. For more information on the different options available for the elytron-tool, you can use the <code>--help</code> option. To learn more about the filesystem-security-realm, please refer to the <a href="https://docs.wildfly.org/30/WildFly_Elytron_Security.html#filesystem-security-realm">WildFly documentation</a>.</p>
 </div>
 </div>
 </div>
