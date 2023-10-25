@@ -204,6 +204,21 @@
           <div class="paragraph">
 <p>WildFly 27 included the ability to add integrity on FileSystem realms. This uses an asymmetric keyPair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify that identities in the realm haven&#8217;t been tampered with.</p>
 </div>
+<div id="toc" class="toc">
+<div id="toctitle" class="title"></div>
+<ul class="sectlevel1">
+<li><a href="#server-configuration">Server Configuration</a></li>
+<li><a href="#adding-integrity-checking">Adding Integrity Checking</a>
+<ul class="sectlevel2">
+<li><a href="#generating-keystore-using-keytool">Generating Keystore Using Keytool</a></li>
+<li><a href="#generating-keystore-using-the-elytron-subsystem">Generating Keystore Using the Elytron Subsystem</a></li>
+</ul>
+</li>
+<li><a href="#deploy-and-access-the-application">Deploy and Access the application</a></li>
+<li><a href="#bulk-conversion-for-filesystem-realms">Bulk Conversion for Filesystem Realms</a></li>
+<li><a href="#summary">Summary</a></li>
+</ul>
+</div>
 <div class="paragraph">
 <p><a href="https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity/">A previous blog post</a> demonstrates how to create a filesystem realm and secure it using the elytron subsystem. This blog post will demonstrate how to take an existing filesystem realm and add integrity checking to it using the WildFly Elytron Tool. In this post we will go through an example of converting an unencrypted filesystem realm to one with integrity enabled and then we will try accessing a web application that is secured with the new filesystem realm.</p>
 </div>
