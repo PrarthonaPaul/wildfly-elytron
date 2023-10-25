@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Wed, 25 Oct 2023 16:54:44 +0000</lastBuildDate>
+        <lastBuildDate>Wed, 25 Oct 2023 19:41:49 +0000</lastBuildDate>
         
         <item>
             <title>Adding Support for Integrity Checking to an Existing Filesystem Realm</title>
@@ -13,7 +13,7 @@
                 https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity-elytron-tool/
             </link>
             <description>
-                WildFly 27 included the ability to add integrity on FileSystem realms. This uses an asymmetric keyPair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify that identities in...
+                WildFly 27 included the ability to add integrity checking support to filesystem realms. This uses an asymmetric key pair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify...
             </description>
             <pubDate>Tue, 24 Oct 2023 00:00:00 +0000</pubDate>
             <guid>

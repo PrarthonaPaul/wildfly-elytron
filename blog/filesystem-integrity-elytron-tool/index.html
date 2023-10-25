@@ -31,8 +31,8 @@
 <meta property="og:title" content="Adding Support for Integrity Checking to an Existing Filesystem Realm" />
 <meta name="author" content="Prarthona Paul" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="WildFly 27 included the ability to add integrity on FileSystem realms. This uses an asymmetric keyPair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify that identities in the realm haven&#8217;t been tampered with." />
-<meta property="og:description" content="WildFly 27 included the ability to add integrity on FileSystem realms. This uses an asymmetric keyPair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify that identities in the realm haven&#8217;t been tampered with." />
+<meta name="description" content="WildFly 27 included the ability to add integrity checking support to filesystem realms. This uses an asymmetric key pair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify that identities in the realm haven&#8217;t been tampered with." />
+<meta property="og:description" content="WildFly 27 included the ability to add integrity checking support to filesystem realms. This uses an asymmetric key pair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify that identities in the realm haven&#8217;t been tampered with." />
 <link rel="canonical" href="https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity-elytron-tool/" />
 <meta property="og:url" content="https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity-elytron-tool/" />
 <meta property="og:site_name" content="WildFly Elytron" />
@@ -43,7 +43,7 @@
 <meta property="twitter:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
 <meta property="twitter:title" content="Adding Support for Integrity Checking to an Existing Filesystem Realm" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2023-10-24T00:00:00+00:00","datePublished":"2023-10-24T00:00:00+00:00","description":"WildFly 27 included the ability to add integrity on FileSystem realms. This uses an asymmetric keyPair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify that identities in the realm haven&#8217;t been tampered with.","headline":"Adding Support for Integrity Checking to an Existing Filesystem Realm","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity-elytron-tool/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity-elytron-tool/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2023-10-24T00:00:00+00:00","datePublished":"2023-10-24T00:00:00+00:00","description":"WildFly 27 included the ability to add integrity checking support to filesystem realms. This uses an asymmetric key pair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify that identities in the realm haven&#8217;t been tampered with.","headline":"Adding Support for Integrity Checking to an Existing Filesystem Realm","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity-elytron-tool/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity-elytron-tool/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -202,7 +202,10 @@
 </div>
       <div class="grid__item width-12-12">
           <div class="paragraph">
-<p>WildFly 27 included the ability to add integrity on FileSystem realms. This uses an asymmetric keyPair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify that identities in the realm haven&#8217;t been tampered with.</p>
+<p>WildFly 27 included the ability to add integrity checking support to filesystem realms. This uses an asymmetric key pair that has a private and public key to secure the filesystem realm. In the filesystem realm, each identity will be signed using the private key. This makes it possible to verify that identities in the realm haven&#8217;t been tampered with.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity/">A previous blog post</a> demonstrates how to enable integrity support on a filesystem realm using the Elytron subsystem. This blog post will demonstrate how to take an existing filesystem realm and add integrity checking to it using the WildFly Elytron Tool. In this post we will go through an example of converting an unencrypted filesystem realm to one with integrity enabled and then we will try accessing a web application that is secured with the new filesystem realm.</p>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle" class="title"></div>
@@ -218,9 +221,6 @@
 <li><a href="#bulk-conversion-for-filesystem-realms">Bulk Conversion for Filesystem Realms</a></li>
 <li><a href="#summary">Summary</a></li>
 </ul>
-</div>
-<div class="paragraph">
-<p><a href="https://wildfly-security.github.io/wildfly-elytron/blog/filesystem-integrity/">A previous blog post</a> demonstrates how to create a filesystem realm and secure it using the elytron subsystem. This blog post will demonstrate how to take an existing filesystem realm and add integrity checking to it using the WildFly Elytron Tool. In this post we will go through an example of converting an unencrypted filesystem realm to one with integrity enabled and then we will try accessing a web application that is secured with the new filesystem realm.</p>
 </div>
 <div class="paragraph">
 <p>Clone the elytron-examples repo locally:</p>
@@ -293,7 +293,7 @@ cd elytron-examples/integrity-filesystem-realm</code></pre>
 <h2 id="adding-integrity-checking"><a class="anchor" href="#adding-integrity-checking"></a>Adding Integrity Checking</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In order to access the elytron tool, we can use the following command:</p>
+<p>To create a new filesystem realm based off our existing one but with the integrity support enabled, we can use the following Elytron Tool command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -301,7 +301,7 @@ cd elytron-examples/integrity-filesystem-realm</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Here the <code>input-location</code> option refers to the path to the filesystem realm directory, the <code>output-location</code> refers to the new filesystem realm to be created. The <code>keystore</code> option specifies the location for the keystore file, <code>password</code> refers to the password for the keystore and <code>key-pair</code> refers to the alias of the key that uniquely identified the key pair we are looking for inside the keystore. The <code>summary</code> option is added so that when the new filesystem is created, we can see the details of what is being done. The keystore can be created in one of two ways:</p>
+<p>Here the <code>input-location</code> option refers to the path to the existing filesystem, the <code>output-location</code> refers to the new filesystem realm to be created. The <code>keystore</code> option specifies the location for the keystore file, <code>password</code> refers to the password for the keystore and <code>key-pair</code> refers to the alias of the key that uniquely identified the key pair we are looking for inside the keystore. The <code>summary</code> option is added so that when the new filesystem is created, we can see the details of what is being done. The keystore can be created in one of two ways:</p>
 </div>
 <div class="sect2">
 <h3 id="generating-keystore-using-keytool"><a class="anchor" href="#generating-keystore-using-keytool"></a>Generating Keystore Using Keytool</h3>
@@ -467,7 +467,7 @@ realm-name:realm-two</code></pre>
 <h2 id="summary"><a class="anchor" href="#summary"></a>Summary</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This blog post shows how to add integrity checking to an existing filesystem realm using an asymmetrical keypair and the WildFly Elytron tool. We also looked at how we can convert multiple filesystem realms using the <code>bulk-convert</code> option. Please note that in addition to elytron-tool.sh, the WildFly package also comes with <code>elytron-tool.bat</code> and <code>elytron-tool.ps1</code> scripts. For more information on the different options available for the elytron-tool, you can use the <code>--help</code> option. To learn more about the filesystem-security-realm, please refer to the <a href="https://docs.wildfly.org/30/WildFly_Elytron_Security.html#filesystem-security-realm">WildFly documentation</a>.</p>
+<p>This blog post has shown how to add integrity checking to an existing filesystem realm using an asymmetrical key pair and the WildFly Elytron tool. We also looked at how we can convert multiple filesystem realms using the <code>bulk-convert</code> option. Please note that in addition to elytron-tool.sh, the WildFly package also comes with <code>elytron-tool.bat</code> and <code>elytron-tool.ps1</code> scripts. For more information on the different options available for the elytron-tool, you can use the <code>--help</code> option. To learn more about the filesystem-security-realm, please refer to the <a href="https://docs.wildfly.org/30/WildFly_Elytron_Security.html#filesystem-security-realm">WildFly documentation</a>.</p>
 </div>
 </div>
 </div>
