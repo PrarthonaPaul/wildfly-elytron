@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Thu, 26 Oct 2023 19:19:32 +0000</lastBuildDate>
+        <lastBuildDate>Thu, 26 Oct 2023 19:20:45 +0000</lastBuildDate>
         
         <item>
             <title>Adding Support for Integrity Checking to an Existing Filesystem Realm</title>
