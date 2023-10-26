@@ -398,7 +398,7 @@ End of summary
 <p>The successful login indicates that integrity has been configured correctly.</p>
 </div>
 <div class="paragraph">
-<p>In order to further verify that these features are being used correctly we can navigate to the identity file and check the contents. The file should be located at WILDFLY_HOME/standalone/configuration/fs-realm/q/u/quickstartuser-&lt;hashed username&gt;.xml if the same filesystem realm and identity configuration was used.</p>
+<p>In order to further verify that these features are being used correctly we can navigate to the identity file and check the contents. The file should be located at WILDFLY_HOME/standalone/configuration/fsRealmWithIntegrity/filesystem-realm-with-integrity/q/u/quickstartuser-&lt;hashed username&gt;.xml if the same filesystem realm and identity configuration was used.</p>
 </div>
 <div class="paragraph">
 <p>In the identity we can see there is now a &lt;principal /&gt; tag specifying the principal name, to ensure it matches with the file name, as well as a &lt;Signature&gt; tag.</p>
