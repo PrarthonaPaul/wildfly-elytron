@@ -429,12 +429,13 @@ mvn clean install -Dversion.org.wildfly.core=&lt;insert_SNAPSHOT_VERSION_OF_WILD
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">FROM quay.io/wildfly/wildfly-runtime-jdk11:latest
-COPY --chown=jboss:root dist/target/wildfly-29.0.0.Final-SNAPSHOT $JBOSS_HOME
+COPY --chown=jboss:root dist/target/wildfly-31.0.0.Beta1-SNAPSHOT $JBOSS_HOME
 RUN chmod -R ug+rwX $JBOSS_HOME</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now run the following commands on your terminal from the WildFly directory to create an image and push it to your repository:</p>
+<p>Please note that the wildfly version may be different for you. Please update the version to match the wildfly version you are running.
+Now run the following commands on your terminal from the WildFly directory to create an image and push it to your repository:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -456,7 +457,7 @@ docker push quay.io/&lt;your-quay-username&gt;/wildfly:wildfly-app</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">mvn package</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">mvn clean package</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -511,13 +512,13 @@ docker push quay.io/&lt;your-quay-username&gt;/wildfly:latest</code></pre>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">image:
-  name: quay.io/&lt;Username&gt;/wildfly
+  name: quay.io/&lt;your-quay-username&gt;/wildfly
 build:
   enabled: false
 deploy:
   env:
     - name: OIDC_PROVIDER_URL
-      value: 'https://sso-some-user.apps.sandbox-m4.g2pi.p1.openshiftapps.com'
+      value: 'https://sso-&lt;your-project-name&gt;.apps.sandbox-m4.g2pi.p1.openshiftapps.com/auth'
     - name: WILDFLY_OVERRIDING_ENV_VARS
       value: "1"
     - name: SUBSYSTEM_LOGGING_PATTERN_FORMATTER_COLOR_PATTERN__PATTERN
@@ -525,7 +526,8 @@ deploy:
 </div>
 </div>
 <div class="paragraph">
-<p>There are three fields that we have specified: image, build and deploy.</p>
+<p>Replace &lt;your-project-name&gt; to match the project in your RH-SSO url.
+There are three fields that we have specified: image, build and deploy.</p>
 </div>
 <div class="paragraph">
 <p>Using the image tag, we are specifying that we want the pod to use the image of our application that we just built. Notice that we did not specify the tag. This is because when the helm chart uploads, the <code>latest</code> tag is appended to it by default, which is why we tagged our application image as that. If you want to use a different tag, then you can edit this by clicking on the pod, click on <code>Edit Deployment</code> and changing it under <code>Image Name</code>.</p>
@@ -551,10 +553,37 @@ helm install simple-webapp-oidc -f charts/helm.yaml wildfly/wildfly</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Click on the three dots beside the pod&#8217;s name and click on <code>Edit Deployment</code>. Under <code>Show advanced image options</code>, set the <code>Pull Secret</code> to be the one you configured in the last section and click <code>Save</code>.</p>
+<p>After running the commands above, you should expect to see the following output:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">Waited for 1.068205845s due to client-side throttling, not priority and fairness,
+request: GET:https://api.sandbox-m4.g2pi.p1.openshiftapps.com:6443/apis/triggers.tekton.dev/v1beta1?timeout=32s
+NAME: simple-webapp-oidc
+LAST DEPLOYED: &lt;current date and time&gt;
+NAMESPACE: &lt;your namespace&gt;
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+To follow the deployment of your application, run:
+
+$ oc get deployment simple-webapp-oidc -w</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Your application is now deploying. Click on the <code>simple-webapp-oidc</code> pod and under the <code>resources</code> tab, you should see the status of your deployment.</p>
+<p>Click on the three dots beside the pod&#8217;s name and click on <code>Edit Deployment</code>. Make sure that the image name has <code>:latest</code>
+added to it. If not, edit it to reflect the correct image name under <code>Image Name</code>. Under <code>Show advanced image options</code>,
+set the <code>Pull Secret</code> to be the one you configured in the last section and click <code>Save</code>.</p>
+</div>
+<div class="paragraph">
+<p>Your application is now deploying. Click on the <code>simple-webapp-oidc</code> pod and under the <code>resources</code> tab, you should see the status of your deployment.
+Alternatively, you can use the following commands:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">$ oc get deployment simple-webapp-oidc -w</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -566,9 +595,10 @@ helm install simple-webapp-oidc -f charts/helm.yaml wildfly/wildfly</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">SIMPLE_WEBAPP_OIDC_URL=https://$(oc get route oidc-app --template='{{ .spec.host }}') &amp;&amp;
+<pre class="highlightjs highlight"><code class="language-none hljs">SIMPLE_WEBAPP_OIDC_URL=https://$(oc get route simple-webapp-oidc --template='{{ .spec.host }}') &amp;&amp;
 echo "" &amp;&amp;
 echo "Application URL:              $SIMPLE_WEBAPP_OIDC_URL/simple-webapp-oidc" &amp;&amp;
+echo "Valid redirect URI:           $SIMPLE_WEBAPP_OIDC_URL/simple-webapp-oidc/*" &amp;&amp;
 echo ""</code></pre>
 </div>
 </div>
@@ -578,7 +608,9 @@ echo ""</code></pre>
 <h2 id="finish-configuring-rh-sso"><a class="anchor" href="#finish-configuring-rh-sso"></a>Finish Configuring RH-SSO</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Copy the link for your webapp and go back to the admin console for RH-SSO and add <code>&lt;Simple-webapp-oidc-url&gt;/simple-webapp-oidc/*</code> to the <code>Valid Redirect URIs</code> field. Notice that the link starts with <code>https</code>. We will be changing it to <code>http</code> since we have not performed any ssl configuration.</p>
+<p>Copy the link for your webapp and go back to the admin console for RH-SSO and add <code>&lt;Simple-webapp-oidc-url&gt;/simple-webapp-oidc/*</code>
+to the <code>Valid Redirect URIs</code> field. Notice that the link starts with <code>https</code>. We will be changing it to <code>http</code> since we
+have not performed any ssl configuration.</p>
 </div>
 </div>
 </div>
@@ -598,7 +630,7 @@ echo ""</code></pre>
 <p>Log in with <code>Alice</code> and the password that you set when configuring RH-SSO.</p>
 </div>
 <div class="paragraph">
-<p>Next, you’ll be redirected back to our application and you should see the "Secured Servlet" page. That means that we were able to successfully log in to our application using the RH-SSO OpenID provider!</p>
+<p>Next, you’ll be redirected back to our application, and you should see the "Secured Servlet" page. That means that we were able to successfully log in to our application using the RH-SSO OpenID provider!</p>
 </div>
 <div class="paragraph">
 <p>This page will display the Current Principal, and a list of claim values obtained using the scope values you configured. This is what it will look like:</p>
