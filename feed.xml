@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Thu, 09 Nov 2023 17:09:37 +0000</lastBuildDate>
+        <lastBuildDate>Thu, 09 Nov 2023 20:14:09 +0000</lastBuildDate>
         
         <item>
             <title>Trying Out An In-progress Feature for WildFly on OpenShift</title>
@@ -18,6 +18,20 @@
             <pubDate>Thu, 09 Nov 2023 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/
+            </guid>
+        </item>
+        
+        <item>
+            <title>Securing WildFly Apps with OIDC on OpenShift</title>
+            <link>
+                https://wildfly-security.github.io/wildfly-elytron/blog/securing-wildfly-apps-oidc-openshift/
+            </link>
+            <description>
+                You can secure your WildFly applications deployed on OpenShift with OpenID Connect (OIDC). By using OIDC to secure applications, you delegate authentication to OIDC providers. This guide shows how to secure an example application deployed to WildFly on OpenShift with OIDC using Keycloak as the OIDC provider. Prerequisites Example Application...
+            </description>
+            <pubDate>Wed, 08 Nov 2023 00:00:00 +0000</pubDate>
+            <guid>
+                https://wildfly-security.github.io/wildfly-elytron/blog/securing-wildfly-apps-oidc-openshift/
             </guid>
         </item>
         
@@ -130,20 +144,6 @@
             <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/securing-management-console-oidc/
-            </guid>
-        </item>
-        
-        <item>
-            <title>Using Certificate Based Authentication with Mutual TLS without Roles</title>
-            <link>
-                https://wildfly-security.github.io/wildfly-elytron/blog/Client-cert-auth-without-roles/
-            </link>
-            <description>
-                Mutual TLS with client certificates is essential for secure and encrypted communication between clients and servers in various applications and systems. It involves a handshake process during which both the client and the server must present their certificate to each other in order to establish a secure connection. This ensures...
-            </description>
-            <pubDate>Mon, 26 Jun 2023 00:00:00 +0000</pubDate>
-            <guid>
-                https://wildfly-security.github.io/wildfly-elytron/blog/Client-cert-auth-without-roles/
             </guid>
         </item>
         
