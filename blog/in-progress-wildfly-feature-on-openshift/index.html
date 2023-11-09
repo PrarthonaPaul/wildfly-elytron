@@ -31,10 +31,10 @@
 <meta property="og:title" content="Trying Out An In-progress Feature for WildFly on OpenShift" />
 <meta name="author" content="Prarthona Paul" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. For updates on the status of the feature, please keep an eye on WFLY-16532 and ELY-2574. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift." />
-<meta property="og:description" content="A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. For updates on the status of the feature, please keep an eye on WFLY-16532 and ELY-2574. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift." />
-<link rel="canonical" href="https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-feature-on-openshift/" />
-<meta property="og:url" content="https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-feature-on-openshift/" />
+<meta name="description" content="A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift." />
+<meta property="og:description" content="A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift." />
+<link rel="canonical" href="https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/" />
+<meta property="og:url" content="https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/" />
 <meta property="og:site_name" content="WildFly Elytron" />
 <meta property="og:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
 <meta property="og:type" content="article" />
@@ -43,7 +43,7 @@
 <meta property="twitter:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
 <meta property="twitter:title" content="Trying Out An In-progress Feature for WildFly on OpenShift" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2023-11-09T00:00:00+00:00","datePublished":"2023-11-09T00:00:00+00:00","description":"A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. For updates on the status of the feature, please keep an eye on WFLY-16532 and ELY-2574. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift.","headline":"Trying Out An In-progress Feature for WildFly on OpenShift","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-feature-on-openshift/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-feature-on-openshift/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2023-11-09T00:00:00+00:00","datePublished":"2023-11-09T00:00:00+00:00","description":"A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift.","headline":"Trying Out An In-progress Feature for WildFly on OpenShift","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -178,24 +178,26 @@
             
               <a style="font-size: 0.9em;" href="/wildfly-elytron/blog/tag/openshift"> #openshift</a>
             
+              <a style="font-size: 0.9em;" href="/wildfly-elytron/blog/tag/scopes"> #scopes</a>
+            
           
         </p>
       </div>
       
       <div class="grid__item width-4-12 width-12-12-m"><div class="share-page">
-  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-feature-on-openshift/&title=Trying Out An In-progress Feature for WildFly on OpenShift" rel="nofollow" target="_blank" title="Share on LinkedIn">
+  <a class="share-linkedin" href="https://www.linkedin.com/shareArticle?mini=true&url=https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/&title=Trying Out An In-progress Feature for WildFly on OpenShift" rel="nofollow" target="_blank" title="Share on LinkedIn">
     <i class="fab fa-linkedin"></i>
   </a>
-  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Trying Out An In-progress Feature for WildFly on OpenShift&url=https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-feature-on-openshift/&via=WildFlyAS&related=WildFlyAS" rel="nofollow" target="_blank" title="Share on Twitter">
+  <a class="share-twitter" href="https://twitter.com/intent/tweet?text=Trying Out An In-progress Feature for WildFly on OpenShift&url=https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/&via=WildFlyAS&related=WildFlyAS" rel="nofollow" target="_blank" title="Share on Twitter">
     <i class="fab fa-twitter-square"></i>
   </a>
-  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-feature-on-openshift/" rel="nofollow" target="_blank" title="Share on Facebook">
+  <a class="share-facebook" href="https://facebook.com/sharer.php?u=https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/" rel="nofollow" target="_blank" title="Share on Facebook">
     <i class="fab fa-facebook-square"></i>
   </a>
-  <a class="share-reddit" href="http://www.reddit.com/submit?url=https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-feature-on-openshift/" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
+  <a class="share-reddit" href="http://www.reddit.com/submit?url=https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/" onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Reddit" >
     <i class="fab fa-reddit-square"></i>
   </a>
-  <a class="share-email" href="mailto:?subject=Trying Out An In-progress Feature for WildFly on OpenShift&amp;body=Trying Out An In-progress Feature for WildFly on OpenShift https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-feature-on-openshift/" title="Share via Email" >
+  <a class="share-email" href="mailto:?subject=Trying Out An In-progress Feature for WildFly on OpenShift&amp;body=Trying Out An In-progress Feature for WildFly on OpenShift https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/" title="Share via Email" >
     <i class="fas fa-envelope-square"></i>
   </a>
 </div>
@@ -205,7 +207,7 @@
 <p>A future release of WildFly will include the ability to add additional scope values when securing applications using
 OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope
 values to request additional claims using an in-progress version of the feature. For updates on the status of the feature,
-please keep an eye on <a href="https://issues.redhat.com/browse/WFLY-16532">WFLY-16532</a> and <a href="https://issues.redhat.com/browse/ELY-2574">ELY-2574</a>.
+please keep an eye on <a href="https://issues.redhat.com/browse/WFLY-16532">WFLY-16532</a>.
 We will also walk through how to deploy this feature on the cloud using <a href="https://developers.redhat.com/developer-sandbox">Red Hat OpenShift</a>.</p>
 </div>
 <div id="toc" class="toc">
