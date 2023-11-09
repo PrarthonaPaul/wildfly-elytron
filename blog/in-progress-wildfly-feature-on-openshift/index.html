@@ -325,6 +325,9 @@ The command will be of this format:</p>
 <div class="paragraph">
 <p>Developer Sandbox gives us access to the enterprise version of Red Hat&#8217;s OpenID provider, Red Hat Single Sign On (RH-SSO). On the topology view of OpenShift, click on the <code>Add to Project</code> button at the top left and add the version of RH-SSO that is compatible with the version of OpehShift you are running and wait for it to finish deploying. Please refer to the <a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.2/html/red_hat_single_sign-on_for_openshift/introduction">RH-SSO for OpenShift Documentation</a> to learn more about it.</p>
 </div>
+<div class="paragraph">
+<p><strong>Note:</strong> If the SSO pod fails to build with the message <code>ERROR <strong>* JBossAS wrapper process (1) received TERM signal </strong>*</code> on the terminal, then try increasing <code>timeoutSeconds</code> and <code>initialDelaySeconds</code> for both the <code>livenessProbe</code> and the <code>readinessProbe</code> for the SSO pod. For more information, visit <a href="https://access.redhat.com/solutions/4874991">here</a>.</p>
+</div>
 <div class="sect2">
 <h3 id="openshift-cli"><a class="anchor" href="#openshift-cli"></a>OpenShift CLI</h3>
 <div class="paragraph">
@@ -351,7 +354,7 @@ echo ""</code></pre>
 <h2 id="configure-rh-sso"><a class="anchor" href="#configure-rh-sso"></a>Configure RH-SSO</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>First log in to the RH-SSO admin console using the username and password specified in the yaml configuration.  From here, create a realm called <code>myrealm</code>, and a client called <code>myclient</code>.</p>
+<p>First log in to the RH-SSO admin console using the username and password specified in the yaml configuration for the SSO pod.  From here, create a realm called <code>myrealm</code>, and a client called <code>myclient</code>.</p>
 </div>
 <div class="paragraph">
 <p>After registering our client, <code>myclient</code>, we also need to configure <code>valid redirect URIs</code>. Once we have our application deployed on OpenShift, we will assign the URL from our application to the <code>Valid Redirect URIs</code> field.</p>
