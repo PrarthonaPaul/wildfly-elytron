@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Thu, 09 Nov 2023 14:50:50 +0000</lastBuildDate>
+        <lastBuildDate>Thu, 09 Nov 2023 15:57:26 +0000</lastBuildDate>
         
         <item>
             <title>Using Credential Stores to Replace Clear Text Passwords in WildFly</title>
@@ -14,6 +14,20 @@
             </link>
             <description>
                 Prerequisite To follow along with this guide you will need: about 10 minutes an IDE or file viewer WildFly with credential-store support WildFly allows the use of credential stores to keep alias for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials...
+            </description>
+            <pubDate>Thu, 09 Nov 2023 00:00:00 +0000</pubDate>
+            <guid>
+                https://wildfly-security.github.io/wildfly-elytron/blog/credential-store-for-passwords/
+            </guid>
+        </item>
+        
+        <item>
+            <title>Using Credential Stores to Replace Clear Text Passwords in WildFly</title>
+            <link>
+                https://wildfly-security.github.io/wildfly-elytron/blog/credential-store-for-passwords/
+            </link>
+            <description>
+                Prerequisite To follow along with this guide you will need: about 10 minutes WildFly with credential-store support WildFly allows the use of credential stores to keep alias for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and use credential-reference...
             </description>
             <pubDate>Thu, 09 Nov 2023 00:00:00 +0000</pubDate>
             <guid>
@@ -130,20 +144,6 @@
             <pubDate>Fri, 04 Aug 2023 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/deploying-OIDC-webapp-on-openshift/
-            </guid>
-        </item>
-        
-        <item>
-            <title>Securing the WildFly Management Console with OpenID Connect</title>
-            <link>
-                https://wildfly-security.github.io/wildfly-elytron/blog/securing-management-console-oidc/
-            </link>
-            <description>
-                WildFly 29 Final, which was just released last week, includes the ability to secure the WildFly Management Console with OpenID Connect using the Keycloak OpenID provider. This blog post gives an overview of how to configure this. OpenID Connect Securing the WildFly Management Console with the Keycloak OpenID Provider Keycloak...
-            </description>
-            <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate>
-            <guid>
-                https://wildfly-security.github.io/wildfly-elytron/blog/securing-management-console-oidc/
             </guid>
         </item>
         
