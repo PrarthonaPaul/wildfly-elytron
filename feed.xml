@@ -5,7 +5,21 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Thu, 09 Nov 2023 20:14:35 +0000</lastBuildDate>
+        <lastBuildDate>Thu, 09 Nov 2023 20:19:57 +0000</lastBuildDate>
+        
+        <item>
+            <title>Trying Out An In-progress Feature for WildFly on OpenShift</title>
+            <link>
+                https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/
+            </link>
+            <description>
+                A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. For updates...
+            </description>
+            <pubDate>Thu, 09 Nov 2023 00:00:00 +0000</pubDate>
+            <guid>
+                https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/
+            </guid>
+        </item>
         
         <item>
             <title>Securing WildFly Apps with OIDC on OpenShift</title>
@@ -130,20 +144,6 @@
             <pubDate>Mon, 24 Jul 2023 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/securing-management-console-oidc/
-            </guid>
-        </item>
-        
-        <item>
-            <title>Using Certificate Based Authentication with Mutual TLS without Roles</title>
-            <link>
-                https://wildfly-security.github.io/wildfly-elytron/blog/Client-cert-auth-without-roles/
-            </link>
-            <description>
-                Mutual TLS with client certificates is essential for secure and encrypted communication between clients and servers in various applications and systems. It involves a handshake process during which both the client and the server must present their certificate to each other in order to establish a secure connection. This ensures...
-            </description>
-            <pubDate>Mon, 26 Jun 2023 00:00:00 +0000</pubDate>
-            <guid>
-                https://wildfly-security.github.io/wildfly-elytron/blog/Client-cert-auth-without-roles/
             </guid>
         </item>
         
