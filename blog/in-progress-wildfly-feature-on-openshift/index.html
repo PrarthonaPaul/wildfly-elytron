@@ -31,8 +31,8 @@
 <meta property="og:title" content="Trying Out An In-progress Feature for WildFly on OpenShift" />
 <meta name="author" content="Prarthona Paul" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift." />
-<meta property="og:description" content="A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift." />
+<meta name="description" content="A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify additional scope values in the authentication request for applications secured using OIDC. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift." />
+<meta property="og:description" content="A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify additional scope values in the authentication request for applications secured using OIDC. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift." />
 <link rel="canonical" href="https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/" />
 <meta property="og:url" content="https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/" />
 <meta property="og:site_name" content="WildFly Elytron" />
@@ -43,7 +43,7 @@
 <meta property="twitter:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
 <meta property="twitter:title" content="Trying Out An In-progress Feature for WildFly on OpenShift" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2023-11-09T00:00:00+00:00","datePublished":"2023-11-09T00:00:00+00:00","description":"A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift.","headline":"Trying Out An In-progress Feature for WildFly on OpenShift","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2023-11-09T00:00:00+00:00","datePublished":"2023-11-09T00:00:00+00:00","description":"A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify additional scope values in the authentication request for applications secured using OIDC. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using Red Hat OpenShift.","headline":"Trying Out An In-progress Feature for WildFly on OpenShift","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -206,9 +206,11 @@
           <div class="paragraph">
 <p>A future release of WildFly will include the ability to add additional scope values when securing applications using
 OpenID Connect. This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope
-values to request additional claims using an in-progress version of the feature. For updates on the status of the feature,
-please keep an eye on <a href="https://issues.redhat.com/browse/WFLY-16532">WFLY-16532</a>.
-We will also walk through how to deploy this feature on the cloud using <a href="https://developers.redhat.com/developer-sandbox">Red Hat OpenShift</a>.</p>
+values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify
+additional scope values in the authentication request for applications secured using OIDC. For updates on the status
+of the feature, please keep an eye on <a href="https://issues.redhat.com/browse/WFLY-16532">WFLY-16532</a>.
+We will also walk through how to deploy this feature on the cloud using
+<a href="https://developers.redhat.com/developer-sandbox">Red Hat OpenShift</a>.</p>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle" class="title"></div>
@@ -353,20 +355,57 @@ echo ""</code></pre>
 <div class="sect1">
 <h2 id="configure-rh-sso"><a class="anchor" href="#configure-rh-sso"></a>Configure RH-SSO</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>First log in to the RH-SSO admin console using the username and password specified in the yaml configuration for the SSO pod.  From here, create a realm called <code>myrealm</code>, and a client called <code>myclient</code>.</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>First log in to the RH-SSO admin console using the username and password specified in the yaml configuration for the SSO pod.</p>
+</li>
+<li>
+<p>From here, create a realm called <strong>myrealm</strong>, and a client called <strong>myclient</strong> as fllows:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>General settings</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Client type</strong> (or <strong>Client Protocol</strong>, depending on your Keycloak version): <strong>OpenID Connect</strong></p>
+</li>
+<li>
+<p><strong>Client ID: myclient</strong></p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>After registering our client, <code>myclient</code>, we also need to configure <code>valid redirect URIs</code>. Once we have our application deployed on OpenShift, we will assign the URL from our application to the <code>Valid Redirect URIs</code> field.</p>
+</li>
+<li>
+<p><strong>Capability config:</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Authentication flow: Standard flow, Direct access grants</strong></p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>Navigate to the <code>Client Scopes</code> tab for <code>myclient</code>. Here you will see that some scope values are under <code>Assigned Default Client Scopes</code> field and some others are under <code>Assigned Optional Client Scopes</code> field. When client scopes are added to <code>Default</code>, the claims associated with them are automatically added to the access token you receive without the need to configure them. Changing it to <code>Optional</code> ensures that they are not included by default and you will only get access to claims if you configure the corresponding scope values. This list of scope values you see here are the values that RH-SSO allows and it varies for different OpenID providers. RH-SSO also allows you to create new scopes, but we will not be doing that for this blog.</p>
+</li>
+<li>
+<p><strong>Login Settings:</strong> leave it blank for now</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>Now, click on <code>Roles</code> and create two roles, <code>user</code> and <code>admin</code>.</p>
-</div>
-<div class="paragraph">
-<p>Finally, create a user called <code>alice</code> whose <code>First Name</code> is Alice and <code>Last Name</code> is Smith and assign her the <code>user</code> and <code>admin</code> roles. Next, navigate to the <code>Credentials</code> tab and create a password for Alice. Toggle the <code>Temporary</code> switch off so you are not prompted to update the password after the first login.</p>
+</li>
+<li>
+<p>Navigate to the <strong>Client Scopes</strong> tab for <strong>myclient</strong>. Here you will see that some scope values are under <strong>Assigned Default Client Scopes</strong> field and some others are under <strong>Assigned Optional Client Scopes</strong> field. When client scopes are added to <strong>Default</strong>, the claims associated with them are automatically added to the access token you receive without the need to configure them. Changing it to <strong>Optional</strong> ensures that they are not included by default and you will only get access to claims if you configure the corresponding scope values. This list of scope values you see here are the values that RH-SSO allows and it varies for different OpenID providers. RH-SSO also allows you to create new scopes, but we will not be doing that for this blog.</p>
+</li>
+<li>
+<p>Now, click on <strong>Roles</strong> and create two roles, <strong>user</strong> and <strong>admin</strong>.</p>
+</li>
+<li>
+<p>Finally, create a user called <strong>alice</strong> whose <strong>First Name</strong> is <strong>Alice</strong> and <strong>Last Name</strong> is <strong>Smith</strong> and assign her the <strong>user</strong> and <strong>admin</strong> roles.</p>
+</li>
+<li>
+<p>Next, navigate to the <code>Credentials</code> tab and create a password for Alice. Toggle the <code>Temporary</code> switch off so you are not prompted to update the password after the first login.</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -397,7 +436,13 @@ git checkout WFLY-16532</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Notice that we are not using <code>WildFly/WildFly</code> repo. Instead, we are using a forked version of the project.</p>
+<p>Notice that we are not using <code>WildFly/WildFly</code> and the <code>wildfly-security/wildfly-elytron</code> repositories. Instead, we are using a forked versions of the projects.
+However, this feature does not add any changes to the WildFly-core project. So we can just clone the project and stay on the main branch:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">git clone https://github.com/wildfly/wildfly-core.git</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -639,7 +684,7 @@ have not performed any ssl configuration.</p>
 <p>Next, you’ll be redirected back to our application, and you should see the "Secured Servlet" page. That means that we were able to successfully log in to our application using the RH-SSO OpenID provider!</p>
 </div>
 <div class="paragraph">
-<p>This page will display the Current Principal, and a list of claim values obtained using the scope values you configured. This is what it will look like:</p>
+<p>This page will display the current principal, and a list of claim values obtained using the scope values you configured. This is what it will look like:</p>
 </div>
 <div class="listingblock">
 <div class="content">
