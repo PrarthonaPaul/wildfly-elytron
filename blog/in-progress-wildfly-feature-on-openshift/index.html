@@ -436,11 +436,12 @@ git checkout WFLY-16532</code></pre>
 </div>
 <div class="paragraph">
 <p>Notice that we are not using <code>WildFly/WildFly</code> and the <code>wildfly-security/wildfly-elytron</code> repositories. Instead, we are using a forked versions of the projects.
-However, this feature does not add any changes to the WildFly-core project. So we can just clone the project and stay on the main branch:</p>
+This feature does not add any changes to the <code>WildFly-Core</code> project. However, to ensure that the branch for <code>WildFly-Core</code> is compatible with the branches in the <code>WildFly</code> and the <code>WildFly-Elytron</code> projects.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">git clone https://github.com/wildfly/wildfly-core.git</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">git clone https://github.com/PrarthonaPaul/wildfly-core.git
+git check WFLY-16532</code></pre>
 </div>
 </div>
 </div>
