@@ -360,7 +360,7 @@ echo "RHSSO Admin Console: $RHSSO_URL/admin" &amp;&amp; echo ""</code></pre>
 <p>First log in to the RH-SSO admin console using the username and password specified in the yaml configuration for the SSO pod.</p>
 </li>
 <li>
-<p>From here, create a realm called <strong>myrealm</strong>, and a client called <strong>myclient</strong> as fllows:</p>
+<p>From here, create a realm called <strong>myrealm</strong>, and a client called <strong>myclient</strong> as follows:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -500,7 +500,13 @@ docker push quay.io/&lt;your-quay-username&gt;/wildfly:wildfly-app</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Replace <code>&lt;your-quay-username&gt;</code> with your username for Quay. The <code>-t</code> command indicates that we are specifying a tag, which in this case is <code>wildfly-app</code>. The tag is used to identify different images inside the same repository. Using this image, we can ensure that we are running your local version of WildFly, as opposed to the version of WildFly that is present on OpenShift.</p>
+<p>Replace <code>&lt;your-quay-username&gt;</code> with your username for Quay. The <code>-t</code> command indicates that we are specifying a tag, which in this case is <code>wildfly-app</code>. The tag is used to identify different images inside the same repository. Using this image, we can ensure that we are running your local version of WildFly, as opposed to the version of WildFly that is present on OpenShift.
+You may need to log into quay.io using your username and password if you have not done so already:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">docker login -u=&lt;your-quay-username&gt; -p=&lt;your-quay-password&gt; quay.io</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -535,14 +541,6 @@ ADD target/simple-webapp-oidc.war /opt/server/standalone/deployments/</code></pr
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">docker build -t quay.io/&lt;your-quay-username&gt;/wildfly:latest .
 docker push quay.io/&lt;your-quay-username&gt;/wildfly:latest</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You may need to log into quay.io using your username and password if you have not done so already:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">docker login -u=&lt;your-quay-username&gt; -p=&lt;your-quay-password&gt; quay.io</code></pre>
 </div>
 </div>
 <div class="sect2">
@@ -590,14 +588,20 @@ deploy:
 </div>
 </div>
 <div class="paragraph">
-<p>Replace &lt;your-project-name&gt; to match the project in your RH-SSO url.
+<p>Replace &lt;OIDC_PROVIDER_URL&gt; to match the url for your RH-SSO instance on OpenShift and add a <code>/auth/</code> to the end of the URL.
 There are three fields that we have specified: image, build and deploy.</p>
 </div>
 <div class="paragraph">
-<p>Using the image tag, we are specifying that we want the pod to use the image of our application that we just built. Notice that we did not specify the tag. This is because when the helm chart uploads, the <code>latest</code> tag is appended to it by default, which is why we tagged our application image as that. If you want to use a different tag, then you can edit this by clicking on the pod, click on <code>Edit Deployment</code> and changing it under <code>Image Name</code>.</p>
+<p>Using the image tag, we are specifying that we want the pod to use the image of our application that we just built.
+Notice that we did not specify the tag. This is because when the helm chart uploads, the <code>latest</code> tag is appended to it
+by default, which is why we tagged our application image as that. If you want to use a different tag, then you can edit
+this by clicking on the pod, click on <code>Edit Deployment</code> and changing it under <code>Image Name</code>.</p>
 </div>
 <div class="paragraph">
-<p>We have also added some environment variables. Notice the <code>OIDC_PROVIDER_URL</code>. The value of this will be the url for your RH-SSO pod, which can be found by clicking on the <code>Open URL</code> button on the pod. So, copy that link and paste it as the <code>value</code>. The <code>OIDC_PROVIDER_URL</code> variable is being used by the <code>oidc.json</code> file inside the <code>WEB-INF</code> directory when specifying the <code>provider-url</code>.</p>
+<p>We have also added some environment variables. Notice the <code>OIDC_PROVIDER_URL</code>. The value of this will be the url for
+your RH-SSO pod, which can be found by clicking on the <code>Open URL</code> button on the pod. So, copy that link and paste it as
+the <code>value</code>. The <code>OIDC_PROVIDER_URL</code> variable is being used by the <code>oidc.json</code> file inside the <code>WEB-INF</code> directory when
+specifying the <code>provider-url</code>.</p>
 </div>
 <div class="paragraph">
 <p>Change the image name on the <code>charts/helm.yaml</code> file to <code>quay.io/&lt;your-quay-username&gt;/wildfly</code>.</p>
@@ -636,13 +640,14 @@ $ oc get deployment simple-webapp-oidc -w</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Click on the three dots beside the <code>simple-webapp-oidc</code> pod&#8217;s name and click on <code>Edit Deployment</code>. Make sure that the image name has <code>:latest</code>
-added to it. If not, edit it to reflect the correct image name under <code>Image Name</code>. Under <code>Show advanced image options</code>,
-set the <code>Pull Secret</code> to be the one you configured in the last section and click <code>Save</code>.</p>
+<p>Click on the three dots beside the <code>simple-webapp-oidc</code> pod&#8217;s name and click on <code>Edit Deployment</code>.
+Make sure that the image name is 'quay.io/&lt;your-quay-username&gt;/wildfly:latest`. If not, edit it to reflect the correct
+image name under <code>Image Name</code>. Under <code>Show advanced image options</code>, set the <code>Pull Secret</code> to be the one you configured
+in the last section and click <code>Save</code>.</p>
 </div>
 <div class="paragraph">
-<p>Your application is now deploying. Click on the <code>simple-webapp-oidc</code> pod and under the <code>resources</code> tab, you should see the status of your deployment.
-Alternatively, you can use the following commands:</p>
+<p>Your application is now deploying. Click on the <code>simple-webapp-oidc</code> pod and under the <code>resources</code> tab, you should see
+the status of your deployment. Alternatively, you can use the following commands:</p>
 </div>
 <div class="listingblock">
 <div class="content">
