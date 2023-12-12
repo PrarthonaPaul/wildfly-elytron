@@ -290,7 +290,7 @@ We will also walk through how to deploy this feature on the cloud using
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">git clone https://github.com/wildfly-security-incubator/elytron-examples
+<pre class="highlightjs highlight"><code class="language-none hljs">git clone https://github.com/prarthonapaul/elytron-examples
 cd elytron-examples/elytron-oidc-client-scope</code></pre>
 </div>
 </div>
@@ -346,7 +346,7 @@ echo "RHSSO Admin Console: $RHSSO_URL/admin" &amp;&amp; echo ""</code></pre>
 <div class="sect2">
 <h3 id="openshift-web-console"><a class="anchor" href="#openshift-web-console"></a>OpenShift Web Console</h3>
 <div class="paragraph">
-<p>Alternatively, you can click on the <code>Open UR`L button on the `Routes</code> tab of the pod to be redirected to the RH-SSO landing page and click on <code>Administration Console</code>. You will be able to sign in using the admin username and password that is specified in the yaml configuration of the RH-SSO pod.</p>
+<p>Alternatively, you can click on the <code>Open URL</code> button on the <code>Routes</code> tab of the pod to be redirected to the RH-SSO landing page and click on <code>Administration Console</code>. You will be able to sign in using the admin username and password that is specified in the yaml configuration of the RH-SSO pod.</p>
 </div>
 </div>
 </div>
@@ -435,13 +435,15 @@ git checkout WFLY-16532</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Notice that we are not using <code>WildFly/WildFly</code> and the <code>wildfly-security/wildfly-elytron</code> repositories. Instead, we are using a forked versions of the projects.
-This feature does not add any changes to the <code>WildFly-Core</code> project. However, to ensure that the branch for <code>WildFly-Core</code> is compatible with the branches in the <code>WildFly</code> and the <code>WildFly-Elytron</code> projects.</p>
+<p>Notice that we are not using <code>WildFly/WildFly</code> and the <code>wildfly-security/wildfly-elytron</code> repositories. Instead, we are
+using a forked versions of the projects. This feature does not add any changes to the <code>WildFly-Core</code> project. However,
+to ensure that the branch for <code>WildFly-Core</code> is compatible with the branches in the <code>WildFly</code> and the <code>WildFly-Elytron</code>
+projects, we have created a branch called <code>WFLY-16532</code>, which we will use for this guide.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">git clone https://github.com/PrarthonaPaul/wildfly-core.git
-git check WFLY-16532</code></pre>
+git checkout WFLY-16532</code></pre>
 </div>
 </div>
 </div>
@@ -535,6 +537,14 @@ ADD target/simple-webapp-oidc.war /opt/server/standalone/deployments/</code></pr
 docker push quay.io/&lt;your-quay-username&gt;/wildfly:latest</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>You may need to log into quay.io using your username and password if you have not done so already:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">docker login -u=&lt;your-quay-username&gt; -p=&lt;your-quay-password&gt; quay.io</code></pre>
+</div>
+</div>
 <div class="sect2">
 <h3 id="configure-image-pull-secret"><a class="anchor" href="#configure-image-pull-secret"></a>Configure Image Pull Secret</h3>
 <div class="paragraph">
@@ -572,7 +582,7 @@ build:
 deploy:
   env:
     - name: OIDC_PROVIDER_URL
-      value: 'https://sso-&lt;your-project-name&gt;.apps.sandbox-m4.g2pi.p1.openshiftapps.com/auth'
+      value: '&lt;OIDC_PROVIDER_URL&gt;'
     - name: WILDFLY_OVERRIDING_ENV_VARS
       value: "1"
     - name: SUBSYSTEM_LOGGING_PATTERN_FORMATTER_COLOR_PATTERN__PATTERN
@@ -626,7 +636,7 @@ $ oc get deployment simple-webapp-oidc -w</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Click on the three dots beside the pod&#8217;s name and click on <code>Edit Deployment</code>. Make sure that the image name has <code>:latest</code>
+<p>Click on the three dots beside the <code>simple-webapp-oidc</code> pod&#8217;s name and click on <code>Edit Deployment</code>. Make sure that the image name has <code>:latest</code>
 added to it. If not, edit it to reflect the correct image name under <code>Image Name</code>. Under <code>Show advanced image options</code>,
 set the <code>Pull Secret</code> to be the one you configured in the last section and click <code>Save</code>.</p>
 </div>
