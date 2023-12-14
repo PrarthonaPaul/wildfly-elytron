@@ -368,7 +368,7 @@ echo "RHSSO Admin Console: $RHSSO_URL/admin" &amp;&amp; echo ""</code></pre>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Client type</strong> (or <strong>Client Protocol</strong>, depending on your Keycloak version): <strong>OpenID Connect</strong></p>
+<p><strong>Client type</strong> (or <strong>Client Protocol</strong>, depending on your RH-SSO version): <strong>OpenID Connect</strong></p>
 </li>
 <li>
 <p><strong>Client ID: myclient</strong></p>
@@ -402,7 +402,7 @@ echo "RHSSO Admin Console: $RHSSO_URL/admin" &amp;&amp; echo ""</code></pre>
 <p>Finally, create a user called <strong>alice</strong> whose <strong>First Name</strong> is <strong>Alice</strong> and <strong>Last Name</strong> is <strong>Smith</strong> and assign her the <strong>user</strong> and <strong>admin</strong> roles.</p>
 </li>
 <li>
-<p>Next, navigate to the <code>Credentials</code> tab and create a password for Alice. Toggle the <code>Temporary</code> switch off so you are not prompted to update the password after the first login.</p>
+<p>Next, navigate to the <code>Credentials</code> tab and create a password for Alice. Toggle the <code>Temporary</code> switch off, so you are not prompted to update the password after the first login.</p>
 </li>
 </ol>
 </div>
@@ -580,7 +580,7 @@ build:
 deploy:
   env:
     - name: OIDC_PROVIDER_URL
-      value: '&lt;OIDC_PROVIDER_URL&gt;'
+      value: '&lt;OIDC_PROVIDER_URL&gt;'/auth/
     - name: WILDFLY_OVERRIDING_ENV_VARS
       value: "1"
     - name: SUBSYSTEM_LOGGING_PATTERN_FORMATTER_COLOR_PATTERN__PATTERN
@@ -588,14 +588,14 @@ deploy:
 </div>
 </div>
 <div class="paragraph">
-<p>Replace &lt;OIDC_PROVIDER_URL&gt; to match the url for your RH-SSO instance on OpenShift and add a <code>/auth/</code> to the end of the URL.
-There are three fields that we have specified: image, build and deploy.</p>
+<p>Replace &lt;OIDC_PROVIDER_URL&gt; to match the url for your RH-SSO instance on OpenShift and add a <code>/auth/</code> to the end of the
+URL as seen above. There are three fields that we have specified: image, build and deploy.</p>
 </div>
 <div class="paragraph">
 <p>Using the image tag, we are specifying that we want the pod to use the image of our application that we just built.
 Notice that we did not specify the tag. This is because when the helm chart uploads, the <code>latest</code> tag is appended to it
 by default, which is why we tagged our application image as that. If you want to use a different tag, then you can edit
-this by clicking on the pod, click on <code>Edit Deployment</code> and changing it under <code>Image Name</code>.</p>
+this by clicking on the 3 dots at the bottom of the pod, click on <strong>Edit Deployment</strong> and changing it under <strong>Image Name</strong>.</p>
 </div>
 <div class="paragraph">
 <p>We have also added some environment variables. Notice the <code>OIDC_PROVIDER_URL</code>. The value of this will be the url for
@@ -604,7 +604,7 @@ the <code>value</code>. The <code>OIDC_PROVIDER_URL</code> variable is being use
 specifying the <code>provider-url</code>.</p>
 </div>
 <div class="paragraph">
-<p>Change the image name on the <code>charts/helm.yaml</code> file to <code>quay.io/&lt;your-quay-username&gt;/wildfly</code>.</p>
+<p>Change the image name on the <code>charts/helm.yaml</code> file to include your quay username instead of &lt;your-quay-username&gt;.</p>
 </div>
 </div>
 </div>
@@ -640,13 +640,13 @@ $ oc get deployment simple-webapp-oidc -w</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Click on the three dots beside the <code>simple-webapp-oidc</code> pod&#8217;s name and click on <code>Edit Deployment</code>.
-Make sure that the image name is 'quay.io/&lt;your-quay-username&gt;/wildfly:latest`. If not, edit it to reflect the correct
-image name under <code>Image Name</code>. Under <code>Show advanced image options</code>, set the <code>Pull Secret</code> to be the one you configured
-in the last section and click <code>Save</code>.</p>
+<p>Click on the three dots beside the <code>simple-webapp-oidc</code> pod&#8217;s name and click on <strong>Edit Deployment</strong>.
+Make sure that the image name is <strong>quay.io/&lt;your-quay-username&gt;/wildfly:latest</strong>. If not, edit it to reflect the correct
+image name under <strong>Image Name</strong>. Under <strong>Show advanced image options</strong>, set the <strong>Pull Secret</strong> to be the one you configured
+in the last section and click <strong>Save</strong>.</p>
 </div>
 <div class="paragraph">
-<p>Your application is now deploying. Click on the <code>simple-webapp-oidc</code> pod and under the <code>resources</code> tab, you should see
+<p>Your application is now deploying. Click on the <strong>simple-webapp-oidc</strong> pod and under the <strong>resources</strong> tab, you should see
 the status of your deployment. Alternatively, you can use the following commands:</p>
 </div>
 <div class="listingblock">
