@@ -291,6 +291,7 @@ We will also walk through how to deploy this feature on the cloud using
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">git clone https://github.com/prarthonapaul/elytron-examples
+git checkout elytron-oidc-client-scope
 cd elytron-examples/elytron-oidc-client-scope</code></pre>
 </div>
 </div>
@@ -458,14 +459,14 @@ git checkout WFLY-16532</code></pre>
 mvn clean install -DskipTests
 
 cd ../wildfly-core
-mvn clean install -DskipTests -Dversion.org.wildfly.elytron=&lt;insert_SNAPSHOT_VERSION_OF_ELYTRON&gt;
+mvn clean install -DskipTests -Dversion.org.wildfly.security.elytron=&lt;insert_SNAPSHOT_VERSION_OF_ELYTRON&gt;
 
 cd ../wildfly
 mvn clean install -DskipTests -Dversion.org.wildfly.core=&lt;insert_SNAPSHOT_VERSION_OF_WILDFLY-CORE&gt;</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>DskipTests</code> tag skips all the tests, since we only need to build the projects.</p>
+<p>The <code>-DskipTests</code> tag skips all the tests, since we only need to build the projects.</p>
 </div>
 </div>
 <div class="sect2">
@@ -477,7 +478,7 @@ mvn clean install -DskipTests -Dversion.org.wildfly.core=&lt;insert_SNAPSHOT_VER
 <p>Navigate to the <code>WildFly</code> project and create a <code>Dockerfile</code> inside the root directory of the project. We will be creating an image of the current version of WildFly using the <code>wildfly-runtime-jdk</code> image on Quay. Quay is a repository for building and storing container images of your projects.</p>
 </div>
 <div class="paragraph">
-<p>Head over to <a href="https://quay.io/repository/">Quay.io</a> and create a repositories called <code>wildfly</code>. For more information on how to create one, visit the <a href="https://docs.quay.io/guides/create-repo.html#:~:text=via%20the%20UI-,To%20create%20a%20repository%20in%20the%20Quay.io%20UI%2C%20click,the%20&#8217;Create%20Repository'%20button">Quay documentation</a>.</p>
+<p>Head over to <a href="https://quay.io/repository/">Quay.io</a> and create a repository called <code>wildfly</code>. For more information on how to create one, visit the <a href="https://docs.quay.io/guides/create-repo.html#:~:text=via%20the%20UI-,To%20create%20a%20repository%20in%20the%20Quay.io%20UI%2C%20click,the%20&#8217;Create%20Repository'%20button">Quay documentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>Now we can create the container image for our WildFly project. Enter the following commands inside your Dockerfile:</p>
@@ -640,7 +641,7 @@ $ oc get deployment simple-webapp-oidc -w</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Click on the three dots beside the <code>simple-webapp-oidc</code> pod&#8217;s name and click on <strong>Edit Deployment</strong>.
+<p>At this point, you may see that the deployment is failing. To fix this, click on the three dots beside the <code>simple-webapp-oidc</code> pod&#8217;s name and click on <strong>Edit Deployment</strong>.
 Make sure that the image name is <strong>quay.io/&lt;your-quay-username&gt;/wildfly:latest</strong>. If not, edit it to reflect the correct
 image name under <strong>Image Name</strong>. Under <strong>Show advanced image options</strong>, set the <strong>Pull Secret</strong> to be the one you configured
 in the last section and click <strong>Save</strong>.</p>
