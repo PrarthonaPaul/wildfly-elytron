@@ -31,8 +31,8 @@
 <meta property="og:title" content="Trying Out An Upcoming Security Feature for WildFly on OpenShift" />
 <meta name="author" content="Prarthona Paul" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A future release of wildfly will include the ability to add additional scope values when securing applications using OpenID Connect (OIDC). This blog post demonstrates how to secure a wildfly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify additional scope values in the authentication request for applications secured using OIDC. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using OpenShift." />
-<meta property="og:description" content="A future release of wildfly will include the ability to add additional scope values when securing applications using OpenID Connect (OIDC). This blog post demonstrates how to secure a wildfly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify additional scope values in the authentication request for applications secured using OIDC. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using OpenShift." />
+<meta name="description" content="A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect (OIDC). This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify additional scope values in the authentication request for applications secured using OIDC. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using OpenShift." />
+<meta property="og:description" content="A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect (OIDC). This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify additional scope values in the authentication request for applications secured using OIDC. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using OpenShift." />
 <link rel="canonical" href="https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/" />
 <meta property="og:url" content="https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/" />
 <meta property="og:site_name" content="WildFly Elytron" />
@@ -43,7 +43,7 @@
 <meta property="twitter:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
 <meta property="twitter:title" content="Trying Out An Upcoming Security Feature for WildFly on OpenShift" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2024-01-02T00:00:00+00:00","datePublished":"2024-01-02T00:00:00+00:00","description":"A future release of wildfly will include the ability to add additional scope values when securing applications using OpenID Connect (OIDC). This blog post demonstrates how to secure a wildfly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify additional scope values in the authentication request for applications secured using OIDC. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using OpenShift.","headline":"Trying Out An Upcoming Security Feature for WildFly on OpenShift","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2024-01-02T00:00:00+00:00","datePublished":"2024-01-02T00:00:00+00:00","description":"A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect (OIDC). This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify additional scope values in the authentication request for applications secured using OIDC. For updates on the status of the feature, please keep an eye on WFLY-16532. We will also walk through how to deploy this feature on the cloud using OpenShift.","headline":"Trying Out An Upcoming Security Feature for WildFly on OpenShift","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -204,8 +204,8 @@
 </div>
       <div class="grid__item width-12-12">
           <div class="paragraph">
-<p>A future release of wildfly will include the ability to add additional scope values when securing applications using
-OpenID Connect (OIDC). This blog post demonstrates how to secure a wildfly application using OpenID Connect and configure scope
+<p>A future release of WildFly will include the ability to add additional scope values when securing applications using
+OpenID Connect (OIDC). This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope
 values to request additional claims using an in-progress version of the feature. This feature adds the ability to specify
 additional scope values in the authentication request for applications secured using OIDC. For updates on the status
 of the feature, please keep an eye on <a href="https://issues.redhat.com/browse/WFLY-16532">WFLY-16532</a>.
@@ -251,7 +251,7 @@ We will also walk through how to deploy this feature on the cloud using
 <h2 id="openid-connect"><a class="anchor" href="#openid-connect"></a>OpenID Connect</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://openid.net/developers/how-connect-works/">OpenID Connect</a> is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. A future release of wildfly will allow the user to configure additional scope values to request specific claim values.</p>
+<p><a href="https://openid.net/developers/how-connect-works/">OpenID Connect</a> is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. A future release of WildFly will allow the user to configure additional scope values to request specific claim values.</p>
 </div>
 </div>
 </div>
@@ -259,7 +259,7 @@ We will also walk through how to deploy this feature on the cloud using
 <h2 id="prerequisites"><a class="anchor" href="#prerequisites"></a>Prerequisites</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We can deploy this application using OpenShift <a href="https://developers.redhat.com/developer-sandbox">Developer Sandbox</a>. There are other <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/try-it">options</a> available for running OpenShift. Please refer to this <a href="https://docs.wildfly.org/30/Getting_Started_on_OpenShift.html">getting started guide</a> to learn more about wildfly on OpenShift. We will be making use of the following tools for this walkthrough:</p>
+<p>We can deploy this application using OpenShift <a href="https://developers.redhat.com/developer-sandbox">Developer Sandbox</a>. There are other <a href="https://www.redhat.com/en/technologies/cloud-computing/openshift/try-it">options</a> available for running OpenShift. Please refer to this <a href="https://docs.wildfly.org/31/Getting_Started_on_OpenShift.html">getting started guide</a> to learn more about WildFly on OpenShift. We will be making use of the following tools for this walkthrough:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -413,7 +413,7 @@ echo "RHSSO Admin Console: $RHSSO_URL/admin" &amp;&amp; echo ""</code></pre>
 <h2 id="build-container-images-for-wildfly-on-openshift"><a class="anchor" href="#build-container-images-for-wildfly-on-openshift"></a>Build Container Images for WildFly on OpenShift</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Normally to use wildfly features that have been released, we just need to add the wildfly Helm release using the chart that is already available on OpenShift. However, since we are making use of a feature that is not released yet, we will need to build our own image of wildfly from the source code and deploy our application on that.</p>
+<p>Normally to use WildFly features that have been released, we just need to add the WildFly Helm release using the chart that is already available on OpenShift. However, since we are making use of a feature that is not released yet, we will need to build our own image of WildFly from the source code and deploy our application on that.</p>
 </div>
 <div class="sect2">
 <h3 id="clone-the-wildfly-and-elytron-projects"><a class="anchor" href="#clone-the-wildfly-and-elytron-projects"></a>Clone the WildFly and Elytron Projects</h3>
@@ -451,7 +451,7 @@ git checkout WFLY-16532</code></pre>
 <div class="sect2">
 <h3 id="build-the-wildfly-project"><a class="anchor" href="#build-the-wildfly-project"></a>Build the WildFly Project</h3>
 <div class="paragraph">
-<p>Next, we need to build these projects to use the local version of the code. To do this, we will specify the SNAPSHOT versions of <code>Elytron</code> and <code>wildfly-core</code>:</p>
+<p>Next, we need to build these projects to use the local version of the code. To do this, we will specify the SNAPSHOT versions of <code>wildfly-elytron</code> and <code>wildfly-core</code>:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -475,13 +475,13 @@ mvn clean install -DskipTests -Dversion.org.wildfly.core=&lt;insert_SNAPSHOT_VER
 <p>In order to deploy our application on OpenShift, we need to first create a container image of the application using Docker or Podman. In this post we are using Docker, but you can also use Podman using the <code>podman</code> keyword, or using an alias.</p>
 </div>
 <div class="paragraph">
-<p>Navigate to the <code>wildfly</code> project and create a <code>Dockerfile</code> inside the root directory of the project. We will be creating an image of the current version of wildfly using the <code>wildfly-runtime-jdk</code> image on Quay. Quay is a repository for building and storing container images of your projects.</p>
+<p>Navigate to the <code>wildfly</code> project and create a <code>Dockerfile</code> inside the root directory of the project. We will be creating an image of the current version of WildFly using the <code>wildfly-runtime-jdk</code> image on Quay. Quay is a repository for building and storing container images of your projects.</p>
 </div>
 <div class="paragraph">
 <p>Head over to <a href="https://quay.io/repository/">Quay.io</a> and create a repository called <code>wildfly</code>. For more information on how to create one, visit the <a href="https://docs.quay.io/guides/create-repo.html#:~:text=via%20the%20UI-,To%20create%20a%20repository%20in%20the%20Quay.io%20UI%2C%20click,the%20&#8217;Create%20Repository'%20button">Quay documentation</a>.</p>
 </div>
 <div class="paragraph">
-<p>Now we can create the container image for our wildfly project. Enter the following commands inside your Dockerfile:</p>
+<p>Now we can create the container image for our WildFly project. Enter the following commands inside your Dockerfile:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -491,8 +491,8 @@ RUN chmod -R ug+rwX $JBOSS_HOME</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Please note that the wildfly version may be different for you. Please update the version to match the wildfly version you have built in previous step.
-Now run the following commands on your terminal from the wildfly directory to create an image and push it to your Quay repository:</p>
+<p>Please note that the WildFly version may be different for you. Please update the version to match the WildFly version you have built in previous step.
+Now run the following commands on your terminal from the <code>wildfly</code> directory to create an image and push it to your Quay repository:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -501,7 +501,7 @@ docker push quay.io/&lt;your-quay-username&gt;/wildfly:wildfly-app</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Replace <code>&lt;your-quay-username&gt;</code> with your username for Quay. The <code>-t</code> command indicates that we are specifying a tag, which in this case is <code>wildfly-app</code>. The tag is used to identify different images inside the same repository. Using this image, we can ensure that we are running your local version of wildfly, as opposed to the version of wildfly that is present on OpenShift.
+<p>Replace <code>&lt;your-quay-username&gt;</code> with your username for Quay. The <code>-t</code> command indicates that we are specifying a tag, which in this case is <code>wildfly-app</code>. The tag is used to identify different images inside the same repository. Using this image, we can ensure that we are running your local version of WildFly, as opposed to the version of WildFly that is present on OpenShift.
 You may need to log into quay.io using your username and password if you have not done so already using the command below:</p>
 </div>
 <div class="listingblock">
@@ -516,7 +516,7 @@ You may need to log into quay.io using your username and password if you have no
 <h2 id="build-the-application"><a class="anchor" href="#build-the-application"></a>Build the Application</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Now that we have our wildfly container image, we can use it to deploy our application on it. Navigate to the <code>elytron-examples/elytron-oidc-client-scope</code> directory and create a deployment file for your application using this command:</p>
+<p>Now that we have our WildFly container image, we can use it to deploy our application on it. Navigate to the <code>elytron-examples/elytron-oidc-client-scope</code> directory and create a deployment file for your application using this command:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -536,7 +536,7 @@ ADD target/simple-webapp-oidc.war /opt/server/standalone/deployments/</code></pr
 </div>
 </div>
 <div class="paragraph">
-<p>Here, we are making use of the container image of wildfly we made earlier and copying over the deployment file to the container image so we can deploy it on OpenShift by running the server. Next, build and push a new image of your application using the following commands:</p>
+<p>Here, we are making use of the container image of WildFly we made earlier and copying over the deployment file to the container image so we can deploy it on OpenShift by running the server. Next, build and push a new image of your application using the following commands:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -565,7 +565,7 @@ docker push quay.io/&lt;your-quay-username&gt;/wildfly:latest</code></pre>
 <h2 id="add-helm-configuration"><a class="anchor" href="#add-helm-configuration"></a>Add Helm Configuration</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Lastly, we will be creating a helm release of our local wildfly image and use that to deploy our application on OpenShift using a helm chart. Navigate to <code>charts</code> directory and open the <code>helm.yaml</code> file.</p>
+<p>Lastly, we will be creating a helm release of our local WildFly image and use that to deploy our application on OpenShift using a helm chart. Navigate to <code>charts</code> directory and open the <code>helm.yaml</code> file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -616,7 +616,7 @@ specifying the <code>provider-url</code>.</p>
 <h2 id="deploy-the-example-application-to-wildfly-on-openshift"><a class="anchor" href="#deploy-the-example-application-to-wildfly-on-openshift"></a>Deploy the Example Application to WildFly on OpenShift</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Use the following commands to deploy your webapp on OpenShift using the wildfly helm chart:</p>
+<p>Use the following commands to deploy your webapp on OpenShift using the WildFly helm chart:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -664,7 +664,7 @@ the status of your deployment. Alternatively, you can use the following commands
 <h2 id="get-the-application-url"><a class="anchor" href="#get-the-application-url"></a>Get the Application URL</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Just like RH-SSO, you can find the url for your webapp by clicking on <code>Open URL</code> which will redirect you to the wildfly landing page. Alternatively, you can use the OC client to do this using the following commands:</p>
+<p>Just like RH-SSO, you can find the url for your webapp by clicking on <code>Open URL</code> which will redirect you to the WildFly landing page. Alternatively, you can use the OC client to do this using the following commands:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -731,7 +731,7 @@ Using the "microprofile-jwt" scope, we got the user's groups: [default-roles-myr
 <h2 id="summary"><a class="anchor" href="#summary"></a>Summary</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This post demonstrated how to deploy an OIDC secured wildfly application on OpenShift using Developer Sandbox. We also looked into how to configure additional scope values to request specific claim values. For more details on the <code>elytron-oidc-client</code> subsystem, please check out the <a href="https://docs.wildfly.org/30/Admin_Guide.html#Elytron_OIDC_Client">documentation</a>. Details on the <code>scope</code> attribute will be available once the feature is released. For more details on wildfly on OpenShift, you can check out <a href="https://cloud.redhat.com/blog/getting-started-with-wildfly">this guide</a>. If you have any questions or comments about this new upcoming feature, please let us know over on the <a href="https://groups.google.com/g/wildfly">WildFly User Forum</a>.</p>
+<p>This post demonstrated how to deploy an OIDC secured WildFly application on OpenShift using Developer Sandbox. We also looked into how to configure additional scope values to request specific claim values. For more details on the <code>elytron-oidc-client</code> subsystem, please check out the <a href="https://docs.wildfly.org/31/Admin_Guide.html#Elytron_OIDC_Client">documentation</a>. Details on the <code>scope</code> attribute will be available once the feature is released. For more details on WildFly on OpenShift, you can check out <a href="https://cloud.redhat.com/blog/getting-started-with-wildfly">this guide</a>. If you have any questions or comments about this new upcoming feature, please let us know over on the <a href="https://groups.google.com/g/wildfly">WildFly User Forum</a>.</p>
 </div>
 </div>
 </div>
@@ -744,13 +744,13 @@ Using the "microprofile-jwt" scope, we got the user's groups: [default-roles-myr
 <p><a href="https://issues.redhat.com/browse/WFLY-16532">Jira Issue for this feature</a></p>
 </li>
 <li>
-<p><a href="https://docs.wildfly.org/30/Getting_Started_on_OpenShift.html">Getting Started with wildfly on OpenShift</a></p>
+<p><a href="https://docs.wildfly.org/31/Getting_Started_on_OpenShift.html">Getting Started with WildFly on OpenShift</a></p>
 </li>
 <li>
 <p><a href="https://docs.openshift.com/container-platform/4.14/cli_reference/openshift_cli/getting-started-cli.html">OpenShift CLI</a></p>
 </li>
 <li>
-<p><a href="https://docs.wildfly.org/30/Getting_Started_on_OpenShift.html#helm-charts">wildfly Helm Chart</a></p>
+<p><a href="https://docs.wildfly.org/31/Getting_Started_on_OpenShift.html#helm-charts">WildFly Helm Chart</a></p>
 </li>
 <li>
 <p><a href="https://access.redhat.com/documentation/en-us/red_hat_single_sign-on/7.6/html/red_hat_single_sign-on_for_openshift/index">Getting started with RH-SSO on OpenShift</a></p>
