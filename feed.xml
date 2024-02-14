@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Mon, 29 Jan 2024 16:08:01 +0000</lastBuildDate>
+        <lastBuildDate>Wed, 14 Feb 2024 14:45:22 +0000</lastBuildDate>
         
         <item>
             <title>Trying Out An Upcoming Security Feature for WildFly on OpenShift</title>
@@ -15,7 +15,7 @@
             <description>
                 A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect (OIDC). This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This...
             </description>
-            <pubDate>Tue, 02 Jan 2024 00:00:00 +0000</pubDate>
+            <pubDate>Wed, 14 Feb 2024 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/
             </guid>
