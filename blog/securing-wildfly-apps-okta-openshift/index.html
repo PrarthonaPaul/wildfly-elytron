@@ -364,16 +364,16 @@ cd simple-webapp-okta</code></pre>
 <p>User Name: <strong>alice@example.org</strong></p>
 </li>
 <li>
-<p>From the dropdown list for <em>Password</em>, choose <em>Set by admin</em> and set a password that fits the password requirements.</p>
+<p>From the dropdown list for <strong>Password</strong>, choose <strong>Set by admin</strong> and set a password that fits the password requirements.</p>
 </li>
 <li>
-<p>Uncheck <em>User must change password on first login</em> and hit <code>Save</code>. For more information about how to add a user manually <a href="https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-add-users.htm">click here</a>.</p>
+<p>Uncheck <strong>User must change password on first login</strong> and hit <code>Save</code>. For more information about how to add a user manually <a href="https://help.okta.com/en-us/content/topics/users-groups-profiles/usgp-add-users.htm">click here</a>.</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Click on the <em>Applications</em> tab on the left hand side. Navigate to <em>Applications</em> and click on <em>simple-webapp-okta</em>. Under the <em>Assignments</em> tab, click on <strong>Assign</strong>, then click on <strong>Assign to People</strong> and select <strong>Alice</strong>. For more information about how to assign a user to an application, please see <a href="https://support.okta.com/help/s/article/How-To-Assign-An-User-To-An-Application?language=en_US">here</a>.</p>
+<p>Click on the <strong>Applications</strong> tab on the left hand side. Navigate to <strong>Applications</strong> and click on <strong>simple-webapp-okta</strong>. Under the <strong>Assignments</strong> tab, click on <strong>Assign</strong>, then click on <strong>Assign to People</strong> and select <strong>Alice</strong>. For more information about how to assign a user to an application, please see <a href="https://support.okta.com/help/s/article/How-To-Assign-An-User-To-An-Application?language=en_US">here</a>.</p>
 </li>
 </ol>
 </div>
@@ -401,7 +401,7 @@ cd simple-webapp-okta</code></pre>
 <p>Value type: <strong>Expression</strong></p>
 </li>
 <li>
-<p>Value: <strong>appuser.userName</strong> and hit <code>Save</code>.
+<p>Value: <strong>appuser.userName</strong> and hit <code>Save</code>. We will be using this claim later to extract the username of the user who is currently logged in.
 You can learn more about Expression Language Reference for Okta <a href="https://developer.okta.com/reference/okta_expression_language/">here</a>.</p>
 </li>
 </ul>
@@ -448,11 +448,11 @@ deploy:
   replicas: 1
   env:
     - name: OIDC_PROVIDER_URL
-      value: &lt;okta_URL&gt;         <i class="conum" data-value="1"></i><b>(1)</b>
+      value: &lt;OKTA_URL&gt;         <i class="conum" data-value="1"></i><b>(1)</b>
     - name: OIDC_CLIENT_ID
-      value: &lt;client_id&gt;        <i class="conum" data-value="2"></i><b>(2)</b>
+      value: &lt;CLIENT_ID&gt;        <i class="conum" data-value="2"></i><b>(2)</b>
     - name: OIDC_CLIENT_SECRET
-      value: &lt;client_secret&gt;    <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+      value: &lt;CLIENT_SECRET&gt;    <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -466,11 +466,11 @@ deploy:
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Replace <strong>client_id</strong> with the <strong>Client ID</strong> listed on the Okta console. Navigate to the <em>General</em> tab for our application on the Okta admin console and copy the <em>Client Id</em> and add it beside the <code>client-id</code> attribute.</td>
+<td>Replace <strong>CLIENT_ID</strong> with the <strong>Client ID</strong> listed on the Okta console. Navigate to the <strong>General</strong> tab for our application on the Okta admin console and copy the <strong>Client Id</strong> and add it beside the <em>client-id</em> attribute.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>Replace <strong>client_secret</strong> with your <strong>Client Secret</strong> for this application listed on Okta.</td>
+<td>Replace <strong>CLIENT_SECRET</strong> with your <strong>Client Secret</strong> for this application listed on Okta.</td>
 </tr>
 </table>
 </div>
@@ -483,7 +483,7 @@ deploy:
 <h2 id="configure-the-deployment-settings"><a class="anchor" href="#configure-the-deployment-settings"></a>Configure the Deployment Settings</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We can use the resources under 'elytron-oidc-client' to configure the WildFly server. We can do this in two different ways:</p>
+<p>Applications deployed to WildFly can be secured with OIDC in a couple different ways:</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -496,7 +496,7 @@ deploy:
 </ol>
 </div>
 <div class="paragraph">
-<p>This guide uses the deployment configuration, but you can use the same attributes to configure the <code>elytron-oidc-client</code> subsystem. You can view the resources defined by navigating to the <strong>oidc.json</strong> file. Note that we are making use of the environment variables we defined in the helm chart.</p>
+<p>This guide uses the deployment configuration, but you can use the same attributes to configure the <code>elytron-oidc-client</code> subsystem. You can view the deployment configuration used in this example by navigating to the <strong>oidc.json</strong> file. Note that we are making use of the environment variables we defined in the helm chart.</p>
 </div>
 <div class="paragraph">
 <p>Now that we have added the required changes, we can deploy our application, the helm chart will specify the location for this example application and pull information needed for our deployment specified in the <code>oidc.json</code> file.</p>
@@ -555,12 +555,8 @@ The build can be observed using:</p>
 <div class="paragraph">
 <p>While our application is building, let’s take a closer look at our application.</p>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/simple-webapp-okta/simple-webapp-okta/pom.xml">pom.xml</a> file. Notice that it contains an openshift profile. A profile in Maven lets you create a set of configuration values to customize your application build for different environments. The openshift profile in this example defines a configuration that will be used by the wildfly Helm Chart when provisioning the WildFly server on OpenShift.</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>Examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/simple-webapp-okta/simple-webapp-okta/pom.xml">pom.xml</a> file. Notice that it contains an openshift profile. A profile in Maven lets you create a set of configuration values to customize your application build for different environments. The openshift profile in this example defines a configuration that will be used by the WildFly Helm Chart when provisioning the WildFly server on OpenShift.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -610,64 +606,72 @@ The build can be observed using:</p>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td><strong>elytron-oidc-client</strong> automatically adds the native OIDC client subsystem to our WildFly installation.
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/simple-webapp-okta/simple-webapp-okta/src/main/webapp/WEB-INF/web.xml">web.xml</a> file.</p>
-</li>
-</ol>
-</div></td>
+<td><strong>elytron-oidc-client</strong> automatically adds the native OIDC client subsystem to our WildFly installation.</td>
 </tr>
 </table>
 </div>
+<div class="paragraph">
+<p>Now examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/simple-webapp-okta/simple-webapp-okta/src/main/webapp/WEB-INF/web.xml">web.xml</a> file.</p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">... &lt;login-config&gt; &lt;auth-method&gt;OIDC&lt;/auth-method&gt; (1) &lt;/login-config&gt; ...</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">    &lt;login-config&gt;
+        &lt;auth-method&gt;OIDC&lt;/auth-method&gt; <i class="conum" data-value="1"></i><b>(1)</b>
+    &lt;/login-config&gt;</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>When <strong>elytron-oidc-client</strong> subsystem sees <strong>auth-method</strong> is set to <strong>OIDC</strong>, it enables OIDC authentication mechanism for the application.</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>When <strong>elytron-oidc-client</strong> subsystem sees <strong>auth-method</strong> is set to <strong>OIDC</strong>, it enables OIDC authentication mechanism for the application.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic">
-<li>
-<p>Examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/simple-webapp-okta/simple-webapp-okta/src/main/webapp/WEB-INF/oidc.json">oidc.json</a> file. The oidc.json is used to configure the native OIDC client subsystem.</p>
-</li>
-</ol>
+<p>Finally, review the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/simple-webapp-okta/simple-webapp-okta/src/main/webapp/WEB-INF/oidc.json">oidc.json</a> file. The oidc.json is used to configure the native OIDC client subsystem.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">{
-    "client-id" : "${env.CLIENT_ID}",
-    "provider-url" : "${env.OIDC_PROVIDER_URL}",
-    "public-client" : "false",
-    "principal-attribute" : "IDTClaim",
-    "ssl-required" : "EXTERNAL",
+    "client-id" : "${env.CLIENT_ID}",               <i class="conum" data-value="1"></i><b>(1)</b>
+    "provider-url" : "${env.OIDC_PROVIDER_URL}",    <i class="conum" data-value="2"></i><b>(2)</b>
+    "public-client" : "false",                      <i class="conum" data-value="3"></i><b>(3)</b>
+    "principal-attribute" : "IDTClaim",             <i class="conum" data-value="4"></i><b>(4)</b>
+    "ssl-required" : "EXTERNAL",                    <i class="conum" data-value="5"></i><b>(5)</b>
     "credentials" : {
-        "secret" : "${env.CLIENT_SECRET}"
+        "secret" : "${env.CLIENT_SECRET}"           <i class="conum" data-value="6"></i><b>(6)</b>
     }
 }</code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Client_ID is the unique identifier for our client used by the Okta OpenID provider. Usually for Keycloak, you can create your own client, but for Okta, you are assigned an id. As a result, we are using environment variables to specify this. We will set the value in</p>
-</li>
-<li>
-<p>The provider URL, which is the URL for the authorization server that we created, is specified as an environment variable. We will set its value in the helm configuration.</p>
-</li>
-<li>
-<p>When public-client set to false, client credentials are sent when communicating with the OpenID provider.</p>
-</li>
-<li>
-<p>We specify that the user name of the identity, which in our case is alice, is to be used as the principal for the identity. We are extracting this information here using a custom claim in the ID token.</p>
-</li>
-<li>
-<p>When ssl-required is set to EXTERNAL, only the communication with external clients happens over HTTPs</p>
-</li>
-</ul>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Client_ID is the unique identifier for our client used by the Okta OpenID provider. Usually for Keycloak, you can create your own client, but for Okta, you are assigned an id. As a result, we are using environment variables to specify this.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>The provider URL, which is the URL for the authorization server that we created, is specified as an environment variable. We set its value previously in the helm configuration.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>When public-client set to false, client credentials are sent when communicating with the OpenID provider.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>We specify that the user name of the identity, which in our case is alice, is to be used as the principal for the identity. We are extracting this information here using a custom claim in the ID token.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>When ssl-required is set to EXTERNAL, only the communication with external clients happens over HTTPs.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>Client credentials helps the OIDC server authenticate the client when accepting a request. It is required when <em>public-client</em> is set to <em>false</em>.</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -696,7 +700,7 @@ echo ""</code></pre>
 <h2 id="finish-configuring-okta"><a class="anchor" href="#finish-configuring-okta"></a>Finish Configuring Okta</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Go back to the <em>General Settings</em> for your application and click on <em>Edit</em>.  add the <code>Valid redirect URI</code> under the <code>Sign-in redirect URIs</code> and check the <code>Allow wildcard * in login URI redirect</code> field and hit Save.</p>
+<p>Go back to the <strong>General Settings</strong> for your application and click on <strong>Edit</strong>.  add the <code>Valid redirect URI</code> under the <code>Sign-in redirect URIs</code> and check the <code>Allow wildcard * in login URI redirect</code> field and hit Save.</p>
 </div>
 </div>
 </div>
@@ -708,10 +712,7 @@ echo ""</code></pre>
 Click on "Access Secured Servlet".</p>
 </div>
 <div class="paragraph">
-<p>Now you will be redirected to the login page for Okta. Login using Alice. You will be prompted for the username. Although we set the username to be <strong>alice@example.org</strong>, we can just input alice here. You will be presented with three options for loggin in. Choose <code>Password</code> and enter the password you selected for Alice.</p>
-</div>
-<div class="paragraph">
-<p>Once you have entered the correct password, you will be prompted to perform 2 factor authentication using the Okta Verify mobile application. You can go ahead and follow the instructions to set it up and once you complete the 2 factor authentication, you will be redirected to the secured page.</p>
+<p>Now you will be redirected to the login page for Okta. Login using Alice. You will be prompted for the username. Although we set the username to be <strong>alice@example.org</strong>, we can just input <strong>alice</strong> here. You will be presented with three options for loggin in. Choose <code>Password</code> and enter the password you selected for Alice.</p>
 </div>
 </div>
 </div>
@@ -719,7 +720,7 @@ Click on "Access Secured Servlet".</p>
 <h2 id="summary"><a class="anchor" href="#summary"></a>Summary</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This guide demonstrates how to use an OpenID provider other than Keycloak to secure an application deployed to WildFly. There are other OpenID providers that can be used to secure WildFly applications as well. And while the specific terms may be slightly different, the overall process should be similar. Please refer to documentations by your OpenID provider for more information.</p>
+<p>This guide demonstrates how to use an OpenID provider other than Keycloak to secure an application deployed to WildFly. Other OpenID providers can be used to secure WildFly applications as well. And while the specific terms may be slightly different, the overall process should be similar. Please refer to documentations by your OpenID provider for more information.</p>
 </div>
 </div>
 </div>
@@ -732,10 +733,10 @@ Click on "Access Secured Servlet".</p>
 <p><a href="https://help.okta.com/oie/en-us/content/topics/identity-engine/oie-index.htm">Okta Documentation</a></p>
 </li>
 <li>
-<p><a href="https://docs.wildfly.org/30/wildscribe/subsystem/elytron-oidc-client/index.html">Elytron-oidc-client subsystem</a></p>
+<p><a href="https://docs.wildfly.org/31/wildscribe/subsystem/elytron-oidc-client/index.html">Elytron-oidc-client subsystem</a></p>
 </li>
 <li>
-<p><a href="https://docs.wildfly.org/30/Admin_Guide.html#Elytron_OIDC_Client">elytron-oidc-client docs</a></p>
+<p><a href="https://docs.wildfly.org/31/Admin_Guide.html#Elytron_OIDC_Client">elytron-oidc-client docs</a></p>
 </li>
 <li>
 <p><a href="https://openid.net/specs/openid-connect-core-1_0.html#">OpenID Specifications</a></p>
@@ -744,13 +745,13 @@ Click on "Access Secured Servlet".</p>
 <p><a href="https://developer.okta.com/docs/guides/#integrate-authentication-into-your-app">Guides Related on Configuring Okta</a></p>
 </li>
 <li>
-<p><a href="https://docs.wildfly.org/30/Getting_Started_on_OpenShift.html">Getting Started with WildFly on OpenShift</a></p>
+<p><a href="https://docs.wildfly.org/31/Getting_Started_on_OpenShift.html">Getting Started with WildFly on OpenShift</a></p>
 </li>
 <li>
 <p><a href="https://docs.openshift.com/container-platform/4.13/cli_reference/openshift_cli/getting-started-cli.html">OpenShift CLI</a></p>
 </li>
 <li>
-<p><a href="https://docs.wildfly.org/30/Getting_Started_on_OpenShift.html#helm-charts">WildFly Helm Charts</a></p>
+<p><a href="https://docs.wildfly.org/31/Getting_Started_on_OpenShift.html#helm-charts">WildFly Helm Charts</a></p>
 </li>
 </ul>
 </div>
