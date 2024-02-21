@@ -260,7 +260,7 @@
 <h2 id="example-application"><a class="anchor" href="#example-application"></a>Example application</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We will use a simple web application in this guide that consists of a single <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/simple-webapp-okta/simple-webapp-okta/src/main/java/org/wildfly/security/examples/SecuredServlet.java">servlet</a>. We will use the <a href="https://github.com/wildfly-security-incubator/elytron-examples/tree/main/simple-webapp-okta">simple-webapp-okta</a> application in this repository.</p>
+<p>We will use a simple web application in this guide that consists of a single <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/main/simple-webapp-okta/src/main/java/org/wildfly/security/examples/SecuredServlet.java">servlet</a>. We will use the <a href="https://github.com/wildfly-security-incubator/elytron-examples/tree/main/simple-webapp-okta">simple-webapp-okta</a> application in this repository.</p>
 </div>
 <div class="paragraph">
 <p>We will need to first fork, and then clone the <a href="https://github.com/wildfly-security-incubator/elytron-examples">elytron-examples</a> repository. We will be using the <code>simple-webapp-okta</code> directory in this repo:</p>
@@ -556,7 +556,7 @@ The build can be observed using:</p>
 <p>While our application is building, let’s take a closer look at our application.</p>
 </div>
 <div class="paragraph">
-<p>Examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/simple-webapp-okta/simple-webapp-okta/pom.xml">pom.xml</a> file. Notice that it contains an openshift profile. A profile in Maven lets you create a set of configuration values to customize your application build for different environments. The openshift profile in this example defines a configuration that will be used by the WildFly Helm Chart when provisioning the WildFly server on OpenShift.</p>
+<p>Examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/main/simple-webapp-okta/pom.xml">pom.xml</a> file. Notice that it contains an openshift profile. A profile in Maven lets you create a set of configuration values to customize your application build for different environments. The openshift profile in this example defines a configuration that will be used by the WildFly Helm Chart when provisioning the WildFly server on OpenShift.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -611,7 +611,7 @@ The build can be observed using:</p>
 </table>
 </div>
 <div class="paragraph">
-<p>Now examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/simple-webapp-okta/simple-webapp-okta/src/main/webapp/WEB-INF/web.xml">web.xml</a> file.</p>
+<p>Now examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/main/simple-webapp-okta/src/main/webapp/WEB-INF/web.xml">web.xml</a> file.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -629,7 +629,7 @@ The build can be observed using:</p>
 </table>
 </div>
 <div class="paragraph">
-<p>Finally, review the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/simple-webapp-okta/simple-webapp-okta/src/main/webapp/WEB-INF/oidc.json">oidc.json</a> file. The oidc.json is used to configure the native OIDC client subsystem.</p>
+<p>Finally, review the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/main/simple-webapp-okta/src/main/webapp/WEB-INF/oidc.json">oidc.json</a> file. The oidc.json is used to configure the native OIDC client subsystem.</p>
 </div>
 <div class="listingblock">
 <div class="content">
