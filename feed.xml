@@ -5,19 +5,19 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Wed, 14 Feb 2024 14:45:22 +0000</lastBuildDate>
+        <lastBuildDate>Wed, 21 Feb 2024 14:28:30 +0000</lastBuildDate>
         
         <item>
-            <title>Trying Out An Upcoming Security Feature for WildFly on OpenShift</title>
+            <title>Securing WildFly Applications Using Okta on OpenShift</title>
             <link>
-                https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/
+                https://wildfly-security.github.io/wildfly-elytron/blog/securing-wildfly-apps-okta-openshift/
             </link>
             <description>
-                A future release of WildFly will include the ability to add additional scope values when securing applications using OpenID Connect (OIDC). This blog post demonstrates how to secure a WildFly application using OpenID Connect and configure scope values to request additional claims using an in-progress version of the feature. This...
+                WildFly applications can be secured using OpenID Connect and deployed to OpenShift. By using OIDC to secure applications, you delegate authentication to OIDC providers. The elytron-oidc-client subsystem can be used to secure an application deployed to WildFly using any OpenID Provider. This guide demonstrates how to secure an example application...
             </description>
             <pubDate>Wed, 14 Feb 2024 00:00:00 +0000</pubDate>
             <guid>
-                https://wildfly-security.github.io/wildfly-elytron/blog/in-progress-wildfly-feature-on-openshift/
+                https://wildfly-security.github.io/wildfly-elytron/blog/securing-wildfly-apps-okta-openshift/
             </guid>
         </item>
         
