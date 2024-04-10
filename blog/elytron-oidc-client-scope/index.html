@@ -228,6 +228,7 @@
 </li>
 <li><a href="#configure-keycloak">Configure Keycloak</a></li>
 <li><a href="#add-helm-configuration">Add Helm Configuration</a></li>
+<li><a href="#stability-levels-for-openshift-deployment">Stability Levels for OpenShift Deployment</a></li>
 <li><a href="#deploy-the-example-application-to-wildfly-on-openshift">Deploy the Example Application to WildFly on OpenShift</a></li>
 <li><a href="#behind-the-scenes">Behind the Scenes</a></li>
 <li><a href="#get-the-application-url">Get the Application URL</a></li>
@@ -320,9 +321,9 @@
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">oc process -f https://raw.githubusercontent.com/keycloak/keycloak-quickstarts/latest/openshift/keycloak.yaml \
-    -p KEYCLOAK_ADMIN=admin                  <i class="conum" data-value="1"></i><b>(1)</b>
-    -p KEYCLOAK_ADMIN_PASSWORD=admin         <i class="conum" data-value="2"></i><b>(2)</b>
-    -p NAMESPACE=&lt;PROJECT_NAME&gt;                <i class="conum" data-value="3"></i><b>(3)</b>
+    -p KEYCLOAK_ADMIN=admin \                 <i class="conum" data-value="1"></i><b>(1)</b>
+    -p KEYCLOAK_ADMIN_PASSWORD=admin \        <i class="conum" data-value="2"></i><b>(2)</b>
+    -p NAMESPACE=&lt;PROJECT_NAME&gt; \               <i class="conum" data-value="3"></i><b>(3)</b>
 | oc create -f -</code></pre>
 </div>
 </div>
@@ -496,7 +497,9 @@ deploy:
   replicas: 1
   env:
     - name: OIDC_PROVIDER_URL
-      value: &lt;KEYCLOAK_URL&gt;    <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+      value: &lt;KEYCLOAK_URL&gt;    <i class="conum" data-value="1"></i><b>(1)</b>
+    - name: SERVER_ARGS
+      value: "--stability=preview"</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -506,6 +509,27 @@ deploy:
 <td>Replace &lt;KEYCLOAK_URL&gt; with the Keycloak URL obtained in the previous command.</td>
 </tr>
 </table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="stability-levels-for-openshift-deployment"><a class="anchor" href="#stability-levels-for-openshift-deployment"></a>Stability Levels for OpenShift Deployment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The WildFly server now includes different stability levels, that can be associated with functionality. Users can use the <code>--stability</code> argument when staring the WildFly server. Depending on the value of the stability levels, different features are available. You can learn more about stability levels <a href="https://docs.wildfly.org/32/Admin_Guide.html#Feature_stability_levels">here</a>.</p>
+</div>
+<div class="paragraph">
+<p>The scope attribute under the elytron-oidc-client subsystem is a <code>preview</code> level feature. Which means in order to access this feature, the server&#8217;s stability level must be set to <code>preview</code> or lower. When applications are deployed to OpenShift, the WildFly Cloud Galleon Feature Pack is used to provision a server. Therefore, in order to use the scope attribute, we need to provision the server at the <code>preview</code> stability level. This is why we have added the environment variable named <strong>SERVER_ARGS</strong> with a value of <strong>--stability=preview</strong>, which specifies that the provisioned server should be started at the <code>preview</code> stability level.</p>
+</div>
+<div class="paragraph">
+<p>Additionally, we have used the <code>stability</code> galleon option to specify the stability level used by the feature pack when deploying the application using the tags below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">    &lt;galleon-options&gt;
+        &lt;stability-level&gt;experimental&lt;/stability-level&gt;
+    &lt;/galleon-options&gt;</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -579,32 +603,42 @@ deploy:
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">&lt;profiles&gt;
     &lt;profile&gt;
-        &lt;id&gt;openshift&lt;/id&gt;
-        &lt;build&gt;
-            &lt;plugins&gt;
-                &lt;plugin&gt;
-                    &lt;groupId&gt;org.wildfly.plugins&lt;/groupId&gt;
-                    &lt;artifactId&gt;wildfly-maven-plugin&lt;/artifactId&gt;                   <i class="conum" data-value="1"></i><b>(1)</b>
-                    &lt;version&gt;${version.wildfly.maven.plugin}&lt;/version&gt;
-                    &lt;configuration&gt;
-                        &lt;feature-packs&gt;
-                            &lt;feature-pack&gt;
-                                &lt;location&gt;org.wildfly:wildfly-galleon-pack:${version.server}&lt;/location&gt;
-                            &lt;/feature-pack&gt;
-                            &lt;feature-pack&gt;
-                                &lt;location&gt;org.wildfly.cloud:wildfly-cloud-galleon-pack:${version.cloud.fp}&lt;/location&gt;
-                            &lt;/feature-pack&gt;
-                        &lt;/feature-packs&gt;
-                        &lt;layers&gt;
-                            &lt;layer&gt;cloud-server&lt;/layer&gt;
-                            &lt;layer&gt;elytron-oidc-client&lt;/layer&gt;                          <i class="conum" data-value="2"></i><b>(2)</b>
-                        &lt;/layers&gt;
-                        &lt;filename&gt;ROOT.war&lt;/filename&gt;
-                    &lt;/configuration&gt;
-                &lt;/plugin&gt;
-            &lt;/plugins&gt;
-        &lt;/build&gt;
-    &lt;/profile&gt;
+            &lt;id&gt;openshift&lt;/id&gt;
+            &lt;build&gt;
+                &lt;plugins&gt;
+                    &lt;plugin&gt;
+                        &lt;groupId&gt;org.wildfly.plugins&lt;/groupId&gt;
+                        &lt;artifactId&gt;wildfly-maven-plugin&lt;/artifactId&gt;
+                        &lt;version&gt;${version.wildfly.maven.plugin}&lt;/version&gt;                  <i class="conum" data-value="1"></i><b>(1)</b>
+                        &lt;configuration&gt;
+                            &lt;feature-packs&gt;
+                                &lt;feature-pack&gt;
+                                    &lt;location&gt;org.wildfly:wildfly-galleon-pack:${version.wildfly}&lt;/location&gt;
+                                &lt;/feature-pack&gt;
+                                &lt;feature-pack&gt;
+                                    &lt;location&gt;org.wildfly.cloud:wildfly-cloud-galleon-pack:${version.wildfly.cloud.galleon.pack}&lt;/location&gt;
+                                &lt;/feature-pack&gt;
+                            &lt;/feature-packs&gt;
+                            &lt;layers&gt;
+                                &lt;layer&gt;cloud-server&lt;/layer&gt;
+                                &lt;layer&gt;elytron-oidc-client&lt;/layer&gt;                      <i class="conum" data-value="2"></i><b>(2)</b>
+                            &lt;/layers&gt;
+                            &lt;galleon-options&gt;
+                                &lt;stability-level&gt;experimental&lt;/stability-level&gt;             <i class="conum" data-value="3"></i><b>(3)</b>
+                            &lt;/galleon-options&gt;
+                            &lt;filename&gt;simple-webapp-oidc.war&lt;/filename&gt;
+                        &lt;/configuration&gt;
+                        &lt;executions&gt;
+                            &lt;execution&gt;
+                                &lt;goals&gt;
+                                    &lt;goal&gt;package&lt;/goal&gt;
+                                &lt;/goals&gt;
+                            &lt;/execution&gt;
+                        &lt;/executions&gt;
+                    &lt;/plugin&gt;
+                &lt;/plugins&gt;
+            &lt;/build&gt;
+        &lt;/profile&gt;
 &lt;/profiles&gt;</code></pre>
 </div>
 </div>
@@ -617,6 +651,10 @@ deploy:
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
 <td><strong>elytron-oidc-client</strong> automatically adds the native OIDC client subsystem to our WildFly installation.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><strong>stability-level</strong> for the feature pack is set to <strong>preview</strong> since we are making use of a preview level feature.</td>
 </tr>
 </table>
 </div>
@@ -772,6 +810,12 @@ This indicates that your authentication request was rejected because it contains
 </li>
 <li>
 <p><a href="https://www.keycloak.org/docs/latest/securing_apps/#_oidc">Using OpenID Connect to secure applications and services</a></p>
+</li>
+<li>
+<p><a href="https://docs.wildfly.org/32/Admin_Guide.html#Feature_stability_levels">Feature stability levels</a></p>
+</li>
+<li>
+<p><a href="https://docs.wildfly.org/33/Galleon_Guide.html#WildFly_Galleon_feature-packs">WildFly Galleon feature-packs</a></p>
 </li>
 </ul>
 </div>
