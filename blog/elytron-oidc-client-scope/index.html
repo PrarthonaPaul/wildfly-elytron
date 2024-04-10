@@ -646,7 +646,7 @@ deploy:
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td><strong>wildfly-maven-plugin</strong> provisions a WildFly server with the specified layers with our application deployed.</td>
+<td><strong>wildfly-maven-plugin</strong> provisions a WildFly server with the specified layers with our application deployed.Version <strong>7.0.0.Beta2</strong> or later must be used to allow for stability levels.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -745,12 +745,13 @@ deploy:
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">Secured Servlet
-
 Current Principal 'alice'
 Claims received using additional scope values:
 Using the "profile" scope, we got User's name: Alice Smith
-Using the "email" scope, we got email verified: true
-Using the "microprofile-jwt" scope, we got the user's groups: [default-roles-myrealm, offline_access, admin, uma_authorization, user]</code></pre>
+Using the "email" scope, we got email verified: false
+Using the "roles" scope, we got user's roles: [default-roles-myrealm, offline_access, uma_authorization]
+Using the "microprofile-jwt" scope, we got the user's groups: [default-roles-myrealm, offline_access, uma_authorization]
+Using the "web-origins" scope, we got the user's allowed-origins: [/*]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -769,7 +770,7 @@ Using the "microprofile-jwt" scope, we got the user's groups: [default-roles-myr
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">helm upgrade simple-webapp-oidc -f charts/helm.yaml wildfly/wildfly</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">helm upgrade oidc-app -f charts/helm.yaml wildfly/wildfly</code></pre>
 </div>
 </div>
 <div class="paragraph">
