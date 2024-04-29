@@ -272,10 +272,10 @@
 <h2 id="example-application"><a class="anchor" href="#example-application"></a>Example Application</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We will use a simple web application in this guide that consists of a <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/elytron-oidc-client-scope/elytron-oidc-client-scope/src/main/java/org/wildfly/security/examples/SecuredServlet.java">single servlet</a>. We will secure this servlet using OIDC.</p>
+<p>We will use a simple web application in this guide that consists of a <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/main/elytron-oidc-client-scope/src/main/java/org/wildfly/security/examples/SecuredServlet.java">single servlet</a>. We will secure this servlet using OIDC.</p>
 </div>
 <div class="paragraph">
-<p>We will use the example in the <a href="https://github.com/wildfly-security-incubator/elytron-examples/tree/elytron-oidc-client-scope/elytron-oidc-client-scope">elytron-oidc-client-scope</a> directory in this repo.</p>
+<p>We will use the example in the <a href="https://github.com/wildfly-security-incubator/elytron-examples/tree/main/elytron-oidc-client-scope">elytron-oidc-client-scope</a> directory in this repo.</p>
 </div>
 <div class="paragraph">
 <p>To obtain this example, clone the elytron-examples repository to your local machine:</p>
@@ -596,7 +596,7 @@ deploy:
 <p>While our application is building, let’s take a closer look at our application.</p>
 </div>
 <div class="paragraph">
-<p>Examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/elytron-oidc-client-scope/elytron-oidc-client-scope/pom.xml">pom.xml</a> file.</p>
+<p>Examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/main/elytron-oidc-client-scope/pom.xml">pom.xml</a> file.</p>
 </div>
 <div class="paragraph">
 <p>Notice that it contains an openshift profile. A profile in Maven lets you create a set of configuration values to customize your application build for different environments. The openshift profile in this example defines a configuration that will be used by the WildFly Helm Chart when provisioning the WildFly server on OpenShift.</p>
@@ -661,7 +661,7 @@ deploy:
 </table>
 </div>
 <div class="paragraph">
-<p>Examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/elytron-oidc-client-scope/elytron-oidc-client-scope/src/main/webapp/WEB-INF/oidc.json">oidc.json</a> file, which is used to configure the OIDC client.</p>
+<p>Examine the <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/main/elytron-oidc-client-scope/src/main/webapp/WEB-INF/oidc.json">oidc.json</a> file, which is used to configure the OIDC client.</p>
 </div>
 <div class="listingblock">
 <div class="content">
