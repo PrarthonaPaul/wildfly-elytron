@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Wed, 03 Jul 2024 14:18:00 +0000</lastBuildDate>
+        <lastBuildDate>Wed, 03 Jul 2024 14:25:29 +0000</lastBuildDate>
         
         <item>
             <title>Sending Request Objects as A JWT Using Request Parameters for OIDC</title>
