@@ -31,8 +31,8 @@
 <meta property="og:title" content="Sending Request Objects as A JWT Using Request Parameters for OIDC" />
 <meta name="author" content="Prarthona Paul" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="WildFly 32 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. The OAuth 2.0 request syntax sends the Request Object in the request by adding them directly to the URL. However, OpenID Connect allows the Request Object to be sent as a JWT using request parameters, which can be signed and optionally encrypted. This adds an added layer of protection, as the parameters are no longer human-readable." />
-<meta property="og:description" content="WildFly 32 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. The OAuth 2.0 request syntax sends the Request Object in the request by adding them directly to the URL. However, OpenID Connect allows the Request Object to be sent as a JWT using request parameters, which can be signed and optionally encrypted. This adds an added layer of protection, as the parameters are no longer human-readable." />
+<meta name="description" content="WildFly 33 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. The OAuth 2.0 request syntax sends the Request Object in the request by adding them directly to the URL. However, OpenID Connect allows the Request Object to be sent as a JWT using request parameters, which can be signed and optionally encrypted. This adds an added layer of protection, as the parameters are no longer human-readable." />
+<meta property="og:description" content="WildFly 33 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. The OAuth 2.0 request syntax sends the Request Object in the request by adding them directly to the URL. However, OpenID Connect allows the Request Object to be sent as a JWT using request parameters, which can be signed and optionally encrypted. This adds an added layer of protection, as the parameters are no longer human-readable." />
 <link rel="canonical" href="https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/" />
 <meta property="og:url" content="https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/" />
 <meta property="og:site_name" content="WildFly Elytron" />
@@ -43,7 +43,7 @@
 <meta property="twitter:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
 <meta property="twitter:title" content="Sending Request Objects as A JWT Using Request Parameters for OIDC" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2024-07-03T00:00:00+00:00","datePublished":"2024-07-03T00:00:00+00:00","description":"WildFly 32 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. The OAuth 2.0 request syntax sends the Request Object in the request by adding them directly to the URL. However, OpenID Connect allows the Request Object to be sent as a JWT using request parameters, which can be signed and optionally encrypted. This adds an added layer of protection, as the parameters are no longer human-readable.","headline":"Sending Request Objects as A JWT Using Request Parameters for OIDC","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2024-07-03T00:00:00+00:00","datePublished":"2024-07-03T00:00:00+00:00","description":"WildFly 33 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. The OAuth 2.0 request syntax sends the Request Object in the request by adding them directly to the URL. However, OpenID Connect allows the Request Object to be sent as a JWT using request parameters, which can be signed and optionally encrypted. This adds an added layer of protection, as the parameters are no longer human-readable.","headline":"Sending Request Objects as A JWT Using Request Parameters for OIDC","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -218,7 +218,7 @@
 </div>
       <div class="grid__item width-12-12">
           <div class="paragraph">
-<p>WildFly 32 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC.
+<p>WildFly 33 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC.
 The feature also includes the ability to sign and/or encrypt the JWT for added security. <a href="https://openid.net/developers/how-connect-works/">OpenID Connect</a> is an identity layer on top of the OAuth 2.0 protocol
 that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID
 provider. The OAuth 2.0 request syntax sends the Request Object in the request by adding them directly to the URL.
@@ -364,7 +364,12 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 <div class="paragraph">
 <p>Note that in this case, we have specified the <strong>key size</strong> for the RSA keys, and the <strong>groupname</strong> for Elliptical Curve keys.
 For the RSA keys, the same keysize can be used for RSA algorithms with different SHA values (i.e. RSA256, RSA512).
-However, this is not the case for Elliptical Curve keys. For ES256 algorithms, you need to use the groupname associated with the SHA value (i.e. <code>-groupname secp256r1</code> and for ES384, use <code>-groupname secp384r1</code> and so on).</p>
+However, this is not the case for Elliptical Curve keys. For ES256 algorithms, you need to use the groupname associated with the SHA value (i.e. <code>-groupname secp256r1</code> and for ES384, use <code>-groupname secp384r1</code> and so on). You can use the following commands to see the contents of the keystore:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-none hljs">    $ keytool -list -v -keystore Keycloak.keystore.pkcs12 -storepass password</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>If you would like to use JKS keystore files instead, see <a href="https://docs.redhat.com/en/documentation/red_hat_jboss_data_virtualization/6.4/html/security_guide/create_a_privatepublic_key_pair_with_keytool">here</a> for more information.</p>
@@ -532,17 +537,29 @@ echo ""</code></pre>
 <p>Once you hit <strong>Save</strong>, you should see a new tab called <strong>Keys</strong> appear.</p>
 </li>
 <li>
-<p>Navigate to that tab and click on <strong>Import</strong>. Under <strong>Archive format</strong>, choose <strong>PKCS12</strong> from the dropdown. Under <strong>Key alias</strong>,
-enter the alias of the RSA key you just created, under <strong>Store password</strong> enter the password of the keystore you created
+<p>Navigate to that tab and click on <strong>Import</strong>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Under <strong>Archive format</strong>, choose <strong>PKCS12</strong> from the dropdown.</p>
+</li>
+<li>
+<p>Under <strong>Key alias</strong>,
+enter the alias of the RSA key you just created.</p>
+</li>
+<li>
+<p>Under <strong>Store password</strong> enter the password of the keystore you created
 and click on the <strong>Browse</strong> button to import the keystore file. Note that when we created the keystore, we specified a key
-password and a keystore password. Here, we are only using the <strong>keystore password</strong>. While we set them both to be the same,
-they do not have to be.</p>
+password and a keystore password. Here, we are only using the <strong>keystore</strong> password. While we set them both to be the same, they do not have to be.</p>
+</li>
+</ul>
+</div>
 </li>
 <li>
-<p>Finally, create a user called <code>alice</code> whose <code>First name</code> is Alice and <code>Last name</code> is Smith.</p>
+<p>Finally, create a user called <strong>alice</strong> whose <strong>First name</strong> is <strong>Alice</strong> and <strong>Last name</strong> is <strong>Smith</strong>.</p>
 </li>
 <li>
-<p>Next, navigate to the <code>Credentials</code> tab and create a password for Alice. Toggle the <code>Temporary</code> switch off, so you are
+<p>Next, navigate to the <strong>Credentials</strong> tab and create a password for Alice. Toggle the <code>Temporary</code> switch off, so you are
 not prompted to update the password after the first login.</p>
 </li>
 </ol>
@@ -589,7 +606,7 @@ echo ""</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">cd /PATH/TO/ELYTRON/EXAMPLES/elytron-oidc-request/charts</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">    $ cd /PATH/TO/ELYTRON/EXAMPLES/elytron-oidc-request/charts</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -645,7 +662,7 @@ deploy:
 <h2 id="stability-levels-for-openshift-deployment"><a class="anchor" href="#stability-levels-for-openshift-deployment"></a>Stability Levels for OpenShift Deployment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The WildFly server now includes different stability levels, that can be associated with functionality. Users can use the <code>--stability</code> argument when staring the WildFly server. Depending on the value of the stability levels, different features are available. You can learn more about stability levels <a href="https://docs.wildfly.org/33/Admin_Guide.html#Feature_stability_levels">here</a>.</p>
+<p>The WildFly server now includes different stability levels, that can be associated with functionality. Users can use the <strong>--stability</strong> argument when staring the WildFly server. Depending on the value of the stability levels, different features are available. You can learn more about stability levels <a href="https://docs.wildfly.org/33/Admin_Guide.html#Feature_stability_levels">here</a>.</p>
 </div>
 <div class="paragraph">
 <p>The attributes related to request objects under the <code>elytron-oidc-client</code> subsystem are <strong>preview</strong> level attributes, which means in order to access their functionalities, the server&#8217;s stability level must be set to <strong>preview</strong>. When applications are deployed to OpenShift, the WildFly Cloud Galleon Feature Pack is used to provision a server. Therefore, in order to use this feature, we need to provision the server at the <strong>preview</strong> stability level. This is why we have added the environment variable named <strong>SERVER_ARGS</strong> with a value of <strong>--stability=preview</strong>, which specifies that the provisioned server should be started at the <strong>preview</strong> stability level. For more information about the server&#8217;s stability levels, please refer to <a href="https://docs.wildfly.org/33/Admin_Guide.html#Feature_stability_levels">WildFly Docs</a>.</p>
@@ -796,17 +813,17 @@ deploy:
     "client-id" : "myclient",
     "provider-url" : "${env.OIDC_PROVIDER_URL:http://localhost:8080}/realms/myrealm",
     "public-client" : "false",
-    "authentication-request-format" : ${env.AUTH_REQUEST_FORMAT},,
+    "authentication-request-format" : "${env.AUTH_REQUEST_FORMAT}",
     "request-object-signing-algorithm" : "RS256",
     "request-object-encryption-alg-value" : "RSA-OAEP",
     "request-object-encryption-enc-value" : "A256GCM",
-    "request-object-signing-keystore-file" : ${env.SIGNING_KEYSTORE_PATH},
+    "request-object-signing-keystore-file" : "${env.SIGNING_KEYSTORE_PATH}",
     "request-object-signing-keystore-password" : "password",
     "request-object-signing-key-password" : "password",
     "request-object-signing-key-alias" : "rsaKey",
     "request-object-signing-keystore-type" : "PKCS12",
     "principal-attribute" : "preferred_username",
-    "ssl-required" : "EXTERNAL"
+    "ssl-required" : "EXTERNAL",
     "scope" : "profile email roles web-origins microprofile-jwt offline_access",
     "credentials" : {
     	"secret" : "${env.OIDC_CLIENT_SECRET}"
@@ -893,7 +910,7 @@ You will also see the claims that were retrieved using the additional scopes. Th
 </div>
 </div>
 <div class="paragraph">
-<p>Now access the application URL again in a new window. You will see the <strong>request_uri</strong> field appear in the
+<p>If the builds don&#8217;t start automatically, you might have to start them manually on the openshift console. Wait for the build to finish and access the application URL again in a new window. You will see the <strong>request_uri</strong> field appear in the
 url. The <code>request_uri</code> parameter is used to send the JWT by reference. The Elytron client sends a PAR request to the
 Pushed Authorization Request Endpoint ({provider-url}/protocol/openid-connect/ext/par/request),
 which creates the request_uri given the JWT Request Object. Once the reference has been made it is only valid for a

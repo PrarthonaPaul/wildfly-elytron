@@ -5,7 +5,7 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Wed, 03 Jul 2024 14:25:29 +0000</lastBuildDate>
+        <lastBuildDate>Fri, 05 Jul 2024 19:11:28 +0000</lastBuildDate>
         
         <item>
             <title>Sending Request Objects as A JWT Using Request Parameters for OIDC</title>
@@ -13,7 +13,7 @@
                 https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/
             </link>
             <description>
-                WildFly 32 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect is an identity layer on top of the OAuth 2.0 protocol...
+                WildFly 33 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect is an identity layer on top of the OAuth 2.0 protocol...
             </description>
             <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
             <guid>
