@@ -427,7 +427,7 @@ However, this is not the case for Elliptical Curve keys. For ES256 algorithms, y
 <pre class="highlightjs highlight"><code class="language-none hljs">oc process -f https://raw.githubusercontent.com/keycloak/keycloak-quickstarts/latest/openshift/keycloak.yaml \
     -p KEYCLOAK_ADMIN=admin \                 <i class="conum" data-value="1"></i><b>(1)</b>
     -p KEYCLOAK_ADMIN_PASSWORD=admin \        <i class="conum" data-value="2"></i><b>(2)</b>
-    -p NAMESPACE=myNameSpace \                <i class="conum" data-value="3"></i><b>(3)</b>
+    -p NAMESPACE=&lt;PROJECT_NAME&gt; \                <i class="conum" data-value="3"></i><b>(3)</b>
 | oc create -f -</code></pre>
 </div>
 </div>
