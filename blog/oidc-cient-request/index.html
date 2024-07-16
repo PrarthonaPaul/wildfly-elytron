@@ -270,7 +270,7 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 <div class="ulist">
 <ul>
 <li>
-<p>Roughly 15 minutes</p>
+<p>Roughly 20 minutes (not including the time needed for building)</p>
 </li>
 <li>
 <p>Access to an OpenShift cluster (try the Red Hat Developer Sandbox for free)</p>
@@ -280,6 +280,9 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 </li>
 <li>
 <p><a href="https://helm.sh/docs/intro/install/">Helm Chart</a></p>
+</li>
+<li>
+<p><a href="https://github.com/wildfly-security-incubator/elytron-examples">Elytron-examples project</a></p>
 </li>
 </ul>
 </div>
@@ -339,8 +342,7 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">    $ keytool -genkeypair -alias &lt;keystore_alias&gt; -keyalg &lt;algorithm&gt; -keysize &lt;key_size&gt; -validity &lt;validity_in_days&gt;
--keystore &lt;keystore_name&gt; -dname "&lt;distinguished_name&gt;" -keypass &lt;private_key_password&gt; -storepass &lt;keystore_password&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">    $ keytool -genkeypair -alias &lt;keystore_alias&gt; -keyalg &lt;algorithm&gt; -keysize &lt;key_size&gt; -validity &lt;validity_in_days&gt; -keystore &lt;keystore_name&gt; -dname "&lt;distinguished_name&gt;" -keypass &lt;private_key_password&gt; -storepass &lt;keystore_password&gt;</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -364,7 +366,7 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 <div class="paragraph">
 <p>Note that in this case, we have specified the <strong>key size</strong> for the RSA keys, and the <strong>groupname</strong> for Elliptical Curve keys.
 For the RSA keys, the same keysize can be used for RSA algorithms with different SHA values (i.e. RSA256, RSA512).
-However, this is not the case for Elliptical Curve keys. For ES256 algorithms, you need to use the groupname associated with the SHA value (i.e. <code>-groupname secp256r1</code> and for ES384, use <code>-groupname secp384r1</code> and so on). You can use the following commands to see the contents of the keystore:</p>
+However, this is not the case for Elliptical Curve keys. For ES256 algorithms, you need to use the groupname associated with the SHA value (i.e. for ES256, use <code>-groupname secp256r1</code> and for ES384, use <code>-groupname secp384r1</code> and so on). You can use the following commands to see the contents of the keystore:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -407,9 +409,6 @@ However, this is not the case for Elliptical Curve keys. For ES256 algorithms, y
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">oc project &lt;projectname&gt;</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Once you have your environment set up with the required tools, we can move on to the next step to build and deploy our application on OpenShift.</p>
 </div>
 </div>
 </div>
@@ -493,6 +492,9 @@ echo "Keycloak Admin Console:   $KEYCLOAK_URL/admin" &amp;&amp;
 echo ""</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Please take a note of the <strong>KEYCLOAK_URL</strong> as we will be making use of that later on.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="openshift-web-console"><a class="anchor" href="#openshift-web-console"></a>OpenShift Web Console</h3>
@@ -511,8 +513,14 @@ echo ""</code></pre>
 <p>Log into the Keycloak Admin Console using the admin username and password you specified earlier.</p>
 </li>
 <li>
-<p>Next, create a realm called <strong>myrealm</strong> and register a client called <strong>myclient</strong> as follows:
-<strong>General settings</strong>:</p>
+<p>Select the drop down menu in the upper left corner, and click on the "Create realm" button. Enter <strong>myrealm</strong> for <strong>Realm name</strong> and click on the <strong>Create</strong> button to create a realm called <strong>myrealm</strong>.</p>
+</li>
+<li>
+<p>Next, go to the <strong>Clients</strong> menu and click on the <strong>Create client</strong> button to register a client called <strong>myclient</strong> as follows:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>General settings</strong>:</p>
 <div class="ulist">
 <ul>
 <li>
@@ -520,23 +528,29 @@ echo ""</code></pre>
 </li>
 <li>
 <p><strong>Client ID</strong>: <strong>myclient</strong></p>
-<div class="ulist">
-<ul>
-<li>
-<p><strong>Capability config</strong>:</p>
 </li>
 </ul>
 </div>
 </li>
 <li>
+<p><strong>Capability config</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
 <p><strong>Client authentication</strong> : <strong>On</strong></p>
 </li>
 <li>
 <p><strong>Authentication flow</strong>: <strong>Standard flow, Direct access grants</strong></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Login settings</strong>:</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Login Settings</strong>: For the <strong>Valid Redirect URIs</strong>, enter a * for now. We will come back to edit it later.</p>
+<p>For the <strong>Valid Redirect URIs</strong>, leave it empty for now. We will come back to edit it later.</p>
 </li>
 </ul>
 </div>
@@ -548,7 +562,11 @@ echo ""</code></pre>
 <p>Once you hit <strong>Save</strong>, you should see a new tab called <strong>Keys</strong> appear.</p>
 </li>
 <li>
-<p>Navigate to that tab and click on the <strong>Import</strong> button located at the bottom of the screen.</p>
+<p>Navigate to the <strong>Keys</strong> tab for my client from the <strong>Client details</strong> page,</p>
+<div class="ulist">
+<ul>
+<li>
+<p>click on the <strong>Import</strong> button located at the bottom of the screen.</p>
 <div class="ulist">
 <ul>
 <li>
@@ -558,21 +576,74 @@ echo ""</code></pre>
 <p>Under <strong>Key alias</strong>, enter the alias of the RSA key you just created.</p>
 </li>
 <li>
-<p>Under <strong>Store password</strong> enter the password of the keystore you created
-and click on the <strong>Browse</strong> button to import the keystore file. Note that when we created the keystore, we specified a key
+<p>Under <strong>Store password</strong> enter the password of the keystore you created.</p>
+</li>
+<li>
+<p>under <strong>Import file</strong>, click on the <strong>Browse</strong> button to import the keystore file. Note that when we created the keystore, we specified a key
 password and a keystore password. Here, we are only using the <strong>keystore</strong> password. While we set them both to be the same, they do not have to be.</p>
 </li>
 <li>
-<p>Once you select the keystore file created earlier, click <strong>Import</strong> and you should see a message at the top of the screen indicating that the certificate has been uploaded successfully and you will see it in the text field in the middle of the screen.</p>
+<p>Once you select the keystore file from your filesystem, click <strong>Import</strong> and you should see a message at the top of the screen indicating that the certificate has been uploaded successfully and you will see the certificate listed in the text field in the middle of the screen.</p>
+</li>
+</ul>
+</div>
 </li>
 </ul>
 </div>
 </li>
 <li>
-<p>Finally, create a user called <strong>alice</strong> whose <strong>First name</strong> is <strong>Alice</strong> and <strong>Last name</strong> is <strong>Smith</strong>. You can find more details about creating and managing KeyCloak users <a href="https://www.keycloak.org/docs/latest/server_admin/#proc-creating-user_server_administration_guide">here</a>.</p>
+<p>Finally, create a user called <strong>alice</strong> as follows:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Users</strong> in the left hand menu.</p>
 </li>
 <li>
-<p>Once you hit <strong>Create</strong> to create the user, navigate to the <strong>Credentials</strong> tab at the top of the page and create a password for Alice. Toggle the <code>Temporary</code> switch off, so you are not prompted to update the password after the first login.</p>
+<p>Click <strong>Add user</strong>.</p>
+</li>
+<li>
+<p>Fill in the form with the following values:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Username</strong>: <strong>alice</strong>.</p>
+</li>
+<li>
+<p><strong>First name</strong>: <strong>Alice</strong>.</p>
+</li>
+<li>
+<p><strong>Last name</strong>: <strong>Smith</strong>.</p>
+</li>
+<li>
+<p>Click <strong>Create</strong>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>You can find more details about creating and managing KeyCloak users <a href="https://www.keycloak.org/docs/latest/server_admin/#proc-creating-user_server_administration_guide">here</a>.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>This user needs a password to log in. To set the initial password:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Click <strong>Credentials</strong> at the top of the page.</p>
+</li>
+<li>
+<p>Fill in the <strong>Set password</strong> form with a password.</p>
+</li>
+<li>
+<p>Toggle <strong>Temporary</strong> to <strong>Off</strong> so that the user does not need to update this password at the first login.</p>
+</li>
+<li>
+<p>Hit <strong>Save</strong>.</p>
+</li>
+</ul>
+</div>
 </li>
 </ol>
 </div>
@@ -588,6 +659,9 @@ password and a keystore password. Here, we are only using the <strong>keystore</
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-none hljs">    $ oc create secret generic simple-webapp-secret --from-file=/PATH/TO/Keycloak.keystore.pkcs12</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Once you have your environment set up with the required tools, we can move on to the next step to build and deploy our application on OpenShift.</p>
 </div>
 </div>
 </div>
@@ -667,6 +741,9 @@ deploy:
 <td>Replace &lt;CLIENT_SECRET&gt; with the client secret for <code>myclient</code>.</td>
 </tr>
 </table>
+</div>
+<div class="paragraph">
+<p>To obtain the client secret, go to the <strong>Client</strong> menu on the left hand side and select <strong>myclient</strong> from the <strong>Clients list</strong>. Click on the <strong>Credentials</strong> tab under <strong>Client details</strong> page, ensure that <strong>Client Authenticator</strong> is set to <strong>Client Id and Secret</strong> and copy the value listed beside <strong>Client Secret</strong>.</p>
 </div>
 </div>
 </div>
