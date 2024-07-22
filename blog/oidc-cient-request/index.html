@@ -230,7 +230,7 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 <ul class="sectlevel1">
 <li><a href="#prerequisites">Prerequisites</a></li>
 <li><a href="#example-application">Example Application</a></li>
-<li><a href="#setting-up-the-keypairs">Setting up the KeyPairs</a>
+<li><a href="#setting-up-the-key-pairs">Setting up the Key Pairs</a>
 <ul class="sectlevel2">
 <li><a href="#about-key-pairs">About Key Pairs</a></li>
 <li><a href="#generating-key-pairs">Generating Key Pairs</a></li>
@@ -270,7 +270,7 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 <div class="ulist">
 <ul>
 <li>
-<p>Roughly 20 minutes (not including the time needed for building)</p>
+<p>Roughly 20 minutes (not including the time needed for to build the pods)</p>
 </li>
 <li>
 <p>Access to an OpenShift cluster (try the Red Hat Developer Sandbox for free)</p>
@@ -295,10 +295,10 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 <p>We will use a simple web application in this guide that consists of a <a href="https://github.com/wildfly-security-incubator/elytron-examples/blob/main/elytron-oidc-request/src/main/java/org/wildfly/security/examples/SecuredServlet.java">single servlet</a>. We will secure this servlet using OIDC.</p>
 </div>
 <div class="paragraph">
-<p>We will use the example in the <a href="https://github.com/wildfly-security-incubator/elytron-examples/tree/main/elytron-oidc-request">elytron-oidc-request</a> directory in this repo.</p>
+<p>We will use the example in the <a href="https://github.com/wildfly-security-incubator/elytron-examples/tree/main/elytron-oidc-request">elytron-oidc-request</a> directory in the <code>elytron-examples</code> repo.</p>
 </div>
 <div class="paragraph">
-<p>To obtain this example, clone the elytron-examples repository to your local machine:</p>
+<p>To obtain this example, clone the <code>elytron-examples</code> repository to your local machine:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -308,31 +308,28 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 </div>
 </div>
 <div class="sect1">
-<h2 id="setting-up-the-keypairs"><a class="anchor" href="#setting-up-the-keypairs"></a>Setting up the KeyPairs</h2>
+<h2 id="setting-up-the-key-pairs"><a class="anchor" href="#setting-up-the-key-pairs"></a>Setting up the Key Pairs</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In order for us to sign the JWT&#8217;s, we will need to use key pairs corresponding to the algorithms specified. These are tokens communicated between the client and the server and are used to sign and encrypt JWT&#8217;s.</p>
+<p>We need to generate a key pair to sign the JWTs. These key pairs are tokens that are communicated between the client and the server and are used to sign and encrypt JWT&#8217;s.</p>
 </div>
 <div class="sect2">
 <h3 id="about-key-pairs"><a class="anchor" href="#about-key-pairs"></a>About Key Pairs</h3>
 <div class="paragraph">
-<p>Typically key pairs have 3 components:</p>
+<p>Typically key pairs have 2 components:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Private Key:</strong> This is the part of the key that must be kept secret and will be used to sign the JWT. Your OpenID provider communicates the public key of some keyPair(s) to you. The public key is used by you to encrypt the JWT.</p>
+<p><strong>Private Key:</strong> This is the part of the key that must be kept secret and will be used to sign the JWT. Your OpenID provider communicates the public key of some key pair(s) to you. The public key is used by you to encrypt the JWT.</p>
 </li>
 <li>
-<p><strong>Public Key:</strong> This is the part of the keypair that is shared with trusted parties. Typically, the OpenID provider shared a set of public keys with us which we use to encrypt our JWT&#8217;s among other things. Public keys can be extracted from certificates.</p>
-</li>
-<li>
-<p><strong>Certificate:</strong> This is used to verify the signatures among other things. We share the certificates of keypairs we generate with the OpenID provider, and it contains the public key.</p>
+<p><strong>Public Key:</strong> This is the part of the key pair that is shared with trusted parties. Typically, the OpenID provider shared a set of public keys with us which we use to encrypt our JWT&#8217;s among other things. Public keys can be extracted from certificates and are used to verify the signatures among other things. We share the certificates of key pairs we generate with the OpenID provider, and it contains the public key.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
-<p>Keypairs with public and private keys are known as <strong>asymmetric</strong> keys. Some keys are <strong>symmetric</strong>, meaning they only have 1 secret key that is used by both the client and the server. Each key has an algorithm that is used to generate it, such as, RSA, Elliptic Curve, etc. An example of a symmetric algorithm is HS256, where the same key is used to sign a JWT and verify the signature.</p>
+<p>Key pairs with public and private keys are known as <strong>asymmetric</strong> keys. Some keys are <strong>symmetric</strong>, meaning they only have 1 secret key that is used by both the client and the server. Each key has an algorithm that is used to generate it, such as, RSA, Elliptic Curve, etc. An example of a symmetric algorithm is HS256, where the same key is used to sign a JWT and verify the signature.</p>
 </div>
 </div>
 <div class="sect2">
@@ -342,17 +339,20 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">    $ keytool -genkeypair -alias &lt;keystore_alias&gt; -keyalg &lt;algorithm&gt; -keysize &lt;key_size&gt; -validity &lt;validity_in_days&gt; -keystore &lt;keystore_name&gt; -dname "&lt;distinguished_name&gt;" -keypass &lt;private_key_password&gt; -storepass &lt;keystore_password&gt;</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">    $ keytool -genkey pair -alias &lt;keystore_alias&gt; -keyalg &lt;algorithm&gt; -keysize &lt;key_size&gt; -validity &lt;validity_in_days&gt; -keystore &lt;keystore_name&gt; -dname "&lt;distinguished_name&gt;" -keypass &lt;private_key_password&gt; -storepass &lt;keystore_password&gt;</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>For this example, we will be using <code>PKCS12</code> keystores.</p>
 </div>
 <div class="sect3">
 <h4 id="generating-pkcs12-keystore"><a class="anchor" href="#generating-pkcs12-keystore"></a>Generating PKCS12 Keystore</h4>
 <div class="paragraph">
-<p>Let us first create a PKCS12 keystore file with 2 different keys. Let&#8217;s first generate an RSA keyPair:</p>
+<p>Let us first create a PKCS12 keystore file with 2 different keys. Let&#8217;s first generate an RSA key pair:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">    $ keytool -genkeypair -alias rsaKey -keyalg RSA -keysize 2048 -validity 365 -keystore Keycloak.keystore.pkcs12 -dname "CN=client" -keypass password -storepass password</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">    $ keytool -genkey pair -alias rsaKey -keyalg RSA -keysize 2048 -validity 365 -keystore Keycloak.keystore.pkcs12 -dname "CN=client" -keypass password -storepass password</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -360,7 +360,7 @@ encrypted. This adds an added layer of protection, as the parameters are no long
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-none hljs">    $ keytool -genkeypair -alias ecKey -keyalg EC -groupname secp256r1 -validity 365 -keystore Keycloak.keystore.pkcs12 -dname "CN=client" -keypass password -storepass password</code></pre>
+<pre class="highlightjs highlight"><code class="language-none hljs">    $ keytool -genkey pair -alias ecKey -keyalg EC -groupname secp256r1 -validity 365 -keystore Keycloak.keystore.pkcs12 -dname "CN=client" -keypass password -storepass password</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -374,7 +374,7 @@ However, this is not the case for Elliptical Curve keys. For ES256 algorithms, y
 </div>
 </div>
 <div class="paragraph">
-<p>Take a note of the absolute path of the keystore file along with the key alias and the keystore password. We will be using them to set up Keycloak later.</p>
+<p>Take a note of the absolute path of the keystore file along with the key alias and the keystore password. We will be using them to set up Keycloak later. For this guide we will only be using the key pair with the alias <strong>rsaKey</strong>. However, if you would like to use an Elliptical Curve key to sign your JWT, you can use the <strong>ecKey</strong> alias when when asked for a key alias.</p>
 </div>
 <div class="paragraph">
 <p>If you would like to use JKS keystore files instead, see <a href="https://docs.redhat.com/en/documentation/red_hat_jboss_data_virtualization/6.4/html/security_guide/create_a_privatepublic_key_pair_with_keytool">here</a> for more information.</p>
@@ -583,7 +583,7 @@ echo ""</code></pre>
 password and a keystore password. Here, we are only using the <strong>keystore</strong> password. While we set them both to be the same, they do not have to be.</p>
 </li>
 <li>
-<p>Once you select the keystore file from your filesystem, click <strong>Import</strong> and you should see a message at the top of the screen indicating that the certificate has been uploaded successfully and you will see the certificate listed in the text field in the middle of the screen.</p>
+<p>Once you select the file named <strong>Keycloak.keystore.pkcs12</strong> from your filesystem, click <strong>Import</strong> and you should see a message at the top of the screen indicating that the certificate has been uploaded successfully and you will see the certificate listed in the text field in the middle of the screen.</p>
 </li>
 </ul>
 </div>
@@ -706,9 +706,9 @@ echo ""</code></pre>
 deploy:
   replicas: 1
   volumes:
-    - name: saml-keystore-volume
+    - name: request-keystore-volume
       secret:
-        secretName: simple-webapp-saml-secret
+        secretName: simple-webapp-secret
   env:
     - name: OIDC_PROVIDER_URL
       value: &lt;KEYCLOAK_URL&gt;                         <i class="conum" data-value="1"></i><b>(1)</b>
@@ -922,7 +922,7 @@ deploy:
 </div>
 <div class="paragraph">
 <p>Note that we have specified the <code>authentication-request-format</code> to be <code>request</code>, meaning, we are sending it by value. We
-have specified the signing algorithm to be <strong>RS256</strong>, and we are using the RSA key to sign the request object.We have also specified the <strong>alg</strong> and <strong>enc</strong> values to encrypt the request object. The request object JWT will be signed first and then encrypted
+have specified the signing algorithm to be <strong>RS256</strong>, and we are using the RSA key to sign the request object. We have also specified the <strong>alg</strong> and <strong>enc</strong> values to encrypt the request object. The request object JWT will be signed first and then encrypted
 using the public key that Keycloak shared with us. To see what this key looks like, you can either go to
 {provider-url}/protocol/openid-connect/certs or you can go to the Keycloak console and under the
 <strong>Realm settings</strong> tab, click on the <strong>keys</strong> tab. You will see that there console includes 2 other keys in addition to
@@ -1029,7 +1029,7 @@ Not all algorithms are supported by all OpenID Providers. Review the documentati
 <div class="paragraph">
 <p>This example has demonstrated how to secure a web application deployed to WildFly by sending the request parameters as a
 JWT. For more details on the <code>elytron-oidc-client</code> subsystem, please check out the
-<a href="https://docs.wildfly.org/33/Admin_Guide.html#Elytron_OIDC_Client">documentation</a> and for more details on OpenID Connect,
+<a href="https://docs.wildfly.org/33/Admin_Guide.html#sending-a-request-object-as-a-jwt">documentation</a> and for more details on OpenID Connect,
 checkout the <a href="https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests">OpenID documentation</a> and the
 documentation of your OpenID provider.</p>
 </div>
@@ -1041,7 +1041,7 @@ documentation of your OpenID provider.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests">Passing Request Parameters as JWTs</a></p>
+<p><a href="https://openid.net/specs/openid-connect-core-1_0.html#JWTRequests">Passing Request Parameters as JWTs Using OIDC</a></p>
 </li>
 <li>
 <p><a href="https://docs.wildfly.org/33/Getting_Started_on_OpenShift.html">Getting Started with WildFly on OpenShift</a></p>
