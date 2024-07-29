@@ -38,12 +38,12 @@
 <meta property="og:site_name" content="WildFly Elytron" />
 <meta property="og:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2024-07-03T00:00:00+00:00" />
+<meta property="article:published_time" content="2024-07-29T00:00:00+00:00" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta property="twitter:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
 <meta property="twitter:title" content="Sending Request Objects as A JWT Using Request Parameters for OIDC" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2024-07-03T00:00:00+00:00","datePublished":"2024-07-03T00:00:00+00:00","description":"WildFly 33 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. The OAuth 2.0 request syntax sends the Request Object in the request by adding them directly to the URL. However, OpenID Connect allows the Request Object to be sent as a JWT using request parameters, which can be signed and optionally encrypted. This adds an added layer of protection, as the parameters are no longer human-readable.","headline":"Sending Request Objects as A JWT Using Request Parameters for OIDC","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2024-07-29T00:00:00+00:00","datePublished":"2024-07-29T00:00:00+00:00","description":"WildFly 33 includes the ability to send the request object as a Json Web Token (JWT) when securing an application using OIDC. The feature also includes the ability to sign and/or encrypt the JWT for added security. OpenID Connect is an identity layer on top of the OAuth 2.0 protocol that makes it possible for a client to verify a user’s identity based on authentication that’s performed by an OpenID provider. The OAuth 2.0 request syntax sends the Request Object in the request by adding them directly to the URL. However, OpenID Connect allows the Request Object to be sent as a JWT using request parameters, which can be signed and optionally encrypted. This adds an added layer of protection, as the parameters are no longer human-readable.","headline":"Sending Request Objects as A JWT Using Request Parameters for OIDC","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -180,7 +180,7 @@
           <img class="headshot" src="https://www.gravatar.com/avatar/6ed81e314d6074bbf734abe812f33b05">
         
         <p class="byline">
-          By <a href="https://github.com/PrarthonaPaul">Prarthona Paul</a> | July 03, 2024
+          By <a href="https://github.com/PrarthonaPaul">Prarthona Paul</a> | July 29, 2024
           <br>
           
             
@@ -374,7 +374,7 @@ However, this is not the case for Elliptical Curve keys. For ES256 algorithms, y
 </div>
 </div>
 <div class="paragraph">
-<p>Take a note of the absolute path of the keystore file along with the key alias and the keystore password. We will be using them to set up Keycloak later. For this guide we will only be using the key pair with the alias <strong>rsaKey</strong>. However, if you would like to use an Elliptical Curve key to sign your JWT, you can use the <strong>ecKey</strong> alias when when asked for a key alias.</p>
+<p>Take a note of the absolute path of the keystore file along with the key alias and the keystore password. We will be using them to set up Keycloak later. For this guide we will only be using the key pair with the alias <strong>rsaKey</strong>. However, if you would like to use an Elliptical Curve key to sign your JWT, you can use the <strong>ecKey</strong> alias when asked for a key alias.</p>
 </div>
 <div class="paragraph">
 <p>If you would like to use JKS keystore files instead, see <a href="https://docs.redhat.com/en/documentation/red_hat_jboss_data_virtualization/6.4/html/security_guide/create_a_privatepublic_key_pair_with_keytool">here</a> for more information.</p>
