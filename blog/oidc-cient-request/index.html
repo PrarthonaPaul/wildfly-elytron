@@ -705,10 +705,6 @@ echo ""</code></pre>
   contextDir: elytron-oidc-request
 deploy:
   replicas: 1
-  volumes:
-    - name: request-keystore-volume
-      secret:
-        secretName: simple-webapp-secret
   env:
     - name: OIDC_PROVIDER_URL
       value: &lt;KEYCLOAK_URL&gt;                         <i class="conum" data-value="1"></i><b>(1)</b>
