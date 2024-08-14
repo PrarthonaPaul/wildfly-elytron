@@ -5,7 +5,21 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Thu, 01 Aug 2024 17:24:54 +0000</lastBuildDate>
+        <lastBuildDate>Wed, 14 Aug 2024 15:18:27 +0000</lastBuildDate>
+        
+        <item>
+            <title>Using Credential Stores to Replace Clear Text Passwords in WildFly</title>
+            <link>
+                https://wildfly-security.github.io/wildfly-elytron/blog/credential-store-for-passwords/
+            </link>
+            <description>
+                WildFly allows the use of credential stores to keep alias for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and use credential-reference to specify them in server configuration. As a result, the credential is no longer visible in clear...
+            </description>
+            <pubDate>Wed, 14 Aug 2024 00:00:00 +0000</pubDate>
+            <guid>
+                https://wildfly-security.github.io/wildfly-elytron/blog/credential-store-for-passwords/
+            </guid>
+        </item>
         
         <item>
             <title>Sending Request Objects as A JWT Using Request Parameters for OIDC</title>
@@ -18,20 +32,6 @@
             <pubDate>Mon, 29 Jul 2024 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/oidc-cient-request/
-            </guid>
-        </item>
-        
-        <item>
-            <title>Enabling Server Side OCSP Stapling During TLS</title>
-            <link>
-                https://wildfly-security.github.io/wildfly-elytron/blog/ocsp-stapling/
-            </link>
-            <description>
-                During a TLS handshake the server presents a certificate to the client to identify itself, which the client can check to authenticate the server and continue the handshake. For X509 certificates that are issued by a certificate authority, the certificate can sometimes be revoked before its expiry date for various...
-            </description>
-            <pubDate>Wed, 03 Jul 2024 00:00:00 +0000</pubDate>
-            <guid>
-                https://wildfly-security.github.io/wildfly-elytron/blog/ocsp-stapling/
             </guid>
         </item>
         
