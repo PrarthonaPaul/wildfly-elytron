@@ -5,17 +5,17 @@
         <title>WildFly Elytron</title>
         <link>https://wildfly-security.github.io/wildfly-elytron</link>
         <description></description>
-        <lastBuildDate>Thu, 15 Aug 2024 20:32:08 +0000</lastBuildDate>
+        <lastBuildDate>Mon, 19 Aug 2024 13:47:56 +0000</lastBuildDate>
         
         <item>
-            <title>Using Credential Stores With Encrypted Expressions on WildFly</title>
+            <title>Credential Store For Encrypted Expressions</title>
             <link>
                 https://wildfly-security.github.io/wildfly-elytron/blog/credential-store-for-encrypted-expressions/
             </link>
             <description>
-                WildFly allows the use of credential stores to keep alias for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and use credential-reference to specify them in server configuration. As a result, the credential is no longer visible in clear...
+                de --- layout: post title: 'Using Credential Stores With Encrypted Expressions on WildFly' date: 2024-08-19 tags: credential-store encryption synopsis: How to set up encrypted expressions and use it to replace sensitive information specified as clear-text on applications deployed to WildFly. author: prarthonapaul --- WildFly allows the use of credential stores...
             </description>
-            <pubDate>Wed, 14 Aug 2024 00:00:00 +0000</pubDate>
+            <pubDate>Mon, 19 Aug 2024 00:00:00 +0000</pubDate>
             <guid>
                 https://wildfly-security.github.io/wildfly-elytron/blog/credential-store-for-encrypted-expressions/
             </guid>
