@@ -252,7 +252,7 @@ And lastly, credential-store can only be used for credential-reference attribute
 <h2 id="configuring-encrypted-expressions"><a class="anchor" href="#configuring-encrypted-expressions"></a>Configuring Encrypted Expressions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Let&#8217;s first create a <code>secret-key-credential-store</code> that we can use to store the encrypted expressions. Just like a regular credential-store file, this will also create a .cs file inside the directory you specify. However, this will be human readable.</p>
+<p>Let&#8217;s first create a <code>secret-key-credential-store</code> that we can use to store secret keys that will be used to encrypt expressions. Just like a regular credential-store file, this will also create a .cs file inside the directory you specify. However, this will be human readable.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -303,7 +303,7 @@ key=RUxZAUsOhzQhCv7KbD9f2SGBgWkmTC9l0lgu28FWM4UfRBY7QQ==</code></pre>
 <h2 id="encrypted-expression-for-credential-reference"><a class="anchor" href="#encrypted-expression-for-credential-reference"></a>Encrypted Expression for Credential Reference</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Now that we have a generated secret key in a credential store we can activate the resource responsible for handling encrypted expressions. And we can use that to convert a clear-text password phrase into an encrypted expression which will be stored in the credential-store.</p>
+<p>Now that we have a generated secret key in a credential store we can activate the resource responsible for handling encrypted expressions. And we can use that to convert a clear-text password phrase into an encrypted expression.</p>
 </div>
 <div class="listingblock">
 <div class="content">
