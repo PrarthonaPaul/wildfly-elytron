@@ -31,8 +31,8 @@
 <meta property="og:title" content="Using Credential Stores for WildFly Client" />
 <meta name="author" content="Prarthona Paul" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="WildFly allows the use of credential stores to keep alias for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and use credential-reference to specify them in server configuration. As a result, the credential is no longer visible in clear text. However, there are additional uses for credential store as well. This guides explains how to create credential stores using the elytron-tool and use it for an application deployed to WildFly." />
-<meta property="og:description" content="WildFly allows the use of credential stores to keep alias for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and use credential-reference to specify them in server configuration. As a result, the credential is no longer visible in clear text. However, there are additional uses for credential store as well. This guides explains how to create credential stores using the elytron-tool and use it for an application deployed to WildFly." />
+<meta name="description" content="WildFly allows the use of credential stores to keep aliases for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and we can then use credential-references to specify them in server configuration. As a result, the credential is no longer visible in clear text. However, there are additional uses for credential store as well. This guides explains how to create credential stores using the elytron-tool and use it for an application deployed to WildFly." />
+<meta property="og:description" content="WildFly allows the use of credential stores to keep aliases for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and we can then use credential-references to specify them in server configuration. As a result, the credential is no longer visible in clear text. However, there are additional uses for credential store as well. This guides explains how to create credential stores using the elytron-tool and use it for an application deployed to WildFly." />
 <link rel="canonical" href="https://wildfly-security.github.io/wildfly-elytron/blog/credential-stores-on-client-side/" />
 <meta property="og:url" content="https://wildfly-security.github.io/wildfly-elytron/blog/credential-stores-on-client-side/" />
 <meta property="og:site_name" content="WildFly Elytron" />
@@ -43,7 +43,7 @@
 <meta property="twitter:image" content="https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg" />
 <meta property="twitter:title" content="Using Credential Stores for WildFly Client" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2023-08-21T00:00:00+00:00","datePublished":"2023-08-21T00:00:00+00:00","description":"WildFly allows the use of credential stores to keep alias for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and use credential-reference to specify them in server configuration. As a result, the credential is no longer visible in clear text. However, there are additional uses for credential store as well. This guides explains how to create credential stores using the elytron-tool and use it for an application deployed to WildFly.","headline":"Using Credential Stores for WildFly Client","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/credential-stores-on-client-side/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/credential-stores-on-client-side/"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Prarthona Paul"},"dateModified":"2023-08-21T00:00:00+00:00","datePublished":"2023-08-21T00:00:00+00:00","description":"WildFly allows the use of credential stores to keep aliases for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and we can then use credential-references to specify them in server configuration. As a result, the credential is no longer visible in clear text. However, there are additional uses for credential store as well. This guides explains how to create credential stores using the elytron-tool and use it for an application deployed to WildFly.","headline":"Using Credential Stores for WildFly Client","image":"https://wildfly-security.github.io/wildfly-elytron/assets/images/wildfly-elytron-logo.jpg","mainEntityOfPage":{"@type":"WebPage","@id":"https://wildfly-security.github.io/wildfly-elytron/blog/credential-stores-on-client-side/"},"url":"https://wildfly-security.github.io/wildfly-elytron/blog/credential-stores-on-client-side/"}</script>
 <!-- End Jekyll SEO tag -->
 
 </head>
@@ -246,7 +246,7 @@
 </div>
       <div class="grid__item width-12-12">
           <div class="paragraph">
-<p>WildFly allows the use of credential stores to keep alias for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and use credential-reference to specify them in server configuration. As a result, the credential is no longer visible in clear text. However, there are additional uses for credential store as well. This guides explains how to create credential stores using the elytron-tool and use it for an application deployed to WildFly.</p>
+<p>WildFly allows the use of credential stores to keep aliases for sensitive information, such as, passwords for external services. Credential stores can be used to store different credentials under aliases and we can then use credential-references to specify them in server configuration. As a result, the credential is no longer visible in clear text. However, there are additional uses for credential store as well. This guides explains how to create credential stores using the elytron-tool and use it for an application deployed to WildFly.</p>
 </div>
 <div id="toc" class="toc">
 <div id="toctitle" class="title"></div>
@@ -284,10 +284,10 @@
 <p>about 10 minutes</p>
 </li>
 <li>
-<p>WildFly with credential-store support</p>
+<p>WildFly</p>
 </li>
 <li>
-<p>Elytron-tool for WIldFly server</p>
+<p>Elytron-tool (provided with WildFly)</p>
 </li>
 </ul>
 </div>
